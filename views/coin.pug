@@ -1,0 +1,14 @@
+extends base
+
+block content
+  main.main 
+    .coin-container.max-w-lg.mx-auto.bg-white.shadow-md.rounded-lg.p-6
+      h1.text-2xl.font-bold.mb-4= title
+      .coin
+        img.coin-image.w-16.h-16.mx-auto(src=coin.image, alt=coin.name)
+        span.coin-name.text-xl.font-semibold= coin.name
+        p.mt-2.text-gray-700 Current Price: $ #{coin.current_price}
+        p.text-gray-700 Market Cap: $ #{coin.market_cap}
+        p.text-gray-700 Total Volume: $ #{coin.total_volume}
+        p.text-gray-700 24h High: $ #{coin.high_24h}
+        p.text-gray-700 24h Low: $ #{coin.low_24h}

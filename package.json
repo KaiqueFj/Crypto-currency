@@ -1,0 +1,20 @@
+{
+  "name": "crypto-tracker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "SET NODE_ENV=development & nodemon server.js"
+  },
+  "author": "Kaique Ferraz de Jesus",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.3.1",
+    "nodemon": "^3.1.4",
+    "path": "^0.12.7",
+    "pug": "^3.0.3"
+  }
+}
