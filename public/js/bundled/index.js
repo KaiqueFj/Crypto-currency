@@ -587,6 +587,12 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 var _chartJs = require("./chart.js");
 document.addEventListener("DOMContentLoaded", ()=>{
     (0, _chartJs.createChart)();
+    const rows = document.querySelectorAll("tr[data-href]");
+    rows.forEach((row)=>{
+        row.addEventListener("click", ()=>{
+            window.location.href = row.dataset.href;
+        });
+    });
 });
 
 },{"./chart.js":"cC087"}],"cC087":[function(require,module,exports) {
