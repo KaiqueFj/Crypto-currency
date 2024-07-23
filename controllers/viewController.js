@@ -10,7 +10,6 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       params: {
         vs_currency: "usd",
         order: "market_cap_desc",
-        per_page: 10,
         page: 1,
         sparkline: false,
       },
@@ -56,6 +55,8 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
         message: "The requested coin data could not be found.",
       });
     }
+
+    console.log(coinData);
 
     const {
       id,

@@ -1,0 +1,12 @@
+:root {
+  --section-rotate: 9vw;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}

@@ -1,22 +1,35 @@
 extends base
 
+block append head
+  script(defer src="/js/bundled/index.js")
+
+
+
 block content
 
+
   main.main
+
     h1(class="text-2xl font-bold mb-4")= title
+    h1 Bitcoin Price Chart
+      .chart-container(class="p-4 bg-gray-100 rounded-lg shadow-md")  
+        canvas#myChart(class="w-48 h-36") // Tailwind classes for width and height
     .coin-container(class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4")
+
+
       each coin in coins
-        .coin(class="bg-white shadow-lg rounded-lg p-4")
-          img.coin-image(class="w-24 h-24 object-cover rounded-full", src=coin.image, alt=coin.name)
-          div(class="mt-2")
-            span.coin-name(class="text-xl font-semibold")= coin.name
-            p(class="mt-1 text-sm text-gray-600")
-              | Current Price: $ #{coin.current_price}
-            p(class="mt-1 text-sm text-gray-600")
-              | Market Cap: $ #{coin.market_cap}
-            p(class="mt-1 text-sm text-gray-600")
-              | Total Volume: $ #{coin.total_volume}
-            p(class="mt-1 text-sm text-gray-600")
-              | 24h High: $ #{coin.high_24h}
-            p(class="mt-1 text-sm text-gray-600")
-              | 24h Low: $ #{coin.low_24h}
+        a(href=`/coin/${coin.id}/usd`, class="block bg-white shadow-lg rounded-lg p-4 hover:bg-gray-100 transition")
+          .coin
+            img.coin-image(class="w-24 h-24 object-cover rounded-full", src=coin.image, alt=coin.name)
+            div(class="mt-2")
+              span.coin-name(class="text-xl font-semibold")= coin.name
+              p(class="mt-1 text-sm text-gray-600")
+                | Current Price: $ #{coin.current_price}
+              p(class="mt-1 text-sm text-gray-600")
+                | Market Cap: $ #{coin.market_cap}
+              p(class="mt-1 text-sm text-gray-600")
+                | Total Volume: $ #{coin.total_volume}
+              p(class="mt-1 text-sm text-gray-600")
+                | 24h High: $ #{coin.high_24h}
+              p(class="mt-1 text-sm text-gray-600")
+                | 24h Low: $ #{coin.low_24h}
