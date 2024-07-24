@@ -6,9 +6,10 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     // Fetch data from CoinGecko API
     const response = await axios({
       method: "GET",
-      url: "https://api.coingecko.com/api/v3/coins/markets",
+      url: "https://api.coingecko.com/api/v3/coins/markets?price_change_percentage=1h%2C24h%2C7d&locale=pt&precision=2",
+
       params: {
-        vs_currency: "usd",
+        vs_currency: "brl",
         order: "market_cap_desc",
         page: 1,
         sparkline: false,

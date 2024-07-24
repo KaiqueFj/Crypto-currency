@@ -6,7 +6,7 @@ export async function fetchCoinData() {
   try {
     const response = await axios({
       method: "GET",
-      url: `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30`,
+      url: `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=7`,
       headers: {
         accept: "application/json",
         "x-cg-demo-api-key": process.env.API_KEY_Cry,
@@ -45,13 +45,13 @@ export async function createChart() {
         datasets: [
           {
             label: "Bitcoin Price (USD)",
-            data: prices, // Include the data here
-            borderColor: "rgba(255, 165, 0, 1)", // Orange color for the line
+            data: prices,
+            borderColor: "#9bfc9b", // Orange color for the line
             borderWidth: 2,
-            pointBackgroundColor: "rgba(255, 165, 0, 1)", // Orange color for dots
-            pointBorderColor: "rgba(255, 165, 0, 1)", // Orange color for dot borders
+            pointBackgroundColor: "#0000", // Orange color for dots
+            pointBorderColor: "#ffff", // Orange color for dot borders
             pointBorderWidth: 2,
-            pointRadius: 4,
+            pointRadius: 0,
             fill: false,
           },
         ],
@@ -59,52 +59,31 @@ export async function createChart() {
       options: {
         plugins: {
           legend: {
-            labels: {
-              color: "rgba(255, 165, 0, 1)", // Orange color for the legend
-              font: {
-                size: 14,
-              },
-            },
+            display: false, // Hide legend
           },
         },
         scales: {
           x: {
-            type: "time",
-            time: {
-              unit: "day",
-            },
-            ticks: {
-              color: "rgba(255, 165, 0, 1)", // Orange color for x-axis labels
-            },
-            title: {
-              display: true,
-              text: "Date",
-              color: "rgba(255, 165, 0, 1)", // Orange color for x-axis title
-              font: {
-                size: 16,
-              },
-            },
+            display: false, // Hide x-axis labels and title
           },
           y: {
-            ticks: {
-              color: "rgba(255, 165, 0, 1)", // Orange color for y-axis labels
-            },
-            beginAtZero: false,
-            title: {
-              display: true,
-              text: "Price (USD)",
-              color: "rgba(255, 165, 0, 1)", // Orange color for y-axis title
-              font: {
-                size: 16,
-              },
-            },
+            display: false, // Hide y-axis labels and title
           },
         },
         layout: {
           padding: {
-            top: 20,
-            bottom: 20,
+            top: 2,
+            bottom: 2,
           },
+        },
+        elements: {
+          line: {
+            tension: 0.4, // Smooth curves
+          },
+        },
+        interaction: {
+          intersect: false,
+          mode: "nearest",
         },
       },
     });

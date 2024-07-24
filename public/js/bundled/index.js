@@ -610,7 +610,7 @@ async function fetchCoinData() {
     try {
         const response = await (0, _axiosDefault.default)({
             method: "GET",
-            url: `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30`,
+            url: `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=7`,
             headers: {
                 accept: "application/json",
                 "x-cg-demo-api-key": "CG-FbS9EdtQ344edbywnjgR5KLQ"
@@ -653,12 +653,12 @@ async function createChart() {
                     {
                         label: "Bitcoin Price (USD)",
                         data: prices,
-                        borderColor: "rgba(255, 165, 0, 1)",
+                        borderColor: "#9bfc9b",
                         borderWidth: 2,
-                        pointBackgroundColor: "rgba(255, 165, 0, 1)",
-                        pointBorderColor: "rgba(255, 165, 0, 1)",
+                        pointBackgroundColor: "#0000",
+                        pointBorderColor: "#ffff",
                         pointBorderWidth: 2,
-                        pointRadius: 4,
+                        pointRadius: 0,
                         fill: false
                     }
                 ]
@@ -666,52 +666,31 @@ async function createChart() {
             options: {
                 plugins: {
                     legend: {
-                        labels: {
-                            color: "rgba(255, 165, 0, 1)",
-                            font: {
-                                size: 14
-                            }
-                        }
+                        display: false
                     }
                 },
                 scales: {
                     x: {
-                        type: "time",
-                        time: {
-                            unit: "day"
-                        },
-                        ticks: {
-                            color: "rgba(255, 165, 0, 1)"
-                        },
-                        title: {
-                            display: true,
-                            text: "Date",
-                            color: "rgba(255, 165, 0, 1)",
-                            font: {
-                                size: 16
-                            }
-                        }
+                        display: false
                     },
                     y: {
-                        ticks: {
-                            color: "rgba(255, 165, 0, 1)"
-                        },
-                        beginAtZero: false,
-                        title: {
-                            display: true,
-                            text: "Price (USD)",
-                            color: "rgba(255, 165, 0, 1)",
-                            font: {
-                                size: 16
-                            }
-                        }
+                        display: false
                     }
                 },
                 layout: {
                     padding: {
-                        top: 20,
-                        bottom: 20
+                        top: 2,
+                        bottom: 2
                     }
+                },
+                elements: {
+                    line: {
+                        tension: 0.4
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: "nearest"
                 }
             }
         });
