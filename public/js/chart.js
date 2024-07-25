@@ -2,11 +2,11 @@ import "chartjs-adapter-date-fns"; // or 'chartjs-adapter-moment'
 import Chart from "chart.js/auto";
 import axios from "axios";
 
-export async function fetchCoinData() {
+export async function fetchCoinData(coin) {
   try {
     const response = await axios({
       method: "GET",
-      url: `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=7`,
+      url: `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=7`,
       headers: {
         accept: "application/json",
         "x-cg-demo-api-key": process.env.API_KEY_Cry,
@@ -21,9 +21,9 @@ export async function fetchCoinData() {
   }
 }
 
-export async function getChartData() {
+export async function getChartData(coin) {
   try {
-    const data = await fetchCoinData();
+    const data = await fetchCoinData(coin);
     const labels = data.prices.map((price) => new Date(price[0]));
     const prices = data.prices.map((price) => price[1]);
     return { labels, prices };
@@ -33,18 +33,23 @@ export async function getChartData() {
   }
 }
 
-export async function createChart() {
+export async function createChart(coin) {
   try {
-    const { labels, prices } = await getChartData();
-    console.log(labels, prices);
-    const ctx = document.getElementById("myChart").getContext("2d");
+    const { labels, prices } = await getChartData(coin);
+    const canvas = document.getElementById(`chart-${coin}`);
+
+    const ctx = document.getElementById(`chart-${coin}`).getContext("2d");
+
+    canvas.style.width = "";
+    canvas.style.height = "";
+
     new Chart(ctx, {
       type: "line",
       data: {
         labels: labels,
         datasets: [
           {
-            label: "Bitcoin Price (USD)",
+            label: `${coin} price`,
             data: prices,
             borderColor: "#9bfc9b", // Orange color for the line
             borderWidth: 2,
@@ -57,6 +62,8 @@ export async function createChart() {
         ],
       },
       options: {
+        maintainAspectRatio: false, // Disable maintaining aspect ratio
+
         plugins: {
           legend: {
             display: false, // Hide legend

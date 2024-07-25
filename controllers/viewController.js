@@ -12,6 +12,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
         vs_currency: "brl",
         order: "market_cap_desc",
         page: 1,
+        per_page: 20,
         sparkline: false,
       },
       headers: {
@@ -56,8 +57,6 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
         message: "The requested coin data could not be found.",
       });
     }
-
-    console.log(coinData);
 
     const {
       id,

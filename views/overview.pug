@@ -43,4 +43,4 @@ block content
                 td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `$${coin.circulating_supply.toLocaleString()}`
                 td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `$${coin.market_cap.toLocaleString()}`
                 td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500
-                  canvas#myChart(class="w-24 h-24") // Tailwind classes for width and height
+                  canvas(id=`chart-${coin.id}` class="w-24 h-24") 

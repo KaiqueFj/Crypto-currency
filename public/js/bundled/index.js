@@ -586,7 +586,11 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"f2QDv":[function(require,module,exports) {
 var _chartJs = require("./chart.js");
 document.addEventListener("DOMContentLoaded", ()=>{
-    (0, _chartJs.createChart)();
+    const coins = document.querySelectorAll("[data-href]");
+    coins.forEach((coin)=>{
+        const coinId = coin.getAttribute("data-href").split("/")[2];
+        (0, _chartJs.createChart)(coinId);
+    });
     const rows = document.querySelectorAll("tr[data-href]");
     rows.forEach((row)=>{
         row.addEventListener("click", ()=>{
@@ -606,11 +610,11 @@ var _auto = require("chart.js/auto");
 var _autoDefault = parcelHelpers.interopDefault(_auto);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
-async function fetchCoinData() {
+async function fetchCoinData(coin) {
     try {
         const response = await (0, _axiosDefault.default)({
             method: "GET",
-            url: `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=7`,
+            url: `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=7`,
             headers: {
                 accept: "application/json",
                 "x-cg-demo-api-key": "CG-FbS9EdtQ344edbywnjgR5KLQ"
@@ -623,9 +627,9 @@ async function fetchCoinData() {
         throw err;
     }
 }
-async function getChartData() {
+async function getChartData(coin) {
     try {
-        const data = await fetchCoinData();
+        const data = await fetchCoinData(coin);
         const labels = data.prices.map((price)=>new Date(price[0]));
         const prices = data.prices.map((price)=>price[1]);
         return {
@@ -640,18 +644,20 @@ async function getChartData() {
         };
     }
 }
-async function createChart() {
+async function createChart(coin) {
     try {
-        const { labels, prices } = await getChartData();
-        console.log(labels, prices);
-        const ctx = document.getElementById("myChart").getContext("2d");
+        const { labels, prices } = await getChartData(coin);
+        const canvas = document.getElementById(`chart-${coin}`);
+        const ctx = document.getElementById(`chart-${coin}`).getContext("2d");
+        canvas.style.width = "";
+        canvas.style.height = "";
         new (0, _autoDefault.default)(ctx, {
             type: "line",
             data: {
                 labels: labels,
                 datasets: [
                     {
-                        label: "Bitcoin Price (USD)",
+                        label: `${coin} price`,
                         data: prices,
                         borderColor: "#9bfc9b",
                         borderWidth: 2,
@@ -664,6 +670,7 @@ async function createChart() {
                 ]
             },
             options: {
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         display: false
