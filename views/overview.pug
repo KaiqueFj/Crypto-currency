@@ -43,4 +43,26 @@ block content
                 td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `$${coin.circulating_supply.toLocaleString()}`
                 td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `$${coin.market_cap.toLocaleString()}`
                 td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500
-                  canvas(id=`chart-${coin.id}` class="w-24 h-24") 
+                  canvas(id=`chart-${coin.id}`).w-24.h-24
+
+
+      div
+        .infoPagination(class="tw-flex tw-flex-1 tw-items-center tw-justify-evenly  sm:tw-justify-between")
+
+          span.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `Showing ${(currentPage - 1) * itemsPerPage + 1} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
+
+          nav(class="tailwind-reset pagy_nav tw-inline-flex tw-items-center tw-space-x-1 tw-rounded-lg")
+            if currentPage > 1
+              span
+                a.px-4.py-2.bg-blue-500.text-white(href=`/overview?page=${currentPage - 1}`)= `${currentPage -1}`
+                a.px-4.py-2.bg-blue-500.text-white(href=`/overview?page=${currentPage}`)= `${currentPage}`
+
+
+            if currentPage < totalPages
+              span
+                a.px-4.py-2.bg-blue-500.text-white(href=`/overview?page=${currentPage + 1}`)= `${currentPage + 1}`
+
+
+            span.px-4.py-2.bg-blue-500.text-white= `...`
+            span
+              a.px-4.py-2.bg-blue-500.text-white= `${totalPages}`

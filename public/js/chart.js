@@ -36,12 +36,8 @@ export async function getChartData(coin) {
 export async function createChart(coin) {
   try {
     const { labels, prices } = await getChartData(coin);
-    const canvas = document.getElementById(`chart-${coin}`);
 
     const ctx = document.getElementById(`chart-${coin}`).getContext("2d");
-
-    canvas.style.width = "";
-    canvas.style.height = "";
 
     new Chart(ctx, {
       type: "line",

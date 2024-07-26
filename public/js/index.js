@@ -1,4 +1,5 @@
 import { createChart } from "./chart.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   const coins = document.querySelectorAll("[data-href]");
   coins.forEach((coin) => {

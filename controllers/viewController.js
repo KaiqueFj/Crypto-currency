@@ -2,17 +2,30 @@ const axios = require("axios");
 const catchAsync = require("../utils/catchAsync");
 
 exports.getOverview = catchAsync(async (req, res, next) => {
+  const itemsPerPage = 20;
+  const currentPage = req.query.page ? parseInt(req.query.page, 10) : 1;
+
   try {
-    // Fetch data from CoinGecko API
-    const response = await axios({
+    // Fetch to get all the coins available
+    const allCoins = await axios({
+      method: "GET",
+      url: "https://api.coingecko.com/api/v3/coins/list",
+      headers: {
+        accept: "application/json",
+        "x-cg-demo-api-key": process.env.API_KEY_Cry,
+      },
+    });
+
+    // Fetch to get all the coins on the first page
+    const coinsInPage = await axios({
       method: "GET",
       url: "https://api.coingecko.com/api/v3/coins/markets?price_change_percentage=1h%2C24h%2C7d&locale=pt&precision=2",
 
       params: {
         vs_currency: "brl",
         order: "market_cap_desc",
-        page: 1,
         per_page: 20,
+
         sparkline: false,
       },
       headers: {
@@ -21,12 +34,38 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       },
     });
 
-    const coins = response.data;
+    // Fetch to get the first 20 coins
+    const cryptoCoins = await axios({
+      method: "GET",
+      url: "https://api.coingecko.com/api/v3/coins/markets?price_change_percentage=1h%2C24h%2C7d&locale=pt&precision=2",
+      params: {
+        vs_currency: "brl",
+        order: "market_cap_desc",
+        page: currentPage,
+        per_page: itemsPerPage,
+        sparkline: false,
+      },
+      headers: {
+        accept: "application/json",
+        "x-cg-demo-api-key": process.env.API_KEY_Cry,
+      },
+    });
+
+    const allCoin = allCoins.data;
+    const coinInPage = coinsInPage.data;
+    const coins = cryptoCoins.data;
+    const totalCoins = allCoin.length;
+    const totalPages = Math.ceil(totalCoins / itemsPerPage);
 
     // Render the overview template with the fetched coin data
     res.status(200).render("overview", {
       title: "Coins Overview",
+      allCoin: allCoin,
+      coinInPage: coinInPage,
       coins: coins,
+      currentPage: currentPage,
+      itemsPerPage: itemsPerPage,
+      totalPages: totalPages,
     });
   } catch (err) {
     console.error(err);
