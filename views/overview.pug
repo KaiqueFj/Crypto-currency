@@ -75,7 +75,8 @@ block content
 
           .dropdown(class="flex relative items-center")
             button.dropdownButton(class="block px-1 ") Show rows
-            .coinsToShow(class="show px-1 py-1 m-1 rounded-lg bg-gray-100 cursor-pointer")=totalRows
+            .coinsToShow(class="show px-1 py-1 m-1 rounded-lg bg-gray-100 cursor-pointer")
+              span.rowValue=totalRows
               i.fa-solid.fa-chevron-down(class="ml-2") 
             .dropdownOptions(class= "hidden p-1 top-full flex-col absolute")
               button.option(class=" px-1 py-1 hover:bg-gray-100 rounded-lg") 5 

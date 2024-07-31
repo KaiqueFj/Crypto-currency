@@ -5,13 +5,14 @@ import {
   dropDownQtdOptions,
   optionsValue,
   rows,
+  rowValue,
 } from "./handleElements.js";
 
 export function handleCoinsFunctions() {
   // Get the value of the per_page to persist
   const storedValue = localStorage.getItem("per_page");
   if (storedValue) {
-    coinsToShow.text(storedValue);
+    rowValue.text(storedValue);
   }
 
   // Create the chart for each coins
@@ -36,7 +37,7 @@ export function handleCoinsFunctions() {
       $(this).on("click", function (e) {
         e.preventDefault();
         const selectedValue = $(this).text();
-        coinsToShow.text(selectedValue);
+        rowValue.text(selectedValue);
 
         // Store the selected value
         localStorage.setItem("per_page", selectedValue);

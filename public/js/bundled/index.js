@@ -598,7 +598,7 @@ var _handleElementsJs = require("./handleElements.js");
 function handleCoinsFunctions() {
     // Get the value of the per_page to persist
     const storedValue = localStorage.getItem("per_page");
-    if (storedValue) (0, _handleElementsJs.coinsToShow).text(storedValue);
+    if (storedValue) (0, _handleElementsJs.rowValue).text(storedValue);
     // Create the chart for each coins
     (0, _handleElementsJs.coins).forEach((coin)=>{
         const coinId = coin.getAttribute("data-href").split("/")[2];
@@ -618,7 +618,7 @@ function handleCoinsFunctions() {
             $(this).on("click", function(e) {
                 e.preventDefault();
                 const selectedValue = $(this).text();
-                (0, _handleElementsJs.coinsToShow).text(selectedValue);
+                (0, _handleElementsJs.rowValue).text(selectedValue);
                 // Store the selected value
                 localStorage.setItem("per_page", selectedValue);
                 const url = new URL(window.location.href);
@@ -36161,11 +36161,13 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "dropDownQtdOptions", ()=>dropDownQtdOptions);
 parcelHelpers.export(exports, "optionsValue", ()=>optionsValue);
 parcelHelpers.export(exports, "coinsToShow", ()=>coinsToShow);
+parcelHelpers.export(exports, "rowValue", ()=>rowValue);
 parcelHelpers.export(exports, "coins", ()=>coins);
 parcelHelpers.export(exports, "rows", ()=>rows);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
+const rowValue = $(".rowValue");
 const coins = document.querySelectorAll("[data-href]");
 const rows = document.querySelectorAll("tr[data-href]");
 
