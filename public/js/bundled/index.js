@@ -584,22 +584,47 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"f2QDv":[function(require,module,exports) {
-var _chartJs = require("./chart.js");
+const { handleCoinsFunctions } = require("dea15e5a0d486318");
 document.addEventListener("DOMContentLoaded", ()=>{
-    const coins = document.querySelectorAll("[data-href]");
-    coins.forEach((coin)=>{
+    handleCoinsFunctions();
+});
+
+},{"dea15e5a0d486318":"jcvt7"}],"jcvt7":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "handleCoinsFunctions", ()=>handleCoinsFunctions);
+var _chartJs = require("./chart.js");
+var _handleElementsJs = require("./handleElements.js");
+function handleCoinsFunctions() {
+    // Create the chart for each coins
+    (0, _handleElementsJs.coins).forEach((coin)=>{
         const coinId = coin.getAttribute("data-href").split("/")[2];
         (0, _chartJs.createChart)(coinId);
     });
-    const rows = document.querySelectorAll("tr[data-href]");
-    rows.forEach((row)=>{
+    //Handle the click for each coin to retrieve the info
+    (0, _handleElementsJs.rows).forEach((row)=>{
         row.addEventListener("click", ()=>{
             window.location.href = row.dataset.href;
         });
     });
-});
+    // Handle the click on the dropdown menu and show the current number of rows
+    (0, _handleElementsJs.coinsToShow).on("click", function(e) {
+        e.preventDefault();
+        (0, _handleElementsJs.dropDownQtdOptions).toggleClass("show");
+        (0, _handleElementsJs.optionsValue).each(function() {
+            $(this).on("click", function(e) {
+                e.preventDefault();
+                const selectedValue = $(this).text();
+                (0, _handleElementsJs.coinsToShow).text(selectedValue);
+                const url = new URL(window.location.href);
+                url.searchParams.set("per_page", selectedValue);
+                window.location.href = url.href;
+            });
+        });
+    });
+}
 
-},{"./chart.js":"cC087"}],"cC087":[function(require,module,exports) {
+},{"./chart.js":"cC087","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./handleElements.js":"3akdP"}],"cC087":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "fetchCoinData", ()=>fetchCoinData);
@@ -36124,6 +36149,20 @@ Object.entries(HttpStatusCode).forEach(([key, value])=>{
     HttpStatusCode[value] = key;
 });
 exports.default = HttpStatusCode;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3akdP":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "dropDownQtdOptions", ()=>dropDownQtdOptions);
+parcelHelpers.export(exports, "optionsValue", ()=>optionsValue);
+parcelHelpers.export(exports, "coinsToShow", ()=>coinsToShow);
+parcelHelpers.export(exports, "coins", ()=>coins);
+parcelHelpers.export(exports, "rows", ()=>rows);
+const dropDownQtdOptions = $(".dropdownOptions");
+const optionsValue = $(".option");
+const coinsToShow = $(".coinsToShow");
+const coins = document.querySelectorAll("[data-href]");
+const rows = document.querySelectorAll("tr[data-href]");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
 

@@ -10,3 +10,15 @@
   -webkit-box-sizing: inherit;
   box-sizing: inherit;
 }
+
+.container {
+  max-width: 1300px;
+  width: 100%;
+}
+
+.dropdownOptions.show {
+  position: absolute;
+  top: 100%;
+  display: flex;
+  flex-direction: column;
+}

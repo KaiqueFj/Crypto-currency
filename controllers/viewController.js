@@ -2,7 +2,9 @@ const axios = require("axios");
 const catchAsync = require("../utils/catchAsync");
 
 exports.getOverview = catchAsync(async (req, res, next) => {
-  const itemsPerPage = 20;
+  const itemsPerPage = req.query.per_page
+    ? parseInt(req.query.per_page, 10)
+    : 5;
   const currentPage = req.query.page ? parseInt(req.query.page, 10) : 1;
 
   try {
@@ -20,12 +22,9 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     const coinsInPage = await axios({
       method: "GET",
       url: "https://api.coingecko.com/api/v3/coins/markets?price_change_percentage=1h%2C24h%2C7d&locale=pt&precision=2",
-
       params: {
         vs_currency: "brl",
         order: "market_cap_desc",
-        per_page: 20,
-
         sparkline: false,
       },
       headers: {
@@ -56,6 +55,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     const coins = cryptoCoins.data;
     const totalCoins = allCoin.length;
     const totalPages = Math.ceil(totalCoins / itemsPerPage);
+    const totalRows = itemsPerPage;
 
     // Render the overview template with the fetched coin data
     res.status(200).render("overview", {
@@ -66,6 +66,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       currentPage: currentPage,
       itemsPerPage: itemsPerPage,
       totalPages: totalPages,
+      totalRows: totalRows,
     });
   } catch (err) {
     console.error(err);

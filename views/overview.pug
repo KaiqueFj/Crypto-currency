@@ -7,16 +7,14 @@ block append head
 
 block content
 
+  .container(class="flex flex-col w-full")
 
-  main.main
+    main.main(class="flex flex-col mx-auto ")
 
-    h1(class="text-2xl font-bold mb-4")= title
-    h1 Bitcoin Price Chart
+      h1(class="text-2xl font-bold mb-4")= `Top ${itemsPerPage} coins in the market`
 
-
-
-    .coin-container(class="flex flex-col  p-4")
-      h2.text-xl.font-semibold.mt-8.mb-4 CryptoCurrency list
+      .coin-container(class="flex flex-col  p-4")
+        h2.text-xl.font-semibold.mt-8.mb-4 CryptoCurrency list
         table.min-w-full.divide-y.divide-gray-200
           thead.bg-gray-50
             tr
@@ -34,8 +32,10 @@ block content
                 td.px-6.py-4.whitespace-nowrap
                   .flex.items-center
                     img.coin-image.w-10.h-10.object-cover.rounded-full(src=coin.image alt=coin.name)
-                    .ml-4
-                      div.text-sm.font-medium.text-gray-900= coin.name
+                    .flex.ml-4
+                      p(class="tw-text-gray-700 dark:tw-text-moon-100 font-bold tw-text-sm px-1 tw-leading-5")= coin.name
+                      p(class="tw-text-gray-800 dark:tw-text-moon-100 font-normal tw-text-sm tw-leading-5")= `${coin.symbol.toUpperCase()}`
+
                 td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `$${coin.current_price.toLocaleString()}`
                 td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
                 td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `${coin.price_change_percentage_24h_in_currency.toFixed(2)}%`
@@ -46,23 +46,38 @@ block content
                   canvas(id=`chart-${coin.id}`).w-24.h-24
 
 
-      div
-        .infoPagination(class="tw-flex tw-flex-1 tw-items-center tw-justify-evenly  sm:tw-justify-between")
+
+        .infoPagination(class=" flex flex-row justify-between items-center")
 
           span.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `Showing ${(currentPage - 1) * itemsPerPage + 1} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
 
-          nav(class="tailwind-reset pagy_nav tw-inline-flex tw-items-center tw-space-x-1 tw-rounded-lg")
-            if currentPage > 1
-              span
-                a.px-4.py-2.bg-blue-500.text-white(href=`/overview?page=${currentPage - 1}`)= `${currentPage -1}`
-                a.px-4.py-2.bg-blue-500.text-white(href=`/overview?page=${currentPage}`)= `${currentPage}`
+          nav(class="  inline-flex items-center space-x-1 rounded-lg")
+            ul.pagination(class= "flex flex-row gap-1")
+              li
+                a( class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=1`)= `1`
+
+              if currentPage > 1
+                li
+                  a( class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage}`)= `${currentPage}`
 
 
-            if currentPage < totalPages
-              span
-                a.px-4.py-2.bg-blue-500.text-white(href=`/overview?page=${currentPage + 1}`)= `${currentPage + 1}`
+              if currentPage < totalPages
+                li
+                  a(class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage + 1}`)= `${currentPage + 1}`
+                  a(class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage + 2}`)= `${currentPage + 2}`
 
 
-            span.px-4.py-2.bg-blue-500.text-white= `...`
-            span
-              a.px-4.py-2.bg-blue-500.text-white= `${totalPages}`
+              li= `...`
+              li
+                a(class="px-4 py-2 text-zinc-950 rounded-lg" href=`/overview?page=${totalPages}`)= `${totalPages}`
+
+
+
+          .dropdown(class="flex relative items-center")
+            button.dropdownButton(class="block px-1 ") Show rows
+            .coinsToShow(class="show px-1 py-1 m-1 rounded-lg bg-gray-100 cursor-pointer	")=totalRows
+              i.fa-solid.fa-chevron-down(class="ml-2") 
+            .dropdownOptions(class= "hidden")
+              button.option 5 
+              button.option 10
+              button.option 20
