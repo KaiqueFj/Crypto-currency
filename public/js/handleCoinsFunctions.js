@@ -8,6 +8,12 @@ import {
 } from "./handleElements.js";
 
 export function handleCoinsFunctions() {
+  // Get the value of the per_page to persist
+  const storedValue = localStorage.getItem("per_page");
+  if (storedValue) {
+    coinsToShow.text(storedValue);
+  }
+
   // Create the chart for each coins
   coins.forEach((coin) => {
     const coinId = coin.getAttribute("data-href").split("/")[2];
@@ -31,6 +37,9 @@ export function handleCoinsFunctions() {
         e.preventDefault();
         const selectedValue = $(this).text();
         coinsToShow.text(selectedValue);
+
+        // Store the selected value
+        localStorage.setItem("per_page", selectedValue);
 
         const url = new URL(window.location.href);
         url.searchParams.set("per_page", selectedValue);
