@@ -691,6 +691,10 @@ async function getChartData(coin) {
 async function createChart(coin) {
     try {
         const { labels, prices } = await getChartData(coin);
+        const initialPrice = prices[0];
+        const finalPrice = prices[prices.length - 1];
+        const isUp = finalPrice >= initialPrice;
+        const lineColor = isUp ? "#10b981" : "#f87171";
         const ctx = document.getElementById(`chart-${coin}`).getContext("2d");
         new (0, _autoDefault.default)(ctx, {
             type: "line",
@@ -700,7 +704,7 @@ async function createChart(coin) {
                     {
                         label: `${coin} price`,
                         data: prices,
-                        borderColor: "#9bfc9b",
+                        borderColor: lineColor,
                         borderWidth: 1,
                         pointBackgroundColor: "#0000",
                         pointBorderColor: "#ffff",
