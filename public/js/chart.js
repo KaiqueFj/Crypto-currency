@@ -38,7 +38,7 @@ export async function createChart(coin) {
   try {
     const { labels, prices } = await getChartData(coin);
 
-    const initialPrice = prices[0];
+    const initialPrice = prices[prices.length - 2];
     const finalPrice = prices[prices.length - 1];
     const isUp = finalPrice >= initialPrice;
 
