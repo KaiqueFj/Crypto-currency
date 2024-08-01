@@ -18,32 +18,39 @@ block content
         table.min-w-full.divide-y.divide-gray-200
           thead.bg-gray-50
             tr
-              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Coin
-              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Price (USD)
-              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider 1h
-              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider 24h
-              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider 7d
-              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider 24h volume
-              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Market cap
-              th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Last 7 days
-          tbody.bg-white.divide-y.divide-gray-200
-            each coin in coins
-              tr(data-href=`/coin/${coin.id}/usd`, class="cursor-pointer hover:bg-gray-100 transition")
-                td.px-6.py-4.whitespace-nowrap
-                  .flex.items-center
-                    img.coin-image.w-10.h-10.object-cover.rounded-full(src=coin.image alt=coin.name)
-                    .flex.ml-4
-                      p(class="tw-text-gray-700 dark:tw-text-moon-100 font-bold tw-text-sm px-1 tw-leading-5")= coin.name
-                      p(class="tw-text-gray-800 dark:tw-text-moon-100 font-normal tw-text-sm tw-leading-5")= `${coin.symbol.toUpperCase()}`
 
-                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `$${coin.current_price.toLocaleString()}`
-                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
-                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `${coin.price_change_percentage_24h_in_currency.toFixed(2)}%`
-                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `${coin.price_change_percentage_7d_in_currency.toFixed(2)}%`
-                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `$${coin.circulating_supply.toLocaleString()}`
-                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `$${coin.market_cap.toLocaleString()}`
-                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500
-                  canvas(id=`chart-${coin.id}`).w-24.h-24
+              th.px-8.py-2.text-left.text-xs.font-bold.text-gray-700.tracking-wider #
+              th.px-8.py-2.text-left.text-xs.font-bold.text-gray-700.tracking-wider Name
+              th.px-8.py-2.text-left.text-xs.font-bold.text-gray-700.tracking-wider Price 
+              th.px-8.py-2.text-left.text-xs.font-bold.text-gray-700.tracking-wider 1h
+              th.px-8.py-2.text-left.text-xs.font-bold.text-gray-700.tracking-wider 24h
+              th.px-8.py-2.text-left.text-xs.font-bold.text-gray-700.tracking-wider 7d
+              th.px-8.py-2.text-left.text-xs.font-bold.text-gray-700.tracking-wider 24h volume
+              th.px-8.py-2.text-left.text-xs.font-bold.text-gray-700.tracking-wider Market cap
+              th.px-8.py-2.text-left.text-xs.font-bold.text-gray-700.tracking-wider Last 7 days
+          tbody.bg-white.divide-y.divide-gray-200
+
+            each coin, index in coins
+              tr(data-href=`/coin/${coin.id}/usd`, class="cursor-pointer hover:bg-gray-100 transition")
+                td.px-8.whitespace-nowrap
+                  p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 lea1ing-5")= `${index + 1}`
+
+                td.px-1.py-1.whitespace-nowrap
+                  .flex.items-center
+                    img.coin-image.w-6.h-6.object-cover.rounded-full(src=coin.image alt=coin.name)
+                    .flex.ml-4
+                      p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 lea1ing-5")= coin.name
+                      p(class="text-gray-400  font-semibold text-sm leading-5")= `${coin.symbol.toUpperCase()}`
+
+                td.px-8.whitespace-nowrap.text-sm.text-gray-500.font-medium= `$${coin.current_price.toLocaleString()}`
+                td.changeValue.px-8.whitespace-nowrap.text-sm.text-gray-500.font-medium= `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
+                td.changeValue.px-8.whitespace-nowrap.text-sm.text-gray-500.font-medium= `${coin.price_change_percentage_24h_in_currency.toFixed(2)}%`
+                td.changeValue.px-8.whitespace-nowrap.text-sm.text-gray-500.font-medium= `${coin.price_change_percentage_7d_in_currency.toFixed(2)}%`
+                td.px-8.whitespace-nowrap.text-sm.text-gray-500.font-medium= `$${coin.circulating_supply.toLocaleString()}`
+                td.px-8.whitespace-nowrap.text-sm.text-gray-500.font-medium= `$${coin.market_cap.toLocaleString()}`
+                td.px-8.whitespace-nowrap.text-sm.text-gray-500.font-medium.w-48.h-20
+                  canvas.chartContainer(id=`chart-${coin.id}`)
+
 
 
 

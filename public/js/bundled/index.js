@@ -610,6 +610,20 @@ function handleCoinsFunctions() {
             window.location.href = row.dataset.href;
         });
     });
+    // Change the color of percentage values based on the change
+    (0, _handleElementsJs.valuesPercentage).each(function() {
+        const text = $(this).text().replace("%", "").trim();
+        const percentage = parseFloat(text);
+        if (percentage < 0) {
+            $(this).addClass("text-red-500");
+            $(this).removeClass("text-green-500");
+            $(this).prepend('<i class="fa-solid fa-caret-down mr-1"></i>');
+        } else {
+            $(this).addClass("text-green-500");
+            $(this).removeClass("text-red-500");
+            $(this).prepend('<i class="fa-solid fa-caret-up mr-1"></i>');
+        }
+    });
     // Handle the click on the dropdown menu and show the current number of rows
     (0, _handleElementsJs.coinsToShow).on("click", function(e) {
         e.preventDefault();
@@ -629,7 +643,7 @@ function handleCoinsFunctions() {
     });
 }
 
-},{"./chart.js":"cC087","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./handleElements.js":"3akdP"}],"cC087":[function(require,module,exports) {
+},{"./chart.js":"cC087","./handleElements.js":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cC087":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "fetchCoinData", ()=>fetchCoinData);
@@ -687,7 +701,7 @@ async function createChart(coin) {
                         label: `${coin} price`,
                         data: prices,
                         borderColor: "#9bfc9b",
-                        borderWidth: 2,
+                        borderWidth: 1,
                         pointBackgroundColor: "#0000",
                         pointBorderColor: "#ffff",
                         pointBorderWidth: 2,
@@ -719,7 +733,8 @@ async function createChart(coin) {
                 },
                 elements: {
                     line: {
-                        tension: 0.4
+                        tension: 0.4,
+                        borderWidth: 1
                     }
                 },
                 interaction: {
@@ -36164,12 +36179,14 @@ parcelHelpers.export(exports, "coinsToShow", ()=>coinsToShow);
 parcelHelpers.export(exports, "rowValue", ()=>rowValue);
 parcelHelpers.export(exports, "coins", ()=>coins);
 parcelHelpers.export(exports, "rows", ()=>rows);
+parcelHelpers.export(exports, "valuesPercentage", ()=>valuesPercentage);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
 const rowValue = $(".rowValue");
 const coins = document.querySelectorAll("[data-href]");
 const rows = document.querySelectorAll("tr[data-href]");
+const valuesPercentage = $(".changeValue");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
 

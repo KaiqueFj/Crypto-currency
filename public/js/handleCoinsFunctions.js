@@ -6,6 +6,7 @@ import {
   optionsValue,
   rows,
   rowValue,
+  valuesPercentage,
 } from "./handleElements.js";
 
 export function handleCoinsFunctions() {
@@ -26,6 +27,22 @@ export function handleCoinsFunctions() {
     row.addEventListener("click", () => {
       window.location.href = row.dataset.href;
     });
+  });
+
+  // Change the color of percentage values based on the change
+  valuesPercentage.each(function () {
+    const text = $(this).text().replace("%", "").trim();
+    const percentage = parseFloat(text);
+
+    if (percentage < 0) {
+      $(this).addClass("text-red-500");
+      $(this).removeClass("text-green-500");
+      $(this).prepend('<i class="fa-solid fa-caret-down mr-1"></i>');
+    } else {
+      $(this).addClass("text-green-500");
+      $(this).removeClass("text-red-500");
+      $(this).prepend('<i class="fa-solid fa-caret-up mr-1"></i>');
+    }
   });
 
   // Handle the click on the dropdown menu and show the current number of rows

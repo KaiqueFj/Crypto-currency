@@ -48,7 +48,7 @@ export async function createChart(coin) {
             label: `${coin} price`,
             data: prices,
             borderColor: "#9bfc9b", // Orange color for the line
-            borderWidth: 2,
+            borderWidth: 1,
             pointBackgroundColor: "#0000", // Orange color for dots
             pointBorderColor: "#ffff", // Orange color for dot borders
             pointBorderWidth: 2,
@@ -82,6 +82,7 @@ export async function createChart(coin) {
         elements: {
           line: {
             tension: 0.4, // Smooth curves
+            borderWidth: 1, // Thinner line
           },
         },
         interaction: {

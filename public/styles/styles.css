@@ -19,3 +19,8 @@
 .dropdownOptions.show {
   display: flex;
 }
+
+.chartContainer {
+  width: 100% !important;
+  height: 100% !important;
+}
