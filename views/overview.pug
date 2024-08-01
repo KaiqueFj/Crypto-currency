@@ -56,7 +56,7 @@ block content
 
         .infoPagination(class=" flex flex-row justify-between items-center")
 
-          span.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `Showing ${(currentPage - 1) * itemsPerPage + 1} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
+          span.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `Showing ${(currentPage - 1) * itemsPerPage} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
 
           nav(class="  inline-flex items-center space-x-1 rounded-lg")
             ul.pagination(class= "flex flex-row gap-1")
