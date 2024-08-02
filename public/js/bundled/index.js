@@ -585,13 +585,13 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 
 },{}],"f2QDv":[function(require,module,exports) {
 const { handleCoinsFunctions } = require("dea15e5a0d486318");
-const { handleSortData } = require("7919fd21b080e627");
+const { handleSortData } = require("b710d7c996a067e0");
 document.addEventListener("DOMContentLoaded", ()=>{
     handleCoinsFunctions();
     handleSortData();
 });
 
-},{"dea15e5a0d486318":"jcvt7","7919fd21b080e627":"iWhVq"}],"jcvt7":[function(require,module,exports) {
+},{"dea15e5a0d486318":"jcvt7","b710d7c996a067e0":"7iSl7"}],"jcvt7":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleCoinsFunctions", ()=>handleCoinsFunctions);
@@ -36198,7 +36198,7 @@ const valuesPercentage = $(".changeValue");
 const tableHeaders = document.querySelectorAll("th[data-sort]");
 const iconsSpan = document.querySelectorAll(".icon");
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iWhVq":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7iSl7":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleSortData", ()=>handleSortData);

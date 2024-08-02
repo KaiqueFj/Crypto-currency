@@ -19,39 +19,39 @@ block content
           thead.bg-gray-50
             tr
 
-              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor.pointer(data-sort="index") 
+              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor-pointer(data-sort="index") 
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader #
-              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor.pointer(data-sort="name") 
+              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor-pointer(data-sort="name") 
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Name
-              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor.pointer(data-sort="price") 
+              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor-pointer(data-sort="price") 
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Price
-              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor.pointer(data-sort="1h") 
+              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor-pointer(data-sort="1h") 
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 1h
-              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor.pointer(data-sort="24h") 
+              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor-pointer(data-sort="24h") 
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 24h
-              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor.pointer(data-sort="7d") 
+              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor-pointer(data-sort="7d") 
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 7d
-              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor.pointer(data-sort="volume") 
+              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor-pointer(data-sort="volume") 
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 24h volume
-              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor.pointer(data-sort="marketCap") 
+              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor-pointer(data-sort="marketCap") 
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Market cap
-              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor.pointer(data-sort="last7Days") 
+              th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor-pointer(data-sort="last7Days") 
                 .container.flex.flex-row.items-center.justify-center
                   span.icon.inline-block
                   p.textHeader Last 7 days
@@ -83,7 +83,7 @@ block content
 
         .infoPagination(class=" flex flex-row justify-between items-center")
 
-          span.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `Showing ${(currentPage - 1) * itemsPerPage} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
+          span.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `Showing ${(currentPage -1 ) * itemsPerPage} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
 
           nav(class="  inline-flex items-center space-x-1 rounded-lg")
             ul.pagination(class= "flex flex-row gap-1")

@@ -1,5 +1,5 @@
 const { handleCoinsFunctions } = require("./handleCoinsFunctions");
-const { handleSortData } = require("./sortValues");
+const { handleSortData } = require("./HandleSortValues");
 
 document.addEventListener("DOMContentLoaded", () => {
   handleCoinsFunctions();
