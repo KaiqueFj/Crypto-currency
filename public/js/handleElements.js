@@ -5,3 +5,5 @@ export const rowValue = $(".rowValue");
 export const coins = document.querySelectorAll("[data-href]");
 export const rows = document.querySelectorAll("tr[data-href]");
 export const valuesPercentage = $(".changeValue");
+export const tableHeaders = document.querySelectorAll("th[data-sort]");
+export const iconsSpan = document.querySelectorAll(".icon");

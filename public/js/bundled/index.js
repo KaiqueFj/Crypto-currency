@@ -585,11 +585,13 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 
 },{}],"f2QDv":[function(require,module,exports) {
 const { handleCoinsFunctions } = require("dea15e5a0d486318");
+const { handleSortData } = require("7919fd21b080e627");
 document.addEventListener("DOMContentLoaded", ()=>{
     handleCoinsFunctions();
+    handleSortData();
 });
 
-},{"dea15e5a0d486318":"jcvt7"}],"jcvt7":[function(require,module,exports) {
+},{"dea15e5a0d486318":"jcvt7","7919fd21b080e627":"iWhVq"}],"jcvt7":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleCoinsFunctions", ()=>handleCoinsFunctions);
@@ -36184,6 +36186,8 @@ parcelHelpers.export(exports, "rowValue", ()=>rowValue);
 parcelHelpers.export(exports, "coins", ()=>coins);
 parcelHelpers.export(exports, "rows", ()=>rows);
 parcelHelpers.export(exports, "valuesPercentage", ()=>valuesPercentage);
+parcelHelpers.export(exports, "tableHeaders", ()=>tableHeaders);
+parcelHelpers.export(exports, "iconsSpan", ()=>iconsSpan);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -36191,7 +36195,62 @@ const rowValue = $(".rowValue");
 const coins = document.querySelectorAll("[data-href]");
 const rows = document.querySelectorAll("tr[data-href]");
 const valuesPercentage = $(".changeValue");
+const tableHeaders = document.querySelectorAll("th[data-sort]");
+const iconsSpan = document.querySelectorAll(".icon");
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iWhVq":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "handleSortData", ()=>handleSortData);
+var _handleElements = require("./handleElements");
+function handleSortData() {
+    (0, _handleElements.tableHeaders).forEach((header)=>{
+        header.addEventListener("click", ()=>{
+            const column = header.dataset.sort;
+            const isAscending = header.classList.contains("asc");
+            sortTable(column, !isAscending);
+            // Toggle sorting direction class
+            header.classList.toggle("asc", !isAscending);
+            header.classList.toggle("desc", isAscending);
+            // Remove existing icons from all headers
+            (0, _handleElements.tableHeaders).forEach((hdr)=>{
+                const icon = hdr.querySelector(".sort-icon");
+                if (icon) icon.remove();
+            });
+            // Append new icon to the clicked header
+            const icon = document.createElement("i");
+            icon.className = `sort-icon fa-solid  align-middle mr-1 fa-${isAscending ? "caret-down" : "caret-up"}`;
+            const iconContainer = header.querySelector("span.icon");
+            if (iconContainer) iconContainer.appendChild(icon);
+        });
+    });
+}
+function sortTable(column, ascending) {
+    const rows = Array.from(document.querySelectorAll("tbody tr"));
+    const columnIndex = Array.from(document.querySelectorAll("th[data-sort]")).findIndex((th)=>th.dataset.sort === column);
+    rows.sort((a, b)=>{
+        const aCell = a.children[columnIndex];
+        const bCell = b.children[columnIndex];
+        let aValue, bValue;
+        if (column === "name") {
+            //  handling for name column
+            aValue = aCell.querySelector(".text-gray-700").textContent.trim();
+            bValue = bCell.querySelector(".text-gray-700").textContent.trim();
+        } else {
+            aValue = aCell.textContent.trim().replace(/[^0-9.-]/g, "");
+            bValue = bCell.textContent.trim().replace(/[^0-9.-]/g, "");
+        }
+        // Check if the column is for names (string comparison) or numbers
+        const isNumericColumn = !isNaN(parseFloat(aValue)) && !isNaN(parseFloat(bValue));
+        aValue = isNumericColumn ? parseFloat(aValue) : aValue;
+        bValue = isNumericColumn ? parseFloat(bValue) : bValue;
+        if (isNumericColumn) return ascending ? aValue - bValue : bValue - aValue;
+        else return ascending ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+    });
+    const tbody = document.querySelector("tbody");
+    rows.forEach((row)=>tbody.appendChild(row));
+}
+
+},{"./handleElements":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
 
 //# sourceMappingURL=index.js.map
