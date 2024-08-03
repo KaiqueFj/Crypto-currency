@@ -59,7 +59,7 @@ block content
           tbody.bg-white.divide-y.divide-gray-200
 
             each coin, index in coins
-              tr(data-href=`/coin/${coin.id}/usd`, class="cursor-pointer hover:bg-gray-100 transition")
+              tr(data-href=`/coin/${coin.id}`, class="cursor-pointer hover:bg-gray-100 transition")
                 td.px-8.whitespace-nowrap
                   p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 lea1ing-5")= `${index + 1}`
 

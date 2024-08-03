@@ -2,13 +2,71 @@ extends base
 
 block content
   main.main 
-    .coin-container.max-w-lg.mx-auto.bg-white.shadow-md.rounded-lg.p-6
-      h1.text-2xl.font-bold.mb-4= title
-      .coin
-        img.coin-image.w-16.h-16.mx-auto(src=coin.image, alt=coin.name)
-        span.coin-name.text-xl.font-semibold= coin.name
-        p.mt-2.text-gray-700 Current Price: $ #{coin.current_price}
-        p.text-gray-700 Market Cap: $ #{coin.market_cap}
-        p.text-gray-700 Total Volume: $ #{coin.total_volume}
-        p.text-gray-700 24h High: $ #{coin.high_24h}
-        p.text-gray-700 24h Low: $ #{coin.low_24h}
+    .coin-container.max-w.mx-auto.p-6
+      h1 Coin Overview: #{coin.name}
+
+      h2 General Information
+      ul
+        li ID: #{coin.id}
+        li Symbol: #{coin.symbol}
+        li Name: #{coin.name}
+        li Description: #{coin.descriptionEn}
+        li Homepage: a(href=coin.homepage[0] target="_blank") #{coin.homepage[0]}
+        li Whitepaper: a(href=coin.whitepaper[0] target="_blank") #{coin.whitepaper[0]}
+        li GitHub: a(href=coin.github[0] target="_blank") #{coin.github[0]}
+
+      h2 Images
+      ul
+        li img(src=coin.thumb alt=coin.name)
+        li img(src=coin.small alt=coin.name)
+        li img(src=coin.large alt=coin.name)
+
+      h2 Market Data
+      ul
+        li=` Current Price ${coin.current_price.brl} BRL`
+        li=`Market Cap: ${coin.market_cap.brl} BRL` 
+        li=`Market Cap Rank: ${coin.market_cap_rank}`
+        li=`Total Volume: ${coin.total_volume.brl} BRL`
+        li=`High 24h: ${coin.high_24h.brl} BRL`
+        li=`Low 24h: ${coin.low_24h.brl} BRL`
+        li=`Price Change 24h: ${coin.price_change_24h.brl} BRL `
+        li Price Change Percentage 24h: #{coin.price_change_percentage_24}%
+        li Price Change Percentage 7d: #{coin.price_change_percentage_7d}%
+        li Price Change Percentage 14d: #{coin.price_change_percentage_14d}%
+        li Price Change Percentage 30d: #{coin.price_change_percentage_30d}%
+        li Price Change Percentage 60d: #{coin.price_change_percentage_60d}%
+        li Price Change Percentage 200d: #{coin.price_change_percentage_200d}%
+        li Price Change Percentage 1y: #{coin.price_change_percentage_1y}%
+        li= `Market Cap Change 24h: ${coin.market_cap_change_24} BRL`
+        li Market Cap Change Percentage 24h: #{coin.market_cap_change_percentage_24h}%
+        li=`Price Change 24h in Currency: ${coin.price_change_24h_in_currency.brl} BRL`
+        li=`Price Change Percentage 1h in Currency: ${coin.price_change_percentage_1h_in_currency.brl}%`
+        li=`Price Change Percentage 24h in Currency: ${coin.price_change_percentage_24h_in_currency.brl}%`
+        li=`Price Change Percentage 7d in Currency: ${coin.price_change_percentage_7d_in_currency.brl}%`
+        li=`Price Change Percentage 14d in Currency: ${coin.price_change_percentage_14d_in_currency.brl}%`
+        li=`Price Change Percentage 30d in Currency: ${coin.price_change_percentage_30d_in_currency.brl}%`
+        li=`Price Change Percentage 60d in Currency: ${coin.price_change_percentage_60d_in_currency.brl}%`
+        li=`Price Change Percentage 200d in Currency: ${coin.price_change_percentage_200d_in_currency.brl}%`
+        li=`Price Change Percentage 1y in Currency: ${coin.price_change_percentage_1y_in_currency.brl}%`
+        li=`Market Cap Change Percentage 24h in Currency: ${coin.market_cap_change_percentage_24h_in_currency.brl}%`
+        li Total Supply: #{coin.total_supply}
+        li Max Supply: #{coin.max_supply}
+        li Circulating Supply: #{coin.circulating_supply}
+        li Last Updated: #{coin.last_updated}
+
+      h2 Tickers
+      each ticker in coin.tickers
+        .ticker
+          h3 Market: #{ticker.marketName}
+          ul
+            li Base: #{ticker.base}
+            li Target: #{ticker.target}
+            li Last Price: #{ticker.last}
+            li Volume: #{ticker.volume}
+            if ticker.converted_last
+              li Converted Last: #{ticker.converted_last.brl} BRL
+            if ticker.converted_volume
+              li Converted Volume: #{ticker.converted_volume.brl} BRL
+            li Trust Score: #{ticker.trust_score}
+            if ticker.trade_url
+              li Trade URL: a(href=ticker.trade_url target="_blank") #{ticker.trade_url}
