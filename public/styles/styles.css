@@ -29,3 +29,10 @@
   display: inline-block;
   vertical-align: middle;
 }
+
+.icon::before,
+.fa-solid.fa-caret-up::before,
+.fa-solid.fa-caret-down::before {
+  display: inline-block;
+  vertical-align: middle;
+}

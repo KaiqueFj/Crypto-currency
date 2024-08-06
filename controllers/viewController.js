@@ -1,6 +1,7 @@
 const axios = require("axios");
 const catchAsync = require("../utils/catchAsync");
 const formatCurrency = require("../utils/formatCurrency");
+const formatDateWithRelativeTime = require("../utils/formatDate");
 
 exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = req.query.per_page
@@ -141,6 +142,12 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
         max_supply,
         circulating_supply,
         last_updated,
+        ath,
+        ath_date,
+        ath_change_percentage,
+        atl,
+        atl_date,
+        atl_change_percentage,
       },
       tickers,
     } = coinData;
@@ -177,6 +184,33 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
 
     const total = formatCurrency(totalPercentageOfCirculatingSupply);
 
+    const lowPrice = {
+      ...low_24h,
+      formattedLowPrice: formatCurrency(low_24h.brl),
+    };
+
+    const highPrice = {
+      ...high_24h,
+      formattedHighPrice: formatCurrency(high_24h.brl),
+    };
+
+    const allTimeHighPrice = {
+      ...ath,
+      formattedAllTimeHighPrice: formatCurrency(ath.brl),
+    };
+
+    const allTimeLowPrice = {
+      ...atl,
+      formattedAllTimeLowPrice: formatCurrency(atl.brl),
+    };
+
+    const maxDateFormatted = {
+      formattedAthDate: formatDateWithRelativeTime(ath_date.brl),
+    };
+    const lowDateFormatted = {
+      formattedAtlDate: formatDateWithRelativeTime(atl_date.brl),
+    };
+
     const result = {
       id,
       symbol,
@@ -192,8 +226,8 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       market_cap: formattedMarketCap,
       market_cap_rank,
       total_volume: formattedTotalVolume,
-      high_24h,
-      low_24h,
+      high_24h: highPrice,
+      low_24h: lowPrice,
       price_change_24h,
       price_change_percentage_24,
       price_change_percentage_7d,
@@ -218,6 +252,12 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       max_supply: formattedMaxSupply,
       circulating_supply: formattedCirculatingSupply,
       last_updated,
+      ath: allTimeHighPrice,
+      ath_date: maxDateFormatted,
+      ath_change_percentage,
+      atl: allTimeLowPrice,
+      atl_date: lowDateFormatted,
+      atl_change_percentage,
       total,
       tickers: tickers.map((ticker) => ({
         base: ticker.base,

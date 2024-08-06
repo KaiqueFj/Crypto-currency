@@ -19,9 +19,9 @@ block content
                     span.font-normal.text-xs.text-gray-400.ml-1=`${coin.symbol.toUpperCase()}`
                 .flex.gap-2
                   button
-                    i.fa-regular.fa-star
+                    i.icon.fa-regular.fa-star
                   button
-                    i.fa-solid.fa-link
+                    i.icon.fa-solid.fa-link
             .coinInfo.flex.flex-col.gap-4
               .coinBody.flex.flex-col.gap-4
                 .coinValue.flex.items-center.justify-between
@@ -68,19 +68,52 @@ block content
                     span.font-medium.text-sm.text-gray-700=`Max supply`
                     .coinPrice
                       span.font-semibold.text-sm.text-gray-700.ml-1=`${coin.max_supply.marketMaxSupply_formatted.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,2)}M ${coin.symbol.toUpperCase()}`    
+
+                .coinLowToHighValue
+                  .coinInfo.flex.flex-row.justify-between
+                    .prices.flex.flex-col
+                      span.font-medium.text-sm.text-gray-700=`Low`
+                      .coinPrice
+                        span.font-semibold.text-sm.text-gray-700=`R$ ${coin.low_24h.formattedLowPrice}`
+
+                    .prices.flex.flex-col.text-right
+                      span.font-medium.text-sm.text-gray-700=`High`
+                      .coinPrice
+                        span.font-semibold.text-sm.text-gray-700=`R$ ${coin.high_24h.formattedHighPrice}`
+
+                .coinAllTime.flex.flex-col.justify-between
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-700=`Max of all time`
+                    span.font-semibold.text-sm.text-gray-700.ml-1=`R$ ${coin.ath.formattedAllTimeHighPrice}`    
+
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-semibold.text-sm.text-gray-700.ml-1=` ${coin.ath_date.formattedAthDate}`
+                    span.changeValue.font-semibold.text-sm.text-gray-700.ml-1=`${coin.ath_change_percentage.brl.toFixed(2)} %`
+
+                .coinAllTime.flex.flex-col.justify-between
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-700=`Low of all time`
+                    span.font-semibold.text-sm.text-gray-700.ml-1=`R$ ${coin.atl.formattedAllTimeLowPrice}`    
+
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-semibold.text-sm.text-gray-700.ml-1=` ${coin.atl_date.formattedAtlDate}`
+                    span.changeValue.font-semibold.text-sm.text-gray-700.ml-1=`${coin.atl_change_percentage.brl.toFixed(2)} %`
+
+
+
               .coinAdditionalInfo
                 .coinLinks
                   .header.flex
                     span.font-semibold.text-sm.text-gray-700 Official links
                   .bodyContent.flex.flex-row.gap-2.mt-2
                     .coinLinks(class=" bg-gray-300 rounded-md px-2 py-1 flex flex-row gap-1 cursor-pointer")
-                      i.fa-solid.fa-globe.text-base
+                      i.icon.fa-solid.fa-globe.text-base
                       a.font-medium.text-gray-700.text-xs.gap-1.flex.items-center( href=`${coin.homepage[0]}`) website
                     .coinLinks(class=" bg-gray-300 rounded-md px-2 py-1 flex flex-row gap-1 cursor-pointer")
-                      i.fa-solid.fa-file.text-base
+                      i.icon.fa-solid.fa-file.text-base
                       a.font-medium.text-gray-700.text-xs.gap-1.flex.items-center(href=`${coin.whitepaper}`) whitepaper
                     .coinLinks(class=" bg-gray-300 rounded-md px-2 py-1 flex flex-row gap-1 cursor-pointer")
-                      i.fa-brands.fa-github.text-base
+                      i.icon.fa-brands.fa-github.text-base
                       a.font-medium.text-gray-700.text-xs.gap-1.flex.items-center(href=`${coin.github[0]}`) github
         .mainSection.col-span-1
           .aboutContainer
