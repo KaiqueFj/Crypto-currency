@@ -1,5 +1,6 @@
 const axios = require("axios");
 const catchAsync = require("../utils/catchAsync");
+const formatCurrency = require("../utils/formatCurrency");
 
 exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = req.query.per_page
@@ -144,6 +145,15 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       tickers,
     } = coinData;
 
+    const formattedCurrentPrice = {
+      ...current_price,
+      brl_formatted: formatCurrency(current_price.brl),
+    };
+
+    const formattedMarketCap = {
+      ...market_cap,
+      marketCap_formatted: formatCurrency(market_cap.brl),
+    };
     const result = {
       id,
       symbol,
@@ -155,8 +165,8 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       thumb,
       small,
       large,
-      current_price,
-      market_cap,
+      current_price: formattedCurrentPrice,
+      market_cap: formattedMarketCap,
       market_cap_rank,
       total_volume,
       high_24h,

@@ -1,72 +1,56 @@
 extends base
 
+block append head
+  script(defer src="/js/bundled/index.js")
+
 block content
   main.main 
+    h1 Coin Overview: #{coin.name}
     .coin-container.max-w.mx-auto.p-6
-      h1 Coin Overview: #{coin.name}
+      .content-container.grid.grid-cols-3.gap-4
+        .asideSection.col-span-1.p-6
+          .coinStats.flex-flex-row
+            .coinHeader
+              .coinInfo.flex.items-center.justify-between
+                .flex.items-center.gap-2
+                  img(src=coin.thumb alt=coin.name)
+                  .coinName.flex.flex-row.items-center
+                    h2.font-semibold.text-lg.text-gray-700=`${coin.name}`
+                    span.font-normal.text-xs.text-gray-400.ml-1=`${coin.symbol.toUpperCase()}`
+                .flex.gap-2
+                  button
+                    i.fa-regular.fa-star
+                  button
+                    i.fa-solid.fa-link
+            .coinBody.flex.flex-col.gap-4
+              .coinValue.flex.items-center.justify-between
+                .coinMarketValue.flex.flex-col
+                  span.font-semibold.text-4xl.text-gray-700=`R$${coin.current_price.brl_formatted}`
+                  span.changeValue.font-normal.text-lg.text-gray-400=`${coin.price_change_percentage_24h_in_currency.brl.toFixed(2)}% (1d)`
 
-      h2 General Information
-      ul
-        li ID: #{coin.id}
-        li Symbol: #{coin.symbol}
-        li Name: #{coin.name}
-        li Description: #{coin.descriptionEn}
-        li Homepage: a(href=coin.homepage[0] target="_blank") #{coin.homepage[0]}
-        li Whitepaper: a(href=coin.whitepaper[0] target="_blank") #{coin.whitepaper[0]}
-        li GitHub: a(href=coin.github[0] target="_blank") #{coin.github[0]}
+              .coinMarketCap
+                .coinInfo.flex.flex-row.justify-between
+                  span.font-semibold.text-sm.text-gray-700=`Market Capitalization`
+                  .coinPrice
+                    span.changeValue.font-normal.text-xs.text-gray-400=`${coin.price_change_percentage_24h_in_currency.brl.toFixed(2)}%`
+                    span.font-semibold.text-sm.text-gray-700.ml-1=`${coin.market_cap.marketCap_formatted.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,4)}T`
 
-      h2 Images
-      ul
-        li img(src=coin.thumb alt=coin.name)
-        li img(src=coin.small alt=coin.name)
-        li img(src=coin.large alt=coin.name)
+                .coinInfoBody.flex.flex-row.items-center
+                  .slider.h-1.w-full.bg-gray-300
+                  span.font-semibold.text-sm.text-gray-700.ml-1.rounded-md.py-0.px-1.bg-gray-300=`#${coin.market_cap_rank}`
 
-      h2 Market Data
-      ul
-        li=` Current Price ${coin.current_price.brl} BRL`
-        li=`Market Cap: ${coin.market_cap.brl} BRL` 
-        li=`Market Cap Rank: ${coin.market_cap_rank}`
-        li=`Total Volume: ${coin.total_volume.brl} BRL`
-        li=`High 24h: ${coin.high_24h.brl} BRL`
-        li=`Low 24h: ${coin.low_24h.brl} BRL`
-        li=`Price Change 24h: ${coin.price_change_24h.brl} BRL `
-        li Price Change Percentage 24h: #{coin.price_change_percentage_24}%
-        li Price Change Percentage 7d: #{coin.price_change_percentage_7d}%
-        li Price Change Percentage 14d: #{coin.price_change_percentage_14d}%
-        li Price Change Percentage 30d: #{coin.price_change_percentage_30d}%
-        li Price Change Percentage 60d: #{coin.price_change_percentage_60d}%
-        li Price Change Percentage 200d: #{coin.price_change_percentage_200d}%
-        li Price Change Percentage 1y: #{coin.price_change_percentage_1y}%
-        li= `Market Cap Change 24h: ${coin.market_cap_change_24} BRL`
-        li Market Cap Change Percentage 24h: #{coin.market_cap_change_percentage_24h}%
-        li=`Price Change 24h in Currency: ${coin.price_change_24h_in_currency.brl} BRL`
-        li=`Price Change Percentage 1h in Currency: ${coin.price_change_percentage_1h_in_currency.brl}%`
-        li=`Price Change Percentage 24h in Currency: ${coin.price_change_percentage_24h_in_currency.brl}%`
-        li=`Price Change Percentage 7d in Currency: ${coin.price_change_percentage_7d_in_currency.brl}%`
-        li=`Price Change Percentage 14d in Currency: ${coin.price_change_percentage_14d_in_currency.brl}%`
-        li=`Price Change Percentage 30d in Currency: ${coin.price_change_percentage_30d_in_currency.brl}%`
-        li=`Price Change Percentage 60d in Currency: ${coin.price_change_percentage_60d_in_currency.brl}%`
-        li=`Price Change Percentage 200d in Currency: ${coin.price_change_percentage_200d_in_currency.brl}%`
-        li=`Price Change Percentage 1y in Currency: ${coin.price_change_percentage_1y_in_currency.brl}%`
-        li=`Market Cap Change Percentage 24h in Currency: ${coin.market_cap_change_percentage_24h_in_currency.brl}%`
-        li Total Supply: #{coin.total_supply}
-        li Max Supply: #{coin.max_supply}
-        li Circulating Supply: #{coin.circulating_supply}
-        li Last Updated: #{coin.last_updated}
+        .mainSection.col-span-1
+          .aboutContainer
+            h2.text-xl.font-semibold.mt-8.mb-4= `About the ${coin.name}`
+            h3.text-xl.font-semibold.mb-4= `What is the ${coin.name}`
+            p.text-sm.font-light.mb-4 #{coin.descriptionEn}
+          .chartContainer
+            h2.text-xl.font-semibold.mt-8.mb-4= `About the ${coin.name}`
+            h3.text-xl.font-semibold.mb-4= `What is the ${coin.name}`
 
-      h2 Tickers
-      each ticker in coin.tickers
-        .ticker
-          h3 Market: #{ticker.marketName}
+        .asideSection.col-span-1
           ul
-            li Base: #{ticker.base}
-            li Target: #{ticker.target}
-            li Last Price: #{ticker.last}
-            li Volume: #{ticker.volume}
-            if ticker.converted_last
-              li Converted Last: #{ticker.converted_last.brl} BRL
-            if ticker.converted_volume
-              li Converted Volume: #{ticker.converted_volume.brl} BRL
-            li Trust Score: #{ticker.trust_score}
-            if ticker.trade_url
-              li Trade URL: a(href=ticker.trade_url target="_blank") #{ticker.trade_url}
+            li ID: #{coin.id}
+            li Symbol: #{coin.symbol}
+            li Name: #{coin.name}
+            li Description: #{coin.descriptionEn}

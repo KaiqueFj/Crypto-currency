@@ -615,7 +615,9 @@ function handleCoinsFunctions() {
     // Change the color of percentage values based on the change
     (0, _handleElementsJs.valuesPercentage).each(function() {
         const text = $(this).text().replace("%", "").trim();
+        console.log(text);
         const percentage = parseFloat(text);
+        console.log(text);
         if (percentage < 0) {
             $(this).addClass("text-red-500");
             $(this).removeClass("text-green-500");
