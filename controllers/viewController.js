@@ -154,6 +154,29 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       ...market_cap,
       marketCap_formatted: formatCurrency(market_cap.brl),
     };
+
+    const formattedTotalVolume = {
+      ...total_volume,
+      marketVolume_formatted: formatCurrency(total_volume.brl),
+    };
+
+    const formattedTotalSupply = {
+      marketTotalSupply_formatted: formatCurrency(total_supply),
+    };
+
+    const formattedMaxSupply = {
+      marketMaxSupply_formatted: formatCurrency(max_supply),
+    };
+
+    const formattedCirculatingSupply = {
+      marketCirculatingSupply: formatCurrency(circulating_supply),
+    };
+
+    const totalPercentageOfCirculatingSupply =
+      (circulating_supply / max_supply) * 100;
+
+    const total = formatCurrency(totalPercentageOfCirculatingSupply);
+
     const result = {
       id,
       symbol,
@@ -168,7 +191,7 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       current_price: formattedCurrentPrice,
       market_cap: formattedMarketCap,
       market_cap_rank,
-      total_volume,
+      total_volume: formattedTotalVolume,
       high_24h,
       low_24h,
       price_change_24h,
@@ -191,10 +214,11 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       price_change_percentage_200d_in_currency,
       price_change_percentage_1y_in_currency,
       market_cap_change_percentage_24h_in_currency,
-      total_supply,
-      max_supply,
-      circulating_supply,
+      total_supply: formattedTotalSupply,
+      max_supply: formattedMaxSupply,
+      circulating_supply: formattedCirculatingSupply,
       last_updated,
+      total,
       tickers: tickers.map((ticker) => ({
         base: ticker.base,
         target: ticker.target,

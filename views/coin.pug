@@ -22,23 +22,66 @@ block content
                     i.fa-regular.fa-star
                   button
                     i.fa-solid.fa-link
-            .coinBody.flex.flex-col.gap-4
-              .coinValue.flex.items-center.justify-between
-                .coinMarketValue.flex.flex-col
-                  span.font-semibold.text-4xl.text-gray-700=`R$${coin.current_price.brl_formatted}`
-                  span.changeValue.font-normal.text-lg.text-gray-400=`${coin.price_change_percentage_24h_in_currency.brl.toFixed(2)}% (1d)`
+            .coinInfo.flex.flex-col.gap-4
+              .coinBody.flex.flex-col.gap-4
+                .coinValue.flex.items-center.justify-between
+                  .coinMarketValue.flex.flex-col
+                    span.font-semibold.text-4xl.text-gray-700=`R$${coin.current_price.brl_formatted}`
+                    span.changeValue.font-normal.text-lg.text-gray-400=`${coin.price_change_percentage_24h_in_currency.brl.toFixed(2)}% (1d)`
 
-              .coinMarketCap
-                .coinInfo.flex.flex-row.justify-between
-                  span.font-semibold.text-sm.text-gray-700=`Market Capitalization`
-                  .coinPrice
-                    span.changeValue.font-normal.text-xs.text-gray-400=`${coin.price_change_percentage_24h_in_currency.brl.toFixed(2)}%`
-                    span.font-semibold.text-sm.text-gray-700.ml-1=`${coin.market_cap.marketCap_formatted.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,4)}T`
+                .coinMarketCap
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-700=`Market Capitalization`
+                    .coinPrice
+                      span.changeValue.font-normal.text-xs.text-gray-400=`${coin.price_change_percentage_24h_in_currency.brl.toFixed(2)}%`
+                      span.font-semibold.text-sm.text-gray-700.ml-1=`${coin.market_cap.marketCap_formatted.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,4)}T`
 
-                .coinInfoBody.flex.flex-row.items-center
-                  .slider.h-1.w-full.bg-gray-300
-                  span.font-semibold.text-sm.text-gray-700.ml-1.rounded-md.py-0.px-1.bg-gray-300=`#${coin.market_cap_rank}`
+                  .coinInfoBody.flex.flex-row.items-center
+                    .slider.h-1.w-full.bg-gray-300
+                    span.font-semibold.text-sm.text-gray-700.ml-1.rounded-md.py-0.px-1.bg-gray-300=`#${coin.market_cap_rank}`
 
+
+                .coinCirculatingSupply
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-700=`Circulating supply`
+                    .coinPrice
+                      span.font-semibold.text-sm.text-gray-700.ml-1=`${coin.circulating_supply.marketCirculatingSupply.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,5)} ${coin.symbol.toUpperCase()}`
+
+                  .coinInfoBody.flex.flex-row.items-center
+                    .slider.h-1.w-full.bg-gray-300
+                    span.font-semibold.text-sm.text-gray-700.ml-1.py-0.px-1=`${coin.total}%`
+
+                .coinMarketVolume
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-700=`Volume (24h)`
+                    .coinPrice
+                      span.font-semibold.text-sm.text-gray-700.ml-1=`R$ ${coin.total_volume.marketVolume_formatted.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,4)}B`
+
+                .coinTotalSupply
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-700=`Total supply`
+                    .coinPrice
+                      span.font-semibold.text-sm.text-gray-700.ml-1=`${coin.total_supply.marketTotalSupply_formatted.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,2)}M ${coin.symbol.toUpperCase()}`    
+
+                .coinMaxSupply
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-700=`Max supply`
+                    .coinPrice
+                      span.font-semibold.text-sm.text-gray-700.ml-1=`${coin.max_supply.marketMaxSupply_formatted.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,2)}M ${coin.symbol.toUpperCase()}`    
+              .coinAdditionalInfo
+                .coinLinks
+                  .header.flex
+                    span.font-semibold.text-sm.text-gray-700 Official links
+                  .bodyContent.flex.flex-row.gap-2.mt-2
+                    .coinLinks(class=" bg-gray-300 rounded-md px-2 py-1 flex flex-row gap-1 cursor-pointer")
+                      i.fa-solid.fa-globe.text-base
+                      a.font-medium.text-gray-700.text-xs.gap-1.flex.items-center( href=`${coin.homepage[0]}`) website
+                    .coinLinks(class=" bg-gray-300 rounded-md px-2 py-1 flex flex-row gap-1 cursor-pointer")
+                      i.fa-solid.fa-file.text-base
+                      a.font-medium.text-gray-700.text-xs.gap-1.flex.items-center(href=`${coin.whitepaper}`) whitepaper
+                    .coinLinks(class=" bg-gray-300 rounded-md px-2 py-1 flex flex-row gap-1 cursor-pointer")
+                      i.fa-brands.fa-github.text-base
+                      a.font-medium.text-gray-700.text-xs.gap-1.flex.items-center(href=`${coin.github[0]}`) github
         .mainSection.col-span-1
           .aboutContainer
             h2.text-xl.font-semibold.mt-8.mb-4= `About the ${coin.name}`
