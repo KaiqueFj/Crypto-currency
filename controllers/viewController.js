@@ -2,6 +2,7 @@ const axios = require("axios");
 const catchAsync = require("../utils/catchAsync");
 const formatCurrency = require("../utils/formatCurrency");
 const formatDateWithRelativeTime = require("../utils/formatDate");
+const formatDescription = require("../utils/formatText");
 
 exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = req.query.per_page
@@ -211,11 +212,13 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       formattedAtlDate: formatDateWithRelativeTime(atl_date.brl),
     };
 
+    const formattedTextDescription = formatDescription(descriptionEn);
+
     const result = {
       id,
       symbol,
       name,
-      descriptionEn,
+      descriptionEn: formattedTextDescription,
       homepage,
       whitepaper,
       github,

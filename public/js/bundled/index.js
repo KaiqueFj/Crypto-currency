@@ -584,14 +584,95 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"f2QDv":[function(require,module,exports) {
+const { handleUserClicks } = require("7d07fb8481c76f64");
 const { handleCoinsFunctions } = require("dea15e5a0d486318");
 const { handleSortData } = require("b710d7c996a067e0");
 document.addEventListener("DOMContentLoaded", ()=>{
     handleCoinsFunctions();
     handleSortData();
+    handleUserClicks();
 });
 
-},{"dea15e5a0d486318":"jcvt7","b710d7c996a067e0":"7iSl7"}],"jcvt7":[function(require,module,exports) {
+},{"7d07fb8481c76f64":"7bD5q","dea15e5a0d486318":"jcvt7","b710d7c996a067e0":"7iSl7"}],"7bD5q":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);
+const { iconsInfo, marketCapInfo } = require("eaddd84cc2e28a4a");
+function handleUserClicks() {
+    iconsInfo.each(function(e) {
+        $(this).on("click", function(e) {
+            e.preventDefault(); // Get the position of the clicked element
+            const offset = $(this).offset();
+            const height = $(this).outerHeight();
+            const width = $(this).outerWidth();
+            // Position the popup next to the clicked element
+            marketCapInfo.css({
+                top: offset.top + height + 5,
+                left: offset.left + width / 2 - marketCapInfo.outerWidth() / 2
+            });
+            // Show the popup
+            marketCapInfo.toggleClass("hidden");
+        });
+    });
+}
+
+},{"eaddd84cc2e28a4a":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3akdP":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "dropDownQtdOptions", ()=>dropDownQtdOptions);
+parcelHelpers.export(exports, "optionsValue", ()=>optionsValue);
+parcelHelpers.export(exports, "coinsToShow", ()=>coinsToShow);
+parcelHelpers.export(exports, "rowValue", ()=>rowValue);
+parcelHelpers.export(exports, "coins", ()=>coins);
+parcelHelpers.export(exports, "rows", ()=>rows);
+parcelHelpers.export(exports, "valuesPercentage", ()=>valuesPercentage);
+parcelHelpers.export(exports, "tableHeaders", ()=>tableHeaders);
+parcelHelpers.export(exports, "iconsSpan", ()=>iconsSpan);
+parcelHelpers.export(exports, "iconsInfo", ()=>iconsInfo);
+parcelHelpers.export(exports, "marketCapInfo", ()=>marketCapInfo);
+const dropDownQtdOptions = $(".dropdownOptions");
+const optionsValue = $(".option");
+const coinsToShow = $(".coinsToShow");
+const rowValue = $(".rowValue");
+const coins = document.querySelectorAll("[data-href]");
+const rows = document.querySelectorAll("tr[data-href]");
+const valuesPercentage = $(".changeValue");
+const tableHeaders = document.querySelectorAll("th[data-sort]");
+const iconsSpan = document.querySelectorAll(".icon");
+const iconsInfo = $(".information");
+const marketCapInfo = $(".coinMessage");
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"jcvt7":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleCoinsFunctions", ()=>handleCoinsFunctions);
@@ -615,9 +696,7 @@ function handleCoinsFunctions() {
     // Change the color of percentage values based on the change
     (0, _handleElementsJs.valuesPercentage).each(function() {
         const text = $(this).text().replace("%", "").trim();
-        console.log(text);
         const percentage = parseFloat(text);
-        console.log(text);
         if (percentage < 0) {
             $(this).addClass("text-red-500");
             $(this).removeClass("text-green-500");
@@ -14306,37 +14385,7 @@ function index_esm(input) {
     return new Color(input);
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"dU215":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dU215":[function(require,module,exports) {
 "use strict";
 var _index = require("bb476f479aec785f");
 Object.keys(_index).forEach(function(key) {
@@ -36177,28 +36226,6 @@ Object.entries(HttpStatusCode).forEach(([key, value])=>{
     HttpStatusCode[value] = key;
 });
 exports.default = HttpStatusCode;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3akdP":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "dropDownQtdOptions", ()=>dropDownQtdOptions);
-parcelHelpers.export(exports, "optionsValue", ()=>optionsValue);
-parcelHelpers.export(exports, "coinsToShow", ()=>coinsToShow);
-parcelHelpers.export(exports, "rowValue", ()=>rowValue);
-parcelHelpers.export(exports, "coins", ()=>coins);
-parcelHelpers.export(exports, "rows", ()=>rows);
-parcelHelpers.export(exports, "valuesPercentage", ()=>valuesPercentage);
-parcelHelpers.export(exports, "tableHeaders", ()=>tableHeaders);
-parcelHelpers.export(exports, "iconsSpan", ()=>iconsSpan);
-const dropDownQtdOptions = $(".dropdownOptions");
-const optionsValue = $(".option");
-const coinsToShow = $(".coinsToShow");
-const rowValue = $(".rowValue");
-const coins = document.querySelectorAll("[data-href]");
-const rows = document.querySelectorAll("tr[data-href]");
-const valuesPercentage = $(".changeValue");
-const tableHeaders = document.querySelectorAll("th[data-sort]");
-const iconsSpan = document.querySelectorAll(".icon");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7iSl7":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
