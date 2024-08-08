@@ -9,3 +9,4 @@ export const tableHeaders = document.querySelectorAll("th[data-sort]");
 export const iconsSpan = document.querySelectorAll(".icon");
 export const iconsInfo = $(".information");
 export const marketCapInfo = $(".coinMessage");
+export const coinName = document.querySelectorAll("[data-coin]");

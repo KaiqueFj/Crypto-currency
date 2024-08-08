@@ -1,5 +1,6 @@
-import { createChart } from "./chart.js";
+import { createChartForAllCoins, createUniqueChart } from "./chart.js";
 import {
+  coinName,
   coins,
   coinsToShow,
   dropDownQtdOptions,
@@ -19,7 +20,12 @@ export function handleCoinsFunctions() {
   // Create the chart for each coins
   coins.forEach((coin) => {
     const coinId = coin.getAttribute("data-href").split("/")[2];
-    createChart(coinId);
+    createChartForAllCoins(coinId);
+  });
+
+  coinName.forEach((coin) => {
+    constCoinIdName = coin.getAttribute("data-coin");
+    createUniqueChart(constCoinIdName);
   });
 
   //Handle the click for each coin to retrieve the info

@@ -630,6 +630,7 @@ parcelHelpers.export(exports, "tableHeaders", ()=>tableHeaders);
 parcelHelpers.export(exports, "iconsSpan", ()=>iconsSpan);
 parcelHelpers.export(exports, "iconsInfo", ()=>iconsInfo);
 parcelHelpers.export(exports, "marketCapInfo", ()=>marketCapInfo);
+parcelHelpers.export(exports, "coinName", ()=>coinName);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -641,6 +642,7 @@ const tableHeaders = document.querySelectorAll("th[data-sort]");
 const iconsSpan = document.querySelectorAll(".icon");
 const iconsInfo = $(".information");
 const marketCapInfo = $(".coinMessage");
+const coinName = document.querySelectorAll("[data-coin]");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -685,7 +687,11 @@ function handleCoinsFunctions() {
     // Create the chart for each coins
     (0, _handleElementsJs.coins).forEach((coin)=>{
         const coinId = coin.getAttribute("data-href").split("/")[2];
-        (0, _chartJs.createChart)(coinId);
+        (0, _chartJs.createChartForAllCoins)(coinId);
+    });
+    (0, _handleElementsJs.coinName).forEach((coin)=>{
+        constCoinIdName = coin.getAttribute("data-coin");
+        (0, _chartJs.createUniqueChart)(constCoinIdName);
     });
     //Handle the click for each coin to retrieve the info
     (0, _handleElementsJs.rows).forEach((row)=>{
@@ -731,17 +737,19 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "fetchCoinData", ()=>fetchCoinData);
 parcelHelpers.export(exports, "getChartData", ()=>getChartData);
-parcelHelpers.export(exports, "createChart", ()=>createChart);
+parcelHelpers.export(exports, "createChartForAllCoins", ()=>createChartForAllCoins);
+parcelHelpers.export(exports, "createUniqueChart", ()=>createUniqueChart);
 var _chartjsAdapterDateFns = require("chartjs-adapter-date-fns"); // or 'chartjs-adapter-moment'
 var _auto = require("chart.js/auto");
 var _autoDefault = parcelHelpers.interopDefault(_auto);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _dateFns = require("date-fns");
 async function fetchCoinData(coin) {
     try {
         const response = await (0, _axiosDefault.default)({
             method: "GET",
-            url: `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=7`,
+            url: `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=brl&days=7`,
             headers: {
                 accept: "application/json",
                 "x-cg-demo-api-key": "CG-FbS9EdtQ344edbywnjgR5KLQ"
@@ -771,7 +779,7 @@ async function getChartData(coin) {
         };
     }
 }
-async function createChart(coin) {
+async function createChartForAllCoins(coin) {
     try {
         const { labels, prices } = await getChartData(coin);
         const initialPrice = prices[prices.length - 2];
@@ -834,8 +842,164 @@ async function createChart(coin) {
         console.error("Error creating chart:", err);
     }
 }
+async function createUniqueChart(coin) {
+    try {
+        const { labels, prices } = await getChartData(coin);
+        // Format the labels (dates) using date-fns
+        const formattedLabels = labels.map((dateString)=>{
+            const date = new Date(dateString);
+            return (0, _dateFns.format)(date, "MMM-dd");
+        });
+        // Use a Map to get the first occurrence of each day
+        const uniqueLabelsMap = new Map();
+        for(let i = 0; i < formattedLabels.length; i++){
+            const date = formattedLabels[i];
+            if (!uniqueLabelsMap.has(date)) uniqueLabelsMap.set(date, prices[i]);
+        }
+        // Extract unique labels and prices from the Map
+        const uniqueLabels = Array.from(uniqueLabelsMap.keys());
+        const uniquePrices = Array.from(uniqueLabelsMap.values());
+        console.log(uniqueLabels);
+        const initialPrice = uniquePrices[uniquePrices.length - 2];
+        const finalPrice = uniquePrices[uniquePrices.length - 1];
+        const isUp = finalPrice >= initialPrice;
+        const lineColor = isUp ? "#10b981" : "#f87171";
+        const ctx = document.getElementById(`chart-${coin}`).getContext("2d");
+        new (0, _autoDefault.default)(ctx, {
+            type: "line",
+            data: {
+                labels: uniqueLabels,
+                datasets: [
+                    {
+                        label: `${coin} price`,
+                        data: uniquePrices,
+                        borderColor: "#10b981",
+                        borderWidth: 3,
+                        pointBackgroundColor: "#10b981",
+                        pointBorderColor: "#fff",
+                        pointBorderWidth: 2,
+                        pointRadius: 3,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: "top",
+                        labels: {
+                            font: {
+                                size: 12
+                            },
+                            color: "#333"
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                        mode: "index",
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ": " + context.raw;
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: "Chart Title",
+                        font: {
+                            size: 16
+                        },
+                        padding: {
+                            top: 10,
+                            bottom: 30
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: "Date",
+                            font: {
+                                size: 14
+                            }
+                        },
+                        ticks: {
+                            color: "#333",
+                            font: {
+                                size: 12
+                            }
+                        },
+                        grid: {
+                            display: true,
+                            color: "rgba(0, 0, 0, 0.1)"
+                        }
+                    },
+                    y: {
+                        display: true,
+                        position: "right",
+                        title: {
+                            display: true,
+                            text: "Price",
+                            font: {
+                                size: 14
+                            }
+                        },
+                        ticks: {
+                            color: "#333",
+                            font: {
+                                size: 12
+                            },
+                            beginAtZero: true
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                layout: {
+                    padding: {
+                        top: 10,
+                        bottom: 10,
+                        left: 10,
+                        right: 10
+                    }
+                },
+                elements: {
+                    line: {
+                        tension: 0.4,
+                        borderWidth: 3,
+                        borderColor: "#10b981",
+                        fill: false
+                    },
+                    point: {
+                        radius: 3,
+                        backgroundColor: "#10b981",
+                        borderWidth: 2,
+                        borderColor: "#FFFFFF",
+                        hoverRadius: 7,
+                        hoverBackgroundColor: "#FF5722",
+                        hoverBorderWidth: 3
+                    }
+                },
+                interaction: {
+                    mode: "nearest",
+                    axis: "x",
+                    intersect: false
+                }
+            }
+        });
+    } catch (err) {
+        console.error("Error creating chart:", err);
+    }
+}
 
-},{"chartjs-adapter-date-fns":"hmLQz","chart.js/auto":"d8NN9","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hmLQz":[function(require,module,exports) {
+},{"chartjs-adapter-date-fns":"hmLQz","chart.js/auto":"d8NN9","axios":"jo6P5","date-fns":"dU215","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hmLQz":[function(require,module,exports) {
 /*!
  * chartjs-adapter-date-fns v3.0.0
  * https://www.chartjs.org

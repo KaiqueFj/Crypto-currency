@@ -280,6 +280,7 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
     res.status(200).render("coin", {
       title: `Overview of ${name}`,
       coin: result,
+      coinName: result.id,
     });
   } catch (err) {
     console.error(err);
