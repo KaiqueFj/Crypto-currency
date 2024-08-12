@@ -135,6 +135,10 @@ export async function createUniqueChart(coin) {
 
     const lineColor = isUp ? "#10b981" : "#f87171";
 
+    const lineColorWithOpacity = isUp
+      ? "rgba(16, 185, 129, 0.1)"
+      : "rgba(248, 113, 113, 0.1)";
+
     const ctx = document.getElementById(`chart-${coin}`).getContext("2d");
 
     new Chart(ctx, {
@@ -145,13 +149,14 @@ export async function createUniqueChart(coin) {
           {
             label: `${coin} price`,
             data: uniquePrices,
-            borderColor: "#10b981", // Green color for the line
+            borderColor: lineColor, // Green color for the line
             borderWidth: 3, // Thicker line
-            pointBackgroundColor: "#10b981", // Green color for dots
+            pointBackgroundColor: lineColor, // Green color for dots
+            backgroundColor: lineColorWithOpacity, // Green color for
             pointBorderColor: "#fff", // White color for dot borders
             pointBorderWidth: 2,
             pointRadius: 3,
-            fill: false,
+            fill: true,
           },
         ],
       },

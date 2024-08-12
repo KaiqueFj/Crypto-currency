@@ -864,6 +864,7 @@ async function createUniqueChart(coin) {
         const finalPrice = uniquePrices[uniquePrices.length - 1];
         const isUp = finalPrice >= initialPrice;
         const lineColor = isUp ? "#10b981" : "#f87171";
+        const lineColorWithOpacity = isUp ? "rgba(16, 185, 129, 0.1)" : "rgba(248, 113, 113, 0.1)";
         const ctx = document.getElementById(`chart-${coin}`).getContext("2d");
         new (0, _autoDefault.default)(ctx, {
             type: "line",
@@ -873,13 +874,14 @@ async function createUniqueChart(coin) {
                     {
                         label: `${coin} price`,
                         data: uniquePrices,
-                        borderColor: "#10b981",
+                        borderColor: lineColor,
                         borderWidth: 3,
-                        pointBackgroundColor: "#10b981",
+                        pointBackgroundColor: lineColor,
+                        backgroundColor: lineColorWithOpacity,
                         pointBorderColor: "#fff",
                         pointBorderWidth: 2,
                         pointRadius: 3,
-                        fill: false
+                        fill: true
                     }
                 ]
             },
