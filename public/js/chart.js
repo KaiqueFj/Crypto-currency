@@ -150,10 +150,10 @@ export async function createUniqueChart(coin) {
             label: `${coin} price`,
             data: uniquePrices,
             borderColor: lineColor, // Green color for the line
-            borderWidth: 3, // Thicker line
+            borderWidth: 2, // Thicker line
             pointBackgroundColor: lineColor, // Green color for dots
             backgroundColor: lineColorWithOpacity, // Green color for
-            pointBorderColor: "#fff", // White color for dot borders
+            pointBorderColor: lineColor, // White color for dot borders
             pointBorderWidth: 2,
             pointRadius: 3,
             fill: true,
@@ -161,78 +161,31 @@ export async function createUniqueChart(coin) {
         ],
       },
       options: {
-        maintainAspectRatio: false,
-        responsive: true,
         plugins: {
-          legend: {
-            display: true,
-            position: "top",
-            labels: {
-              font: {
-                size: 12,
-              },
-              color: "#333",
-            },
-          },
           tooltip: {
-            enabled: true,
-            mode: "index",
-            intersect: false,
-            callbacks: {
-              label: function (context) {
-                return context.dataset.label + ": " + context.raw;
-              },
-            },
-          },
-          title: {
-            display: true,
-            text: "Chart Title",
-            font: {
-              size: 16,
-            },
-            padding: {
-              top: 10,
-              bottom: 30,
-            },
+            backgroundColor: "#ffffff",
+            titleColor: "#000000",
+            bodyColor: "#333333",
+            borderColor: "#dddddd",
+            borderWidth: 1,
+            cornerRadius: 4,
+            displayColors: false,
           },
         },
+
+        maintainAspectRatio: false,
+        responsive: true,
         scales: {
-          x: {
-            display: true,
-            title: {
-              display: true,
-              text: "Date",
-              font: {
-                size: 14,
-              },
-            },
-            ticks: {
-              color: "#333",
-              font: {
-                size: 12,
-              },
-            },
-            grid: {
-              display: true,
-              color: "rgba(0, 0, 0, 0.1)", // Color of x-axis grid lines
-            },
-          },
           y: {
             display: true,
             position: "right", // Positioning y-axis on the right
-            title: {
-              display: true,
-              text: "Price",
-              font: {
-                size: 14,
-              },
-            },
             ticks: {
-              color: "#333",
+              color: lineColor,
               font: {
                 size: 12,
               },
               beginAtZero: true,
+              callback: (value) => `${value.toLocaleString()} K`,
             },
             grid: {
               display: false, // Hide y-axis grid lines
@@ -243,31 +196,9 @@ export async function createUniqueChart(coin) {
           padding: {
             top: 10,
             bottom: 10,
-            left: 10,
-            right: 10,
+            left: 30,
+            right: 30,
           },
-        },
-        elements: {
-          line: {
-            tension: 0.4,
-            borderWidth: 3, // Thicker line
-            borderColor: "#10b981", // Green line color
-            fill: false, // No fill under the line
-          },
-          point: {
-            radius: 3, // Point radius
-            backgroundColor: "#10b981", // Point color
-            borderWidth: 2, // Point border width
-            borderColor: "#FFFFFF", // Point border color
-            hoverRadius: 7, // Point radius on hover
-            hoverBackgroundColor: "#FF5722", // Point color on hover
-            hoverBorderWidth: 3, // Point border width on hover
-          },
-        },
-        interaction: {
-          mode: "nearest",
-          axis: "x",
-          intersect: false,
         },
       },
     });
