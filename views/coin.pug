@@ -127,12 +127,12 @@ block content
             canvas.chartContainer(id=`chart-${coinName}`)
 
 
-          .Exchanges(class=" w-4/5 overflow-x-auto flex flex-col")
+          .Exchanges(class=" w-11/12 overflow-x-auto flex flex-col")
             .header
               h2.text-3xl.text-black.font-bold.mt-8.mb-4= `${coin.name} Exchange`
 
             .body-info(class="w-full  overflow-x-scroll") 
-              table(class="w-full table-fixed") 
+              table(class="w-full ") 
                 thead.bg-gray-50
                   tr
                     th.px-4.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider(data-sort="index")
@@ -151,6 +151,22 @@ block content
                       .container.flex.flex-row.items-center.justify-center
                         span.icon
                         p.textHeader Price
+                    th.px-4.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider(data-sort="7d")
+                      .container.flex.flex-row.items-center.justify-center
+                        span.icon
+                        p.textHeader Move up
+                    th.px-4.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider(data-sort="move-up")
+                      .container.flex.flex-row.items-center.justify-center
+                        span.icon
+                        p.textHeader Move down
+                    th.px-4.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider(data-sort="move-down")
+                      .container.flex.flex-row.items-center.justify-center
+                        span.icon
+                        p.textHeader Volume
+                    th.px-4.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider(data-sort="marketCap")
+                      .container.flex.flex-row.items-center.justify-center
+                        span.icon
+                        p.textHeader Bid ask spread             
                     th.px-4.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider(data-sort="24h")
                       .container.flex.flex-row.items-center.justify-center
                         span.icon
@@ -159,14 +175,6 @@ block content
                       .container.flex.flex-row.items-center.justify-center
                         span.icon
                         p.textHeader Updated In
-                    th.px-4.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider(data-sort="volume")
-                      .container.flex.flex-row.items-center.justify-center
-                        span.icon
-                        p.textHeader Volume
-                    th.px-4.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider(data-sort="marketCap")
-                      .container.flex.flex-row.items-center.justify-center
-                        span.icon
-                        p.textHeader Bid ask spread
 
                 tbody.bg-white.divide-y.divide-gray-200
                   each coinMarket, index in coinTickerData
@@ -175,19 +183,23 @@ block content
                         p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 leading-5")= `${index + 1}`
 
 
-                      td.px-1.py-1.whitespace-nowrap
-                        .flex.items-center
+                      td.px-1.py-1.whitespace-normal
+                        .flex.items-center.justify-start
                           img.coin-image.w-6.h-6.object-cover.rounded-full(src=coinMarket.logo alt=coinMarket.marketName)
                           .flex.ml-4
                             p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 lea1ing-5")= coinMarket.marketName
 
-                      td.px-4.whitespace-nowrap.text-sm.text-gray-500.font-medium
-                        a(href=`${coinMarket.tradeUrl}`, target="_blank")= `${coinMarket.base}/${coinMarket.target}`
-                      td.changeValue.px-4.whitespace-nowrap.text-sm.text-gray-500.font-medium= `${coinMarket.lastPrice}`
-                      td.changeValue.px-4.whitespace-nowrap.text-sm.text-gray-500.font-medium= `${coinMarket.trustScore}`
-                      td.changeValue.px-4.whitespace-nowrap.text-sm.text-gray-500.font-medium= `${coinMarket.lastFetchAt}`
-                      td.px-4.whitespace-nowrap.text-sm.text-gray-500.font-medium= `${coinMarket.volume}`
-                      td.px-4.whitespace-nowrap.text-sm.text-gray-500.font-medium= `${coinMarket.bidAskSpreadPercentage}`
+                      td.px-4.whitespace-nowrap.text-center.text-sm.text-blue-600.font-medium
+                        a.text-sky-400(href=`${coinMarket.tradeUrl}`, target="_blank")= `${coinMarket.base}/${coinMarket.target}`
+                      td.px-4.whitespace-nowrap.text-center.text-sm.text-gray-500.font-medium= `R$ ${coinMarket.lastPrice}`
+
+                      td.px-4.whitespace-nowrap.text-center.text-sm.text-gray-500.font-medium= `R$ ${coinMarket.cost_to_move_up_usd}`
+                      td.px-4.whitespace-nowrap.text-center.text-sm.text-gray-500.font-medium= `R$ ${coinMarket.cost_to_move_down_usd}`
+                      td.px-4.whitespace-nowrap.text-center.text-sm.text-gray-500.font-medium= `${coinMarket.volume}`
+                      td.px-4.whitespace-nowrap.text-center.text-sm.text-gray-500.font-medium= `${coinMarket.bidAskSpreadPercentage}`
+                      td.px-4.whitespace-nowrap.text-center.text-sm.text-gray-500.font-medium
+                        span(class=`w-4 h-4 rounded-full bg-${coinMarket.trustScore}-500 inline-block`)
+                      td.px-4.whitespace-nowrap.text-center.text-sm.text-gray-500.font-medium= `${coinMarket.lastFetchAt}`
 
 
           .aboutContainer.flex.flex-col.p-3
@@ -200,7 +212,116 @@ block content
 
 
 
-        .asideSection.p-5.border-r-2.border-gray-200.flex.flex-col.h-full
+        .asideSection.p-2.border-r-2.border-gray-200.flex.flex-col.h-full
           .coinStats.flex.flex-col.flex-1
             .coinHeader
               .coinInfo.flex.items-center.justify-between
+                .flex.items-center.gap-2
+                  img(src=coin.thumb alt=coin.name)
+                  .coinName(id=`${coin.name}` data-coin=`${coin.id}`).flex.flex-row.items-center
+                    h2.font-semibold.text-lg.text-black=`${coin.name}`
+                    span.font-semibold.text-sm.text-gray-400.ml-1=`${coin.symbol.toUpperCase()}`
+                .flex.gap-2
+                  button.bg-gray-200.rounded-md.py-1.px-2
+                    i.icon.fa-regular.fa-star.text-sm
+                  button.bg-gray-200.rounded-md.py-1.px-2
+                    i.icon.fa-solid.fa-link.text-sm
+
+            .coinInfo.flex.flex-col.gap-4
+              .coinBody.flex.flex-col.gap-4
+                .coinValue.flex.items-center.justify-between
+                  .coinMarketValue.flex.flex-col
+                    span.font-semibold.text-4xl.text-black=`R$${coin.current_price}`
+                    span.changeValue.font-semibold.text-lg.text-gray-400=`${coin.price_change_percentage_24h_in_currency.toFixed(2)}%`
+
+                .coinMarketCap
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-400=`Market Capitalization`
+                      i.information.fa-solid.fa-circle-info.ml-1
+                    .coinPrice
+                      span.changeValue.font-normal.text-xs.text-gray-400=`${coin.price_change_percentage_24h_in_currency.toFixed(2)}%`
+                      span.font-semibold.text-sm.text-black.ml-1=`${coin.market_cap.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,4)}T`
+
+                  .coinInfoBody.flex.flex-row.items-center
+                    .slider.h-1.w-full.bg-gray-300
+                    span.font-semibold.text-sm.text-black.ml-1.rounded-md.py-0.px-1.bg-gray-300=`#${coin.market_cap_rank}`
+
+
+                .coinCirculatingSupply
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-400=`Circulating supply`
+                    .coinPrice
+                      span.font-semibold.text-sm.text-black.ml-1=`${coin.circulating_supply.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,5)} ${coin.symbol.toUpperCase()}`
+
+                  .coinInfoBody.flex.flex-row.items-center
+                    .slider.h-1.w-full.bg-gray-300
+                    span.font-semibold.text-sm.text-black.ml-1.py-0.px-1=`${coin.total}%`
+
+                .coinMarketVolume
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-400=`Volume (24h)`
+                    .coinPrice
+                      span.font-semibold.text-sm.text-black.ml-1=`R$ ${coin.total_volume.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,4)}B`
+
+                .coinTotalSupply
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-400=`Total supply`
+                    .coinPrice
+                      span.font-semibold.text-sm.text-black.ml-1=`${coin.total_supply.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,2)}M ${coin.symbol.toUpperCase()}`    
+
+                .coinMaxSupply
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-400=`Max supply`
+                    .coinPrice
+                      span.font-semibold.text-sm.text-black.ml-1=`${coin.max_supply.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,2)}M ${coin.symbol.toUpperCase()}`    
+
+                .coinLowToHighValue
+                  .coinInfo.flex.flex-row.justify-between
+                    .prices.flex.flex-col
+                      span.font-medium.text-sm.text-gray-400=`Low`
+                      .coinPrice
+                        span.font-semibold.text-sm.text-black=`R$ ${coin.low_24h}`
+
+                    .prices.flex.flex-col.text-right
+                      span.font-medium.text-sm.text-gray-400=`High`
+                      .coinPrice
+                        span.font-semibold.text-sm.text-black=`R$ ${coin.high_24h}`
+
+                .coinAllTime.flex.flex-col.justify-between
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-400=`Max of all time`
+                    span.font-semibold.text-sm.text-black.ml-1=`R$ ${coin.ath}`    
+
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-semibold.text-sm.text-black.ml-1=` ${coin.ath_date}`
+                    span.changeValue.font-semibold.text-sm.text-black.ml-1=`${coin.ath_change_percentage.toFixed(2)} %`
+
+                .coinAllTime.flex.flex-col.justify-between
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-medium.text-sm.text-gray-400=`Low of all time`
+                    span.font-semibold.text-sm.text-black.ml-1=`R$ ${coin.atl}`    
+
+                  .coinInfo.flex.flex-row.justify-between
+                    span.font-semibold.text-sm.text-black.ml-1=` ${coin.atl_date}`
+                    span.changeValue.font-semibold.text-sm.text-black.ml-1=`${coin.atl_change_percentage.toFixed(2)} %`
+
+
+
+              .coinAdditionalInfo
+                .coinLinks
+                  .header.flex
+                    span.font-semibold.text-sm.text-black Official links
+                  .bodyContent.flex.flex-row.gap-2.mt-2
+                    .coinLinks(class=" bg-gray-200 rounded-md px-2 py-1 flex flex-row gap-1 cursor-pointer")
+                      i.icon.fa-solid.fa-globe.text-base
+                      a.font-medium.text-black.text-xs.gap-1.flex.items-center( href=`${coin.homepage[0]}`) website
+                    .coinLinks(class=" bg-gray-200 rounded-md px-2 py-1 flex flex-row gap-1 cursor-pointer")
+                      i.icon.fa-solid.fa-file.text-base
+                      a.font-medium.text-gray-700.text-xs.gap-1.flex.items-center(href=`${coin.whitepaper}`) whitepaper
+                    .coinLinks(class=" bg-gray-200 rounded-md px-2 py-1 flex flex-row gap-1 cursor-pointer")
+                      i.icon.fa-brands.fa-github.text-base
+                      a.font-medium.text-gray-700.text-xs.gap-1.flex.items-center(href=`${coin.github[0]}`) github
+          .coinMessage.flex.flex-col.bg-gray-600.hidden.max-w-xs.w-xs.absolute.p-2.rounded-md.shadow-lg
+            p.text-sm.mx-0.my-1 market capitalization is the total value of all the coins that have been mined. 
+            p.text-sm.mx-0.my-1 It’s calculated by multiplying the number of coins in circulation by the current market price of a single coin
+

@@ -3,6 +3,7 @@ const catchAsync = require("../utils/catchAsync");
 const formatCurrency = require("../utils/formatCurrency");
 const formatDateWithRelativeTime = require("../utils/formatDate");
 const formatDescription = require("../utils/formatText");
+const convertUsdToBrl = require("../utils/convertToCurrency");
 
 exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = req.query.per_page
@@ -112,6 +113,16 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
 
     const coinTicker = getTicker.data.tickers;
 
+    const getValueToCurrentCurrency = await axios({
+      method: "GET",
+      url: `https://api.coingecko.com/api/v3/simple/price?ids=usd&vs_currencies=brl`,
+      headers: {
+        accept: "application/json",
+        "x-cg-demo-api-key": process.env.API_KEY_Cry,
+      },
+    });
+    const rate = getValueToCurrentCurrency.data.usd.brl;
+
     const totalPercentageOfCirculatingSupply =
       (coinData.market_data.circulating_supply /
         coinData.market_data.max_supply) *
@@ -163,11 +174,16 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       marketIdentifier: ticker.market.identifier,
       hasTradingIncentive: ticker.market.has_trading_incentive,
       logo: ticker.market.logo,
-      lastPrice: formatCurrency(ticker.last),
+      lastPrice: formatCurrency(convertUsdToBrl(ticker.last, rate)),
       volume: formatCurrency(ticker.volume),
       trustScore: ticker.trust_score,
-      cost_to_move_up_usd: ticker.cost_to_move_up_usd,
-      cost_to_move_down_usd: ticker.cost_to_move_down_usd,
+
+      cost_to_move_up_usd: formatCurrency(
+        convertUsdToBrl(ticker.cost_to_move_up_usd, rate)
+      ),
+      cost_to_move_down_usd: formatCurrency(
+        convertUsdToBrl(ticker.cost_to_move_down_usd, rate)
+      ),
       bidAskSpreadPercentage: ticker.bid_ask_spread_percentage,
       tradeUrl: ticker.trade_url,
       lastTradedAt: ticker.last_traded_at,
