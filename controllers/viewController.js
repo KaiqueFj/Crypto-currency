@@ -84,6 +84,12 @@ exports.getOverview = catchAsync(async (req, res, next) => {
 exports.getSpecificCoin = catchAsync(async (req, res, next) => {
   const { coin, currency } = req.params;
 
+  // Get pagination parameters from query
+  const itemsPerPage = req.query.per_page
+    ? parseInt(req.query.per_page, 10)
+    : 10; // Default to 10 items per page if not provided
+  const currentPage = req.query.page ? parseInt(req.query.page, 10) : 1;
+
   try {
     const response = await axios({
       method: "GET",
@@ -104,7 +110,7 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
 
     const getTicker = await axios({
       method: "GET",
-      url: `https://api.coingecko.com/api/v3/coins/${coin}/tickers?include_exchange_logo=true&depth=true`,
+      url: `https://api.coingecko.com/api/v3/coins/${coin}/tickers?include_exchange_logo=true&depth=true&order=volume_desc`,
       headers: {
         accept: "application/json",
         "x-cg-demo-api-key": process.env.API_KEY_Cry,
@@ -128,6 +134,7 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
         coinData.market_data.max_supply) *
       100;
 
+    // Process the data about the selected coin
     const coinDataInfo = {
       id: coinData.id,
       symbol: coinData.symbol,
@@ -166,37 +173,68 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       total: formatCurrency(totalPercentageOfCirculatingSupply),
     };
 
-    // Process the tickers array
-    const formattedTickers = coinTicker.map((ticker) => ({
-      base: ticker.base,
-      target: ticker.target,
-      marketName: ticker.market.name,
-      marketIdentifier: ticker.market.identifier,
-      hasTradingIncentive: ticker.market.has_trading_incentive,
-      logo: ticker.market.logo,
-      lastPrice: formatCurrency(convertUsdToBrl(ticker.last, rate)),
-      volume: formatCurrency(ticker.volume),
-      trustScore: ticker.trust_score,
+    // Paginate the tickers
+    const paginateTickers = (tickers, perPage, currentPage) => {
+      const totalItems = tickers.length;
+      const totalPages = Math.ceil(totalItems / perPage);
+      const itemsPerPage = perPage;
 
-      cost_to_move_up_usd: formatCurrency(
-        convertUsdToBrl(ticker.cost_to_move_up_usd, rate)
-      ),
-      cost_to_move_down_usd: formatCurrency(
-        convertUsdToBrl(ticker.cost_to_move_down_usd, rate)
-      ),
-      bidAskSpreadPercentage: ticker.bid_ask_spread_percentage,
-      tradeUrl: ticker.trade_url,
-      lastTradedAt: ticker.last_traded_at,
-      lastFetchAt: formatDateWithRelativeTime(ticker.last_fetch_at),
-      convertedLast: ticker.converted_last,
-      convertedVolume: ticker.converted_volume,
-    }));
+      const startIndex = (currentPage - 1) * perPage;
+      const endIndex = startIndex + perPage;
+      const paginatedTickers = tickers.slice(startIndex, endIndex);
+
+      return {
+        paginatedTickers,
+        totalPages,
+        totalItems,
+        currentPage,
+        itemsPerPage,
+      };
+    };
+
+    const paginatedTickersData = paginateTickers(
+      coinTicker,
+      itemsPerPage,
+      currentPage
+    );
+
+    // Process the tickers array
+    const formattedTickers = paginatedTickersData.paginatedTickers.map(
+      (ticker) => ({
+        base: ticker.base,
+        target: ticker.target,
+        marketName: ticker.market.name,
+        marketIdentifier: ticker.market.identifier,
+        hasTradingIncentive: ticker.market.has_trading_incentive,
+        logo: ticker.market.logo,
+        lastPrice: formatCurrency(convertUsdToBrl(ticker.last, rate)),
+        volume: formatCurrency(ticker.volume),
+        trustScore: ticker.trust_score,
+
+        cost_to_move_up_usd: formatCurrency(
+          convertUsdToBrl(ticker.cost_to_move_up_usd, rate)
+        ),
+        cost_to_move_down_usd: formatCurrency(
+          convertUsdToBrl(ticker.cost_to_move_down_usd, rate)
+        ),
+        bidAskSpreadPercentage: ticker.bid_ask_spread_percentage,
+        tradeUrl: ticker.trade_url,
+        lastTradedAt: ticker.last_traded_at,
+        lastFetchAt: formatDateWithRelativeTime(ticker.last_fetch_at),
+        convertedLast: ticker.converted_last,
+        convertedVolume: ticker.converted_volume,
+      })
+    );
 
     res.status(200).render("coin", {
       title: `Overview of ${coinData.name}`,
       coin: coinDataInfo,
       coinTickerData: formattedTickers,
       coinName: coinDataInfo.id,
+      currentPage: paginatedTickersData.currentPage,
+      totalPages: paginatedTickersData.totalPages,
+      totalItems: paginatedTickersData.totalItems,
+      itemsPerPage: paginatedTickersData.itemsPerPage,
     });
   } catch (err) {
     console.error(err);

@@ -123,7 +123,7 @@ block content
 
 
         .mainSection.border-r-2.border-gray-200.p-1.flex.flex-col.items-center(class="w-3/5	max-w-3/5")
-          .chartCanvasContainer(class="w-4/5 max-w-4/5 max-h-1/3 ")
+          .chartCanvasContainer(class="w-11/12 max-h-1/3 ")
             canvas.chartContainer(id=`chart-${coinName}`)
 
 
@@ -200,6 +200,40 @@ block content
                       td.px-4.whitespace-nowrap.text-center.text-sm.text-gray-500.font-medium
                         span(class=`w-4 h-4 rounded-full bg-${coinMarket.trustScore}-500 inline-block`)
                       td.px-4.whitespace-nowrap.text-center.text-sm.text-gray-500.font-medium= `${coinMarket.lastFetchAt}`
+
+
+
+              .infoPagination(class="flex flex-row justify-between items-center")
+                span.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500
+                  = `Showing ${(currentPage - 1) * itemsPerPage + 1} to ${Math.min(currentPage * itemsPerPage, totalItems)} of ${totalItems} exchanges`
+
+                nav(class="inline-flex items-center space-x-1 rounded-lg")
+                  ul.pagination(class="flex flex-row gap-1")
+
+                    // Show pages dynamically if there are more than 1 page
+                    if currentPage > 2
+                      li= '...'
+
+                    // Previous page (if not the first page)
+                    if currentPage > 1
+                      li
+                        a(class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/coin/${coinName}?page=${currentPage - 1}&per_page=${itemsPerPage}`)= currentPage - 1
+
+                    // Current page
+                    li
+                      span(class="px-4 py-2 bg-gray-200 rounded-lg text-zinc-950")= currentPage
+
+                    // Next page (if not the last page)
+                    if currentPage < totalPages
+                      li
+                        a(class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/coin/${coinName}?page=${currentPage + 1}&per_page=${itemsPerPage}`)= currentPage + 1
+
+                    if currentPage < totalPages - 1
+                      li= '...'
+
+                    // Last page link
+                    li
+                      a(class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/coin/${coinName}?page=${totalPages}&per_page=${itemsPerPage}`)= totalPages
 
 
           .aboutContainer.flex.flex-col.p-3
