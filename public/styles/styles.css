@@ -43,6 +43,10 @@ body {
   display: flex;
 }
 
+.downloadsDropDownOptions.show {
+  display: flex;
+}
+
 .chartContainer {
   width: 100% !important;
   height: auto !important; /* Allow the canvas to size naturally */

@@ -14,3 +14,5 @@ export const daysInChart = document.querySelectorAll(".optionChartDays");
 export const saveAsPng = document.querySelector(".saveAsPng");
 export const saveAsJpeg = document.querySelector(".saveAsJpeg");
 export const saveAsPdf = document.querySelector(".saveAsPdf");
+export const saveAsButtonDropdown = $(".saveAsBtnDropdown");
+export const optionsContainerDownloads = $(".downloadsDropDownOptions ");

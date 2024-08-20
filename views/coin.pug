@@ -131,11 +131,13 @@ block content
                 button.optionChartDays(class=" px-2 py-1 text-black hover:bg-white rounded-lg" data-days="30") 1m
                 button.optionChartDays(class=" px-2 py-1 text-black hover:bg-white rounded-lg" data-days="90") 3m
                 button.optionChartDays(class=" px-2 py-1 text-black hover:bg-white rounded-lg" data-days="365") 1y
-                button.saveAs(class=" px-2 py-1 text-black hover:bg-white rounded-lg")
-                  i.fa-solid.fa-circle-down
-                button.saveAsPdf(class=" px-2 py-1 text-black hover:bg-white rounded-lg" ) Download as PDF
-                button.saveAsPng(class=" px-2 py-1 text-black hover:bg-white rounded-lg" ) Download as PNG
-                button.saveAsJpeg(class=" px-2 py-1 text-black hover:bg-white rounded-lg" ) Download as JPEG
+                .dropDownContainer.flex
+                  button.saveAsBtnDropdown(class=" px-2 py-1 text-black hover:bg-white rounded-lg")
+                    i.fa-solid.fa-circle-down
+                  .downloadsDropDownOptions(class="hidden px-2 py-2 flex-col absolute  shadow-xl drop-shadow-xl rounded-lg bg-gray-200 ")  
+                    button.saveAsPdf(class=" px-2 py-1 text-black hover:bg-white rounded-lg" ) Download as PDF
+                    button.saveAsPng(class=" px-2 py-1 text-black hover:bg-white rounded-lg" ) Download as PNG
+                    button.saveAsJpeg(class=" px-2 py-1 text-black hover:bg-white rounded-lg" ) Download as JPEG
 
 
             canvas.chartContainer(id=`chart-${coinName}`)

@@ -14,7 +14,6 @@ import {
   valuesPercentage,
 } from "./handleElements.js";
 
-import { Chart } from "./chart.js"; // Adjust the path as necessary
 import { saveChartAsImage, saveChartAsPdf } from "./handleDownloads.js";
 
 export function handleCoinsFunctions() {
@@ -71,23 +70,29 @@ export function handleCoinsFunctions() {
   });
 
   // Handles the download of the chart
-  saveAsPng.addEventListener("click", function () {
-    const coinNameSelected = coinName[0].getAttribute("data-coin");
+  if (saveAsPng) {
+    saveAsPng.addEventListener("click", function () {
+      const coinNameSelected = coinName[0].getAttribute("data-coin");
 
-    saveChartAsImage("png", coinNameSelected);
-  });
+      saveChartAsImage("png", coinNameSelected);
+    });
+  }
 
-  saveAsJpeg.addEventListener("click", function () {
-    const coinNameSelected = coinName[0].getAttribute("data-coin");
+  if (saveAsJpeg) {
+    saveAsJpeg.addEventListener("click", function () {
+      const coinNameSelected = coinName[0].getAttribute("data-coin");
 
-    saveChartAsImage("jpeg", coinNameSelected);
-  });
+      saveChartAsImage("jpeg", coinNameSelected);
+    });
+  }
 
-  saveAsPdf.addEventListener("click", function () {
-    const coinNameSelected = coinName[0].getAttribute("data-coin");
+  if (saveAsJpeg) {
+    saveAsPdf.addEventListener("click", function () {
+      const coinNameSelected = coinName[0].getAttribute("data-coin");
 
-    saveChartAsPdf(coinNameSelected);
-  });
+      saveChartAsPdf(coinNameSelected);
+    });
+  }
 
   // Handle the click on the dropdown menu and show the current number of rows
   coinsToShow.on("click", function (e) {

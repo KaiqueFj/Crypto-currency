@@ -597,7 +597,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);
-const { iconsInfo, marketCapInfo } = require("eaddd84cc2e28a4a");
+const { iconsInfo, marketCapInfo, optionsContainerDownloads, saveAsButtonDropdown } = require("eaddd84cc2e28a4a");
 function handleUserClicks() {
     iconsInfo.each(function(e) {
         $(this).on("click", function(e) {
@@ -613,6 +613,16 @@ function handleUserClicks() {
             // Show the popup
             marketCapInfo.toggleClass("hidden");
         });
+    });
+    saveAsButtonDropdown.on("click", function(e) {
+        var containerPosition = $(this).offset();
+        optionsContainerDownloads.css({
+            top: containerPosition.top + $(this).outerHeight() + "px",
+            left: containerPosition.left + "px",
+            position: "absolute"
+        });
+        // Toggle the dropdown visibility
+        optionsContainerDownloads.toggleClass("show");
     });
 }
 
@@ -635,6 +645,8 @@ parcelHelpers.export(exports, "daysInChart", ()=>daysInChart);
 parcelHelpers.export(exports, "saveAsPng", ()=>saveAsPng);
 parcelHelpers.export(exports, "saveAsJpeg", ()=>saveAsJpeg);
 parcelHelpers.export(exports, "saveAsPdf", ()=>saveAsPdf);
+parcelHelpers.export(exports, "saveAsButtonDropdown", ()=>saveAsButtonDropdown);
+parcelHelpers.export(exports, "optionsContainerDownloads", ()=>optionsContainerDownloads);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -651,6 +663,8 @@ const daysInChart = document.querySelectorAll(".optionChartDays");
 const saveAsPng = document.querySelector(".saveAsPng");
 const saveAsJpeg = document.querySelector(".saveAsJpeg");
 const saveAsPdf = document.querySelector(".saveAsPdf");
+const saveAsButtonDropdown = $(".saveAsBtnDropdown");
+const optionsContainerDownloads = $(".downloadsDropDownOptions ");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -733,15 +747,15 @@ function handleCoinsFunctions() {
         });
     });
     // Handles the download of the chart
-    (0, _handleElementsJs.saveAsPng).addEventListener("click", function() {
+    if (0, _handleElementsJs.saveAsPng) (0, _handleElementsJs.saveAsPng).addEventListener("click", function() {
         const coinNameSelected = (0, _handleElementsJs.coinName)[0].getAttribute("data-coin");
         (0, _handleDownloadsJs.saveChartAsImage)("png", coinNameSelected);
     });
-    (0, _handleElementsJs.saveAsJpeg).addEventListener("click", function() {
+    if (0, _handleElementsJs.saveAsJpeg) (0, _handleElementsJs.saveAsJpeg).addEventListener("click", function() {
         const coinNameSelected = (0, _handleElementsJs.coinName)[0].getAttribute("data-coin");
         (0, _handleDownloadsJs.saveChartAsImage)("jpeg", coinNameSelected);
     });
-    (0, _handleElementsJs.saveAsPdf).addEventListener("click", function() {
+    if (0, _handleElementsJs.saveAsJpeg) (0, _handleElementsJs.saveAsPdf).addEventListener("click", function() {
         const coinNameSelected = (0, _handleElementsJs.coinName)[0].getAttribute("data-coin");
         (0, _handleDownloadsJs.saveChartAsPdf)(coinNameSelected);
     });
@@ -764,7 +778,7 @@ function handleCoinsFunctions() {
     });
 }
 
-},{"./chart.js":"cC087","./handleElements.js":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./handleDownloads.js":"krMLf"}],"cC087":[function(require,module,exports) {
+},{"./chart.js":"cC087","./handleElements.js":"3akdP","./handleDownloads.js":"krMLf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cC087":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Chart", ()=>(0, _autoDefault.default)) // Export Chart for use in other files

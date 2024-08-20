@@ -1,4 +1,9 @@
-const { iconsInfo, marketCapInfo } = require("./handleElements");
+const {
+  iconsInfo,
+  marketCapInfo,
+  optionsContainerDownloads,
+  saveAsButtonDropdown,
+} = require("./handleElements");
 
 export function handleUserClicks() {
   iconsInfo.each(function (e) {
@@ -17,5 +22,18 @@ export function handleUserClicks() {
       // Show the popup
       marketCapInfo.toggleClass("hidden");
     });
+  });
+
+  saveAsButtonDropdown.on("click", function (e) {
+    var containerPosition = $(this).offset();
+
+    optionsContainerDownloads.css({
+      top: containerPosition.top + $(this).outerHeight() + "px",
+      left: containerPosition.left + "px",
+      position: "absolute",
+    });
+
+    // Toggle the dropdown visibility
+    optionsContainerDownloads.toggleClass("show");
   });
 }
