@@ -3,6 +3,7 @@ import {
   coinName,
   coins,
   coinsToShow,
+  daysInChart,
   dropDownQtdOptions,
   optionsValue,
   rows,
@@ -49,6 +50,18 @@ export function handleCoinsFunctions() {
       $(this).removeClass("text-red-500");
       $(this).prepend('<i class="fa-solid fa-caret-up mr-1"></i>');
     }
+  });
+
+  // Handle the click on the data to be filtered in the chart
+  daysInChart.forEach((button) => {
+    button.addEventListener("click", () => {
+      const days = button.getAttribute("data-days");
+
+      coinName.forEach((coin) => {
+        constCoinIdName = coin.getAttribute("data-coin");
+        createUniqueChart(constCoinIdName, days);
+      });
+    });
   });
 
   // Handle the click on the dropdown menu and show the current number of rows

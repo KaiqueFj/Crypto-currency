@@ -3,11 +3,13 @@ import Chart from "chart.js/auto";
 import axios from "axios";
 import { format } from "date-fns";
 
-export async function fetchCoinData(coin) {
+let chartInstances = {};
+
+export async function fetchCoinData(coin, days = 7) {
   try {
     const response = await axios({
       method: "GET",
-      url: `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=brl&days=7`,
+      url: `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=brl&days=${days}`,
       headers: {
         accept: "application/json",
         "x-cg-demo-api-key": process.env.API_KEY_Cry,
@@ -22,9 +24,9 @@ export async function fetchCoinData(coin) {
   }
 }
 
-export async function getChartData(coin) {
+export async function getChartData(coin, days) {
   try {
-    const data = await fetchCoinData(coin);
+    const data = await fetchCoinData(coin, days);
     const labels = data.prices.map((price) => new Date(price[0]));
     const prices = data.prices.map((price) => price[1]);
 
@@ -35,9 +37,9 @@ export async function getChartData(coin) {
   }
 }
 
-export async function createChartForAllCoins(coin) {
+export async function createChartForAllCoins(coin, days) {
   try {
-    const { labels, prices } = await getChartData(coin);
+    const { labels, prices } = await getChartData(coin, days);
 
     const initialPrice = prices[prices.length - 2];
     const finalPrice = prices[prices.length - 1];
@@ -104,9 +106,9 @@ export async function createChartForAllCoins(coin) {
   }
 }
 
-export async function createUniqueChart(coin) {
+export async function createUniqueChart(coin, days) {
   try {
-    const { labels, prices } = await getChartData(coin);
+    const { labels, prices } = await getChartData(coin, days);
 
     // Format the labels (dates) using date-fns
     const formattedLabels = labels.map((dateString) => {
@@ -127,8 +129,6 @@ export async function createUniqueChart(coin) {
     const uniqueLabels = Array.from(uniqueLabelsMap.keys());
     const uniquePrices = Array.from(uniqueLabelsMap.values());
 
-    console.log(uniqueLabels);
-
     const initialPrice = uniquePrices[uniquePrices.length - 2];
     const finalPrice = uniquePrices[uniquePrices.length - 1];
     const isUp = finalPrice >= initialPrice;
@@ -141,7 +141,12 @@ export async function createUniqueChart(coin) {
 
     const ctx = document.getElementById(`chart-${coin}`).getContext("2d");
 
-    new Chart(ctx, {
+    // Check if a chart instance already exists and destroy it
+    if (chartInstances[coin]) {
+      chartInstances[coin].destroy();
+    }
+
+    chartInstances[coin] = new Chart(ctx, {
       type: "line",
       data: {
         labels: uniqueLabels,
@@ -155,7 +160,7 @@ export async function createUniqueChart(coin) {
             backgroundColor: lineColorWithOpacity, // Green color for
             pointBorderColor: lineColor, // White color for dot borders
             pointBorderWidth: 2,
-            pointRadius: 3,
+            pointRadius: 0,
             fill: true,
           },
         ],

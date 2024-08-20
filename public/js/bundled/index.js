@@ -631,6 +631,7 @@ parcelHelpers.export(exports, "iconsSpan", ()=>iconsSpan);
 parcelHelpers.export(exports, "iconsInfo", ()=>iconsInfo);
 parcelHelpers.export(exports, "marketCapInfo", ()=>marketCapInfo);
 parcelHelpers.export(exports, "coinName", ()=>coinName);
+parcelHelpers.export(exports, "daysInChart", ()=>daysInChart);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -643,6 +644,7 @@ const iconsSpan = document.querySelectorAll(".icon");
 const iconsInfo = $(".information");
 const marketCapInfo = $(".coinMessage");
 const coinName = document.querySelectorAll("[data-coin]");
+const daysInChart = document.querySelectorAll(".optionChartDays");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -713,6 +715,16 @@ function handleCoinsFunctions() {
             $(this).prepend('<i class="fa-solid fa-caret-up mr-1"></i>');
         }
     });
+    // Handle the click on the data to be filtered in the chart
+    (0, _handleElementsJs.daysInChart).forEach((button)=>{
+        button.addEventListener("click", ()=>{
+            const days = button.getAttribute("data-days");
+            (0, _handleElementsJs.coinName).forEach((coin)=>{
+                constCoinIdName = coin.getAttribute("data-coin");
+                (0, _chartJs.createUniqueChart)(constCoinIdName, days);
+            });
+        });
+    });
     // Handle the click on the dropdown menu and show the current number of rows
     (0, _handleElementsJs.coinsToShow).on("click", function(e) {
         e.preventDefault();
@@ -745,11 +757,12 @@ var _autoDefault = parcelHelpers.interopDefault(_auto);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _dateFns = require("date-fns");
-async function fetchCoinData(coin) {
+let chartInstances = {};
+async function fetchCoinData(coin, days = 7) {
     try {
         const response = await (0, _axiosDefault.default)({
             method: "GET",
-            url: `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=brl&days=7`,
+            url: `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=brl&days=${days}`,
             headers: {
                 accept: "application/json",
                 "x-cg-demo-api-key": "CG-FbS9EdtQ344edbywnjgR5KLQ"
@@ -762,9 +775,9 @@ async function fetchCoinData(coin) {
         throw err;
     }
 }
-async function getChartData(coin) {
+async function getChartData(coin, days) {
     try {
-        const data = await fetchCoinData(coin);
+        const data = await fetchCoinData(coin, days);
         const labels = data.prices.map((price)=>new Date(price[0]));
         const prices = data.prices.map((price)=>price[1]);
         return {
@@ -779,9 +792,9 @@ async function getChartData(coin) {
         };
     }
 }
-async function createChartForAllCoins(coin) {
+async function createChartForAllCoins(coin, days) {
     try {
-        const { labels, prices } = await getChartData(coin);
+        const { labels, prices } = await getChartData(coin, days);
         const initialPrice = prices[prices.length - 2];
         const finalPrice = prices[prices.length - 1];
         const isUp = finalPrice >= initialPrice;
@@ -842,9 +855,9 @@ async function createChartForAllCoins(coin) {
         console.error("Error creating chart:", err);
     }
 }
-async function createUniqueChart(coin) {
+async function createUniqueChart(coin, days) {
     try {
-        const { labels, prices } = await getChartData(coin);
+        const { labels, prices } = await getChartData(coin, days);
         // Format the labels (dates) using date-fns
         const formattedLabels = labels.map((dateString)=>{
             const date = new Date(dateString);
@@ -859,14 +872,15 @@ async function createUniqueChart(coin) {
         // Extract unique labels and prices from the Map
         const uniqueLabels = Array.from(uniqueLabelsMap.keys());
         const uniquePrices = Array.from(uniqueLabelsMap.values());
-        console.log(uniqueLabels);
         const initialPrice = uniquePrices[uniquePrices.length - 2];
         const finalPrice = uniquePrices[uniquePrices.length - 1];
         const isUp = finalPrice >= initialPrice;
         const lineColor = isUp ? "#10b981" : "#f87171";
         const lineColorWithOpacity = isUp ? "rgba(16, 185, 129, 0.1)" : "rgba(248, 113, 113, 0.1)";
         const ctx = document.getElementById(`chart-${coin}`).getContext("2d");
-        new (0, _autoDefault.default)(ctx, {
+        // Check if a chart instance already exists and destroy it
+        if (chartInstances[coin]) chartInstances[coin].destroy();
+        chartInstances[coin] = new (0, _autoDefault.default)(ctx, {
             type: "line",
             data: {
                 labels: uniqueLabels,
@@ -880,7 +894,7 @@ async function createUniqueChart(coin) {
                         backgroundColor: lineColorWithOpacity,
                         pointBorderColor: lineColor,
                         pointBorderWidth: 2,
-                        pointRadius: 3,
+                        pointRadius: 0,
                         fill: true
                     }
                 ]

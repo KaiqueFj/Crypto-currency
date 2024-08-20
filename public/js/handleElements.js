@@ -10,3 +10,4 @@ export const iconsSpan = document.querySelectorAll(".icon");
 export const iconsInfo = $(".information");
 export const marketCapInfo = $(".coinMessage");
 export const coinName = document.querySelectorAll("[data-coin]");
+export const daysInChart = document.querySelectorAll(".optionChartDays");
