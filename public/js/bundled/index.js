@@ -632,6 +632,9 @@ parcelHelpers.export(exports, "iconsInfo", ()=>iconsInfo);
 parcelHelpers.export(exports, "marketCapInfo", ()=>marketCapInfo);
 parcelHelpers.export(exports, "coinName", ()=>coinName);
 parcelHelpers.export(exports, "daysInChart", ()=>daysInChart);
+parcelHelpers.export(exports, "saveAsPng", ()=>saveAsPng);
+parcelHelpers.export(exports, "saveAsJpeg", ()=>saveAsJpeg);
+parcelHelpers.export(exports, "saveAsPdf", ()=>saveAsPdf);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -645,6 +648,9 @@ const iconsInfo = $(".information");
 const marketCapInfo = $(".coinMessage");
 const coinName = document.querySelectorAll("[data-coin]");
 const daysInChart = document.querySelectorAll(".optionChartDays");
+const saveAsPng = document.querySelector(".saveAsPng");
+const saveAsJpeg = document.querySelector(".saveAsJpeg");
+const saveAsPdf = document.querySelector(".saveAsPdf");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -682,6 +688,7 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleCoinsFunctions", ()=>handleCoinsFunctions);
 var _chartJs = require("./chart.js");
 var _handleElementsJs = require("./handleElements.js");
+var _handleDownloadsJs = require("./handleDownloads.js");
 function handleCoinsFunctions() {
     // Get the value of the per_page to persist
     const storedValue = localStorage.getItem("per_page");
@@ -725,6 +732,19 @@ function handleCoinsFunctions() {
             });
         });
     });
+    // Handles the download of the chart
+    (0, _handleElementsJs.saveAsPng).addEventListener("click", function() {
+        const coinNameSelected = (0, _handleElementsJs.coinName)[0].getAttribute("data-coin");
+        (0, _handleDownloadsJs.saveChartAsImage)("png", coinNameSelected);
+    });
+    (0, _handleElementsJs.saveAsJpeg).addEventListener("click", function() {
+        const coinNameSelected = (0, _handleElementsJs.coinName)[0].getAttribute("data-coin");
+        (0, _handleDownloadsJs.saveChartAsImage)("jpeg", coinNameSelected);
+    });
+    (0, _handleElementsJs.saveAsPdf).addEventListener("click", function() {
+        const coinNameSelected = (0, _handleElementsJs.coinName)[0].getAttribute("data-coin");
+        (0, _handleDownloadsJs.saveChartAsPdf)(coinNameSelected);
+    });
     // Handle the click on the dropdown menu and show the current number of rows
     (0, _handleElementsJs.coinsToShow).on("click", function(e) {
         e.preventDefault();
@@ -744,9 +764,11 @@ function handleCoinsFunctions() {
     });
 }
 
-},{"./chart.js":"cC087","./handleElements.js":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cC087":[function(require,module,exports) {
+},{"./chart.js":"cC087","./handleElements.js":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./handleDownloads.js":"krMLf"}],"cC087":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Chart", ()=>(0, _autoDefault.default)) // Export Chart for use in other files
+;
 parcelHelpers.export(exports, "fetchCoinData", ()=>fetchCoinData);
 parcelHelpers.export(exports, "getChartData", ()=>getChartData);
 parcelHelpers.export(exports, "createChartForAllCoins", ()=>createChartForAllCoins);
@@ -36337,7 +36359,48 @@ Object.entries(HttpStatusCode).forEach(([key, value])=>{
 });
 exports.default = HttpStatusCode;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7iSl7":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"krMLf":[function(require,module,exports) {
+// chartUtils.js
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "saveChartAsImage", ()=>saveChartAsImage);
+parcelHelpers.export(exports, "saveChartAsPdf", ()=>saveChartAsPdf);
+var _auto = require("chart.js/auto");
+var _autoDefault = parcelHelpers.interopDefault(_auto);
+function saveChartAsImage(format, coinName) {
+    const coinElement = document.querySelector(`[data-coin="${coinName}"]`);
+    if (coinElement) {
+        const chartCanvas = document.getElementById(`chart-${coinName}`);
+        if (chartCanvas) {
+            const chart = (0, _autoDefault.default).getChart(chartCanvas);
+            if (chart) {
+                const image = chartCanvas.toDataURL(`image/${format}`);
+                const link = document.createElement("a");
+                link.href = image;
+                link.download = `${coinName}-chart.${format}`;
+                link.click();
+            }
+        }
+    }
+}
+function saveChartAsPdf(coinName) {
+    const coinElement = document.querySelector(`[data-coin="${coinName}"]`);
+    if (coinElement) {
+        const chartCanvas = document.getElementById(`chart-${coinName}`);
+        if (chartCanvas) {
+            const chart = (0, _autoDefault.default).getChart(chartCanvas);
+            if (chart) {
+                const image = chartCanvas.toDataURL("image/png");
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF();
+                pdf.addImage(image, "PNG", 10, 10, 190, 100);
+                pdf.save(`${coinName}-chart.pdf`);
+            }
+        }
+    }
+}
+
+},{"chart.js/auto":"d8NN9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7iSl7":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleSortData", ()=>handleSortData);

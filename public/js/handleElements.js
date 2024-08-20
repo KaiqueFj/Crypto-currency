@@ -11,3 +11,6 @@ export const iconsInfo = $(".information");
 export const marketCapInfo = $(".coinMessage");
 export const coinName = document.querySelectorAll("[data-coin]");
 export const daysInChart = document.querySelectorAll(".optionChartDays");
+export const saveAsPng = document.querySelector(".saveAsPng");
+export const saveAsJpeg = document.querySelector(".saveAsJpeg");
+export const saveAsPdf = document.querySelector(".saveAsPdf");

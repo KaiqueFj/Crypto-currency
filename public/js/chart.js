@@ -2,6 +2,7 @@ import "chartjs-adapter-date-fns"; // or 'chartjs-adapter-moment'
 import Chart from "chart.js/auto";
 import axios from "axios";
 import { format } from "date-fns";
+export { Chart }; // Export Chart for use in other files
 
 let chartInstances = {};
 

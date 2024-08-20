@@ -8,8 +8,14 @@ import {
   optionsValue,
   rows,
   rowValue,
+  saveAsJpeg,
+  saveAsPdf,
+  saveAsPng,
   valuesPercentage,
 } from "./handleElements.js";
+
+import { Chart } from "./chart.js"; // Adjust the path as necessary
+import { saveChartAsImage, saveChartAsPdf } from "./handleDownloads.js";
 
 export function handleCoinsFunctions() {
   // Get the value of the per_page to persist
@@ -62,6 +68,25 @@ export function handleCoinsFunctions() {
         createUniqueChart(constCoinIdName, days);
       });
     });
+  });
+
+  // Handles the download of the chart
+  saveAsPng.addEventListener("click", function () {
+    const coinNameSelected = coinName[0].getAttribute("data-coin");
+
+    saveChartAsImage("png", coinNameSelected);
+  });
+
+  saveAsJpeg.addEventListener("click", function () {
+    const coinNameSelected = coinName[0].getAttribute("data-coin");
+
+    saveChartAsImage("jpeg", coinNameSelected);
+  });
+
+  saveAsPdf.addEventListener("click", function () {
+    const coinNameSelected = coinName[0].getAttribute("data-coin");
+
+    saveChartAsPdf(coinNameSelected);
   });
 
   // Handle the click on the dropdown menu and show the current number of rows
