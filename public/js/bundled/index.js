@@ -597,7 +597,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);
-const { iconsInfo, marketCapInfo, optionsContainerDownloads, saveAsButtonDropdown } = require("eaddd84cc2e28a4a");
+const { iconsInfo, marketCapInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar } = require("eaddd84cc2e28a4a");
 function handleUserClicks() {
     iconsInfo.each(function(e) {
         $(this).on("click", function(e) {
@@ -624,6 +624,10 @@ function handleUserClicks() {
         // Toggle the dropdown visibility
         optionsContainerDownloads.toggleClass("show");
     });
+    const sentimentPercentageUp = parseFloat(sentimentProfitBarUp.textContent.replace("%", ""));
+    const sentimentPercentageDown = parseFloat(sentimentProfitBarDown.textContent.replace("%", ""));
+    profitBar.style.width = `${sentimentPercentageUp}%`;
+    lostBar.style.width = `${sentimentPercentageDown}%`;
 }
 
 },{"eaddd84cc2e28a4a":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3akdP":[function(require,module,exports) {
@@ -647,6 +651,10 @@ parcelHelpers.export(exports, "saveAsJpeg", ()=>saveAsJpeg);
 parcelHelpers.export(exports, "saveAsPdf", ()=>saveAsPdf);
 parcelHelpers.export(exports, "saveAsButtonDropdown", ()=>saveAsButtonDropdown);
 parcelHelpers.export(exports, "optionsContainerDownloads", ()=>optionsContainerDownloads);
+parcelHelpers.export(exports, "sentimentProfitBarUp", ()=>sentimentProfitBarUp);
+parcelHelpers.export(exports, "profitBar", ()=>profitBar);
+parcelHelpers.export(exports, "sentimentProfitBarDown", ()=>sentimentProfitBarDown);
+parcelHelpers.export(exports, "lostBar", ()=>lostBar);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -665,6 +673,10 @@ const saveAsJpeg = document.querySelector(".saveAsJpeg");
 const saveAsPdf = document.querySelector(".saveAsPdf");
 const saveAsButtonDropdown = $(".saveAsBtnDropdown");
 const optionsContainerDownloads = $(".downloadsDropDownOptions ");
+const sentimentProfitBarUp = document.querySelector(".sentimentUp");
+const profitBar = document.querySelector(".profit-bar");
+const sentimentProfitBarDown = document.querySelector(".sentimentDown");
+const lostBar = document.querySelector(".lost-bar");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {

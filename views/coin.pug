@@ -117,6 +117,25 @@ block content
                     .coinLinks(class=" bg-gray-200 rounded-md px-2 py-1 flex flex-row gap-1 cursor-pointer")
                       i.icon.fa-brands.fa-github.text-base
                       a.font-medium.text-gray-700.text-xs.gap-1.flex.items-center(href=`${coin.github[0]}`) github
+
+              .sentimentAboutTheCoin
+                .header.flex
+                  span.font-semibold.text-sm.text-black Community sentiment
+
+                .coinSentiments.flex.flex-row.justify-evenly.items-center.mt-2
+                  .sentimentUp
+                    i.fa-solid.fa-arrow-trend-up.text-green-500
+                    span.sentimentUp.px-1.text-green-500=`${coin.sentiment_votes_up_percentage}%`
+
+                  .sentimentBar(class="flex flex-row grow w-4/12 px-1")
+                    span.profit-bar.bg-green-500.h-2.rounded-md.h-2
+                    span.lost-bar.bg-red-500.h-2.rounded-md.h-2
+
+                  .sentimentDown
+                    i.fa-solid.fa-arrow-trend-down.text-red-500
+                    span.sentimentDown.px-1.text-red-500=`${coin.sentiment_votes_down_percentage}%`
+
+
           .coinMessage.flex.flex-col.bg-gray-600.hidden.max-w-xs.w-xs.absolute.p-2.rounded-md.shadow-lg
             p.text-sm.mx-0.my-1 market capitalization is the total value of all the coins that have been mined. 
             p.text-sm.mx-0.my-1 It’s calculated by multiplying the number of coins in circulation by the current market price of a single coin

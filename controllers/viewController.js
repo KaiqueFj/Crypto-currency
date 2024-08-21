@@ -139,6 +139,8 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       id: coinData.id,
       symbol: coinData.symbol,
       name: coinData.name,
+      sentiment_votes_up_percentage: coinData.sentiment_votes_up_percentage,
+      sentiment_votes_down_percentage: coinData.sentiment_votes_down_percentage,
       descriptionEn: formatDescription(coinData.description.en),
       homepage: coinData.links.homepage,
       whitepaper: coinData.links.whitepaper,

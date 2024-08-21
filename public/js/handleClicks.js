@@ -3,6 +3,10 @@ const {
   marketCapInfo,
   optionsContainerDownloads,
   saveAsButtonDropdown,
+  sentimentProfitBarUp,
+  profitBar,
+  sentimentProfitBarDown,
+  lostBar,
 } = require("./handleElements");
 
 export function handleUserClicks() {
@@ -36,4 +40,15 @@ export function handleUserClicks() {
     // Toggle the dropdown visibility
     optionsContainerDownloads.toggleClass("show");
   });
+
+  const sentimentPercentageUp = parseFloat(
+    sentimentProfitBarUp.textContent.replace("%", "")
+  );
+
+  const sentimentPercentageDown = parseFloat(
+    sentimentProfitBarDown.textContent.replace("%", "")
+  );
+
+  profitBar.style.width = `${sentimentPercentageUp}%`;
+  lostBar.style.width = `${sentimentPercentageDown}%`;
 }
