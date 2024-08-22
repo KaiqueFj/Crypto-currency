@@ -584,6 +584,7 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"f2QDv":[function(require,module,exports) {
+const updateSpeedDoMeter = require("e2366ba8a8f4b6a3");
 const { handleUserClicks } = require("7d07fb8481c76f64");
 const { handleCoinsFunctions } = require("dea15e5a0d486318");
 const { handleSortData } = require("b710d7c996a067e0");
@@ -591,9 +592,25 @@ document.addEventListener("DOMContentLoaded", ()=>{
     handleCoinsFunctions();
     handleSortData();
     handleUserClicks();
+    // Update speedometer
+    const fearGreedValue = document.querySelector(".fear-greed-value").dataset.value;
+    if (fearGreedValue) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
 });
 
-},{"7d07fb8481c76f64":"7bD5q","dea15e5a0d486318":"jcvt7","b710d7c996a067e0":"7iSl7"}],"7bD5q":[function(require,module,exports) {
+},{"e2366ba8a8f4b6a3":"iLZtn","7d07fb8481c76f64":"7bD5q","dea15e5a0d486318":"jcvt7","b710d7c996a067e0":"7iSl7"}],"iLZtn":[function(require,module,exports) {
+// Function to update the speedometer needle
+function updateSpeedDoMeter(value) {
+    const maxValue = 100;
+    const angle = value / maxValue * 180 - 90;
+    const needle = document.querySelector(".speedometer-needle");
+    if (needle) {
+        needle.style.transform = "";
+        needle.style.transform = `rotate(${angle}deg)`;
+    }
+}
+module.exports = updateSpeedDoMeter;
+
+},{}],"7bD5q":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);
@@ -655,6 +672,7 @@ parcelHelpers.export(exports, "sentimentProfitBarUp", ()=>sentimentProfitBarUp);
 parcelHelpers.export(exports, "profitBar", ()=>profitBar);
 parcelHelpers.export(exports, "sentimentProfitBarDown", ()=>sentimentProfitBarDown);
 parcelHelpers.export(exports, "lostBar", ()=>lostBar);
+parcelHelpers.export(exports, "greed", ()=>greed);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -677,6 +695,7 @@ const sentimentProfitBarUp = document.querySelector(".sentimentUp");
 const profitBar = document.querySelector(".profit-bar");
 const sentimentProfitBarDown = document.querySelector(".sentimentDown");
 const lostBar = document.querySelector(".lost-bar");
+const greed = document.querySelector(".fear-greed-indicator");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {

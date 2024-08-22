@@ -20,3 +20,4 @@ export const sentimentProfitBarUp = document.querySelector(".sentimentUp");
 export const profitBar = document.querySelector(".profit-bar");
 export const sentimentProfitBarDown = document.querySelector(".sentimentDown");
 export const lostBar = document.querySelector(".lost-bar");
+export const greed = document.querySelector(".fear-greed-indicator");

@@ -57,6 +57,17 @@ body {
   vertical-align: middle;
 }
 
+.speedometer-svg {
+  width: 200px;
+  height: 100px;
+  display: block;
+  margin: 0 auto;
+}
+
+.speedometer-needle {
+  transition: transform 0.3s ease;
+}
+
 .icon::before,
 .fa-solid.fa-caret-up::before,
 .fa-solid.fa-caret-down::before {

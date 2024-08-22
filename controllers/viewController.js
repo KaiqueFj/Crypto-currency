@@ -119,6 +119,21 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
 
     const coinTicker = getTicker.data.tickers;
 
+    const getFearGreed = await axios({
+      url: `https://api.alternative.me/fng/?limit=7`,
+      headers: {
+        accept: "application/json",
+      },
+    });
+
+    const fearGreed = getFearGreed.data.data;
+
+    const fearGreedData = fearGreed.map((item) => ({
+      value: item.value,
+      classification: item.value_classification,
+      timestamp: item.timestamp,
+    }));
+
     const getValueToCurrentCurrency = await axios({
       method: "GET",
       url: `https://api.coingecko.com/api/v3/simple/price?ids=usd&vs_currencies=brl`,
@@ -237,6 +252,7 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       totalPages: paginatedTickersData.totalPages,
       totalItems: paginatedTickersData.totalItems,
       itemsPerPage: paginatedTickersData.itemsPerPage,
+      fearGreedValue: fearGreedData,
     });
   } catch (err) {
     console.error(err);
