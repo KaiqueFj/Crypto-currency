@@ -64,6 +64,10 @@ body {
   margin: 0 auto;
 }
 
+.mainSection {
+  width: calc(100vw - 272px);
+}
+
 .speedometer-needle {
   transition: transform 0.3s ease;
 }
