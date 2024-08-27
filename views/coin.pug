@@ -72,33 +72,32 @@ block content
 
                 canvas.chartContainer.items-center(id=`chart-${coinName}`)
 
-            .coinValueInCurrency(class="border-2 w-1/4 rounded-lg flex flex-col p-3 gap-16")
+            .coinValueInCurrency(class="border-2 w-1/3 rounded-lg flex flex-col p-3 gap-16")
               .header
                 h2.font-semibold.text-2xl.font-medium.text-black Coin convert
 
 
-
-              .valueInCurrency.flex.flex-col.rounded-lg.p-4.border-2.gap-4
-                .headerContainer.flex.flex-row.justify-between
-                  span.font-semibold.text-lg.text-black=`You pay`
-                  .currency-selector
-                    select(id="currencySelect").p-2.border.rounded
-                      each currency in currencies
-                        option(value=`${currency}`)=`${currency}`
-                        span=`${currency}`
-                  span#selectedCurrency.changeValue.px-1.font-normal.text-sm.text-gray-400 BRL
-                .body-info
-                  span#coinPrice.font-semibold.text-lg.text-black= `R$ ${coin.current_price}`
+              .quantityOfCoin.flex.flex-row.items-center.rounded-lg.p-4.border-2.gap-4
+                .currency-selector.flex-grow.flex.flex-row.items-center.gap-4
+                  .icon-container.flex.items-center
+                    span#cryptoIcon.hidden
+                    span#flagIcon.hidden
+                  select#currencySelect.p-2.border.rounded.w-fit.border-none
+                    each currency in currencies
+                      option(value=`${currency}`)= currency.toUpperCase()
+                  .body-info.flex.flex-col.items-end
+                    span#coinPrice.font-semibold.text-lg.text-black= `R$ ${coin.current_price}`
                   input(type="hidden", id="coinPriceUsd", value=coin.current_price_usd)
 
-              .valueOfCoin.flex.flex-col.rounded-lg.p-4.border-2.gap-4
-                .headerContainer.flex.flex-row.justify-between
-                  span.font-semibold.text-lg.text-black=`You buy`
-                  .coinType(class="flex flex-row items-center bg-gray-200 rounded-lg p-0.5")
-                    img.w-6.m-1(src=coin.thumb alt=coin.name)
-                    span.px-1.font-normal.text-sm.text-gray-400= `${coin.symbol.toUpperCase()}`
-                .body-info
-                  input(type="text" id="QuantityCoin" value="1").font-semibold.text-lg.text-black 
+              .valueInCurrency.flex.flex-row.items-center.rounded-lg.p-4.border-2.gap-4
+                img.w-6.h-6.m-1(src=coin.thumb alt=coin.name) 
+                .currency-selector.flex-grow.flex.flex-row.items-center
+                  select#currencySelect.p-2.border.rounded.w-fit
+                    each currency in currencies
+                      option(value=`${currency}`)= currency.toUpperCase()
+                  .body-info.flex.flex-col.items-end
+                    span#coinPrice.font-semibold.text-lg.text-black= `R$ ${coin.current_price}`
+                  input(type="hidden", id="coinPriceUsd", value=coin.current_price_usd)
 
 
 

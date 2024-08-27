@@ -1,7 +1,10 @@
 const updateSpeedDoMeter = require("./fearGreed");
 const { handleUserClicks } = require("./handleClicks");
 const { handleCoinsFunctions } = require("./handleCoinsFunctions");
-const { handleCoinValueInCurrency } = require("./handlePriceChange");
+const {
+  handleCoinValueInCurrency,
+  insertFlags,
+} = require("./handlePriceChange");
 const { handleSortData } = require("./HandleSortValues");
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -9,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   handleSortData();
   handleUserClicks();
   handleCoinValueInCurrency();
+  insertFlags();
 
   // Update speedometer
   const fearGreedValue =
