@@ -75,12 +75,22 @@ block content
             .coinValueInCurrency(class="border-2 w-1/4 rounded-lg flex flex-col p-3 gap-16")
               .header
                 h2.font-semibold.text-2xl.font-medium.text-black Coin convert
+
+
+
               .valueInCurrency.flex.flex-col.rounded-lg.p-4.border-2.gap-4
                 .headerContainer.flex.flex-row.justify-between
                   span.font-semibold.text-lg.text-black=`You pay`
-                  span.changeValue.px-1.font-normal.text-sm.text-gray-400 BRL
+                  .currency-selector
+                    select(id="currencySelect").p-2.border.rounded
+                      each currency in currencies
+                        option(value=`${currency}`)=`${currency}`
+                        span=`${currency}`
+                  span#selectedCurrency.changeValue.px-1.font-normal.text-sm.text-gray-400 BRL
                 .body-info
-                  span.font-semibold.text-lg.text-black=`R$ ${coin.current_price.toLocaleString()}`
+                  span#coinPrice.font-semibold.text-lg.text-black= `R$ ${coin.current_price}`
+                  input(type="hidden", id="coinPriceUsd", value=coin.current_price_usd)
+
               .valueOfCoin.flex.flex-col.rounded-lg.p-4.border-2.gap-4
                 .headerContainer.flex.flex-row.justify-between
                   span.font-semibold.text-lg.text-black=`You buy`

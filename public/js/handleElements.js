@@ -21,3 +21,11 @@ export const profitBar = document.querySelector(".profit-bar");
 export const sentimentProfitBarDown = document.querySelector(".sentimentDown");
 export const lostBar = document.querySelector(".lost-bar");
 export const greed = document.querySelector(".fear-greed-indicator");
+export const currencySelect = document.getElementById("currencySelect");
+export const coinPriceElement = document.getElementById("coinPrice");
+export const selectedCurrencyElement =
+  document.getElementById("selectedCurrency");
+
+export const coinPriceUsd = parseFloat(
+  document.getElementById("coinPriceUsd").value
+);

@@ -134,6 +134,17 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       timestamp: item.timestamp,
     }));
 
+    const getAllCurrencies = await axios({
+      method: "GET",
+      url: "https://api.coingecko.com/api/v3/simple/supported_vs_currencies",
+      headers: {
+        accept: "application/json",
+        "x-cg-demo-api-key": process.env.API_KEY_Cry,
+      },
+    });
+
+    const currencies = getAllCurrencies.data;
+
     const getValueToCurrentCurrency = await axios({
       method: "GET",
       url: `https://api.coingecko.com/api/v3/simple/price?ids=usd&vs_currencies=brl`,
@@ -163,6 +174,7 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       thumb: coinData.image.thumb,
       small: coinData.image.small,
       large: coinData.image.large,
+      current_price_usd: coinData.market_data.current_price.usd,
       current_price: formatCurrency(coinData.market_data.current_price.brl),
       market_cap: formatCurrency(coinData.market_data.market_cap.brl),
       market_cap_rank: coinData.market_data.market_cap_rank,
@@ -253,6 +265,7 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       totalItems: paginatedTickersData.totalItems,
       itemsPerPage: paginatedTickersData.itemsPerPage,
       fearGreedValue: fearGreedData,
+      currencies: currencies,
     });
   } catch (err) {
     console.error(err);

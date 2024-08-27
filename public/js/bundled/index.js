@@ -587,17 +587,19 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 const updateSpeedDoMeter = require("e2366ba8a8f4b6a3");
 const { handleUserClicks } = require("7d07fb8481c76f64");
 const { handleCoinsFunctions } = require("dea15e5a0d486318");
+const { handleCoinValueInCurrency } = require("fe3fbbf1f03d049c");
 const { handleSortData } = require("b710d7c996a067e0");
 document.addEventListener("DOMContentLoaded", ()=>{
     handleCoinsFunctions();
     handleSortData();
     handleUserClicks();
+    handleCoinValueInCurrency();
     // Update speedometer
     const fearGreedValue = document.querySelector(".fear-greed-value").dataset.value;
     if (fearGreedValue) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
 });
 
-},{"e2366ba8a8f4b6a3":"iLZtn","7d07fb8481c76f64":"7bD5q","dea15e5a0d486318":"jcvt7","b710d7c996a067e0":"7iSl7"}],"iLZtn":[function(require,module,exports) {
+},{"e2366ba8a8f4b6a3":"iLZtn","7d07fb8481c76f64":"7bD5q","dea15e5a0d486318":"jcvt7","b710d7c996a067e0":"7iSl7","fe3fbbf1f03d049c":"hYVWg"}],"iLZtn":[function(require,module,exports) {
 // Function to update the speedometer needle
 function updateSpeedDoMeter(value) {
     const maxValue = 100;
@@ -673,6 +675,10 @@ parcelHelpers.export(exports, "profitBar", ()=>profitBar);
 parcelHelpers.export(exports, "sentimentProfitBarDown", ()=>sentimentProfitBarDown);
 parcelHelpers.export(exports, "lostBar", ()=>lostBar);
 parcelHelpers.export(exports, "greed", ()=>greed);
+parcelHelpers.export(exports, "currencySelect", ()=>currencySelect);
+parcelHelpers.export(exports, "coinPriceElement", ()=>coinPriceElement);
+parcelHelpers.export(exports, "selectedCurrencyElement", ()=>selectedCurrencyElement);
+parcelHelpers.export(exports, "coinPriceUsd", ()=>coinPriceUsd);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -696,6 +702,10 @@ const profitBar = document.querySelector(".profit-bar");
 const sentimentProfitBarDown = document.querySelector(".sentimentDown");
 const lostBar = document.querySelector(".lost-bar");
 const greed = document.querySelector(".fear-greed-indicator");
+const currencySelect = document.getElementById("currencySelect");
+const coinPriceElement = document.getElementById("coinPrice");
+const selectedCurrencyElement = document.getElementById("selectedCurrency");
+const coinPriceUsd = parseFloat(document.getElementById("coinPriceUsd").value);
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -36498,6 +36508,29 @@ function sortTable(column, ascending) {
     rows.forEach((row)=>tbody.appendChild(row));
 }
 
-},{"./handleElements":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
+},{"./handleElements":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hYVWg":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "handleCoinValueInCurrency", ()=>handleCoinValueInCurrency);
+var _handleElements = require("./handleElements");
+function handleCoinValueInCurrency() {
+    (0, _handleElements.currencySelect).addEventListener("change", async ()=>{
+        const selectedCurrency = (0, _handleElements.currencySelect).value.toLowerCase();
+        try {
+            const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=usd&vs_currencies=${selectedCurrency}`);
+            const data = await response.json();
+            const conversionRate = data.usd[selectedCurrency];
+            // Calculate the new price by multiplying the coin's price in USD by the conversion rate
+            const newPrice = (0, _handleElements.coinPriceUsd) * conversionRate;
+            // Update the price and currency symbol in the DOM
+            (0, _handleElements.coinPriceElement).textContent = `${newPrice.toLocaleString()} ${selectedCurrency.toUpperCase()}`;
+            (0, _handleElements.selectedCurrencyElement).textContent = selectedCurrency.toUpperCase();
+        } catch (error) {
+            console.error("Error fetching conversion rate:", error);
+        }
+    });
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./handleElements":"3akdP"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
 
 //# sourceMappingURL=index.js.map
