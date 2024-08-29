@@ -4,6 +4,7 @@ const { handleCoinsFunctions } = require("./handleCoinsFunctions");
 const {
   handleCoinValueInCurrency,
   insertFlags,
+  updateValueOfCoinByQuantity,
 } = require("./handlePriceChange");
 const { handleSortData } = require("./HandleSortValues");
 
@@ -13,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   handleUserClicks();
   handleCoinValueInCurrency();
   insertFlags();
+  updateValueOfCoinByQuantity();
 
   // Update speedometer
   const fearGreedValue =

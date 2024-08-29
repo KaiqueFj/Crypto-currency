@@ -4,6 +4,33 @@ import {
   coinPriceUsd,
 } from "./handleElements";
 
+function updateTotalValue() {
+  const coinPriceValue = document.getElementById("coinPriceValue");
+  const coinQuantity = document.getElementById("coinQuantity");
+
+  let coinPrice = parseFloat(coinPriceValue.dataset.originalPrice);
+
+  if (isNaN(coinPrice)) {
+    // If the data attribute is not set or not a valid number, use the text content
+    coinPrice = parseFloat(coinPriceValue.textContent);
+  }
+
+  const quantity = parseFloat(coinQuantity.value) || 1; // Default to 1 if input is empty or NaN
+
+  const totalValue = coinPrice * quantity; // Calculate the total value
+  coinPriceValue.textContent = totalValue.toFixed(2); // Display the total value with 2 decimal places
+}
+
+export function updateValueOfCoinByQuantity() {
+  const coinQuantity = document.getElementById("coinQuantity");
+
+  // Event listener to update total value when quantity changes
+  coinQuantity.addEventListener("input", updateTotalValue);
+
+  // Initial calculation
+  updateTotalValue();
+}
+
 export function insertFlags() {
   const select = document.getElementById("currencySelect");
   const cryptoIcon = document.getElementById("cryptoIcon");
@@ -53,8 +80,14 @@ export function insertFlags() {
 }
 
 export function handleCoinValueInCurrency() {
+  const currencySelect = document.getElementById("currencySelect");
+  const coinPriceValue = document.getElementById("coinPriceValue");
+
   currencySelect.addEventListener("change", async () => {
     const selectedCurrency = currencySelect.value.toLowerCase();
+    const coinPriceUsd = parseFloat(
+      document.getElementById("coinPriceUsd").value
+    );
 
     try {
       const response = await fetch(
@@ -63,12 +96,15 @@ export function handleCoinValueInCurrency() {
       const data = await response.json();
 
       const conversionRate = data.usd[selectedCurrency];
-
-      // Calculate the new price by multiplying the coin's price in USD by the conversion rate
       const newPrice = coinPriceUsd * conversionRate;
 
-      // Update the price and currency symbol in the DOM
-      coinPriceElement.textContent = `${newPrice.toLocaleString()} ${selectedCurrency.toUpperCase()}`;
+      // Update the original price in the data attribute
+      coinPriceValue.dataset.originalPrice = newPrice.toFixed(2);
+
+      // Display the new price (without multiplication by quantity yet)
+      coinPriceValue.textContent = newPrice.toFixed(2);
+
+      updateTotalValue(); // Recalculate the total value after changing the currency
     } catch (error) {
       console.error("Error fetching conversion rate:", error);
     }

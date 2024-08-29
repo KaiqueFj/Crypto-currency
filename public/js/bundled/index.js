@@ -587,7 +587,7 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 const updateSpeedDoMeter = require("e2366ba8a8f4b6a3");
 const { handleUserClicks } = require("7d07fb8481c76f64");
 const { handleCoinsFunctions } = require("dea15e5a0d486318");
-const { handleCoinValueInCurrency, insertFlags } = require("fe3fbbf1f03d049c");
+const { handleCoinValueInCurrency, insertFlags, updateValueOfCoinByQuantity } = require("fe3fbbf1f03d049c");
 const { handleSortData } = require("b710d7c996a067e0");
 document.addEventListener("DOMContentLoaded", ()=>{
     handleCoinsFunctions();
@@ -595,12 +595,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
     handleUserClicks();
     handleCoinValueInCurrency();
     insertFlags();
+    updateValueOfCoinByQuantity();
     // Update speedometer
     const fearGreedValue = document.querySelector(".fear-greed-value").dataset.value;
     if (fearGreedValue) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
 });
 
-},{"e2366ba8a8f4b6a3":"iLZtn","7d07fb8481c76f64":"7bD5q","dea15e5a0d486318":"jcvt7","b710d7c996a067e0":"7iSl7","fe3fbbf1f03d049c":"hYVWg"}],"iLZtn":[function(require,module,exports) {
+},{"e2366ba8a8f4b6a3":"iLZtn","7d07fb8481c76f64":"7bD5q","dea15e5a0d486318":"jcvt7","fe3fbbf1f03d049c":"hYVWg","b710d7c996a067e0":"7iSl7"}],"iLZtn":[function(require,module,exports) {
 // Function to update the speedometer needle
 function updateSpeedDoMeter(value) {
     const maxValue = 100;
@@ -36456,7 +36457,92 @@ function saveChartAsPdf(coinName) {
     }
 }
 
-},{"chart.js/auto":"d8NN9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7iSl7":[function(require,module,exports) {
+},{"chart.js/auto":"d8NN9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hYVWg":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "updateValueOfCoinByQuantity", ()=>updateValueOfCoinByQuantity);
+parcelHelpers.export(exports, "insertFlags", ()=>insertFlags);
+parcelHelpers.export(exports, "handleCoinValueInCurrency", ()=>handleCoinValueInCurrency);
+var _handleElements = require("./handleElements");
+function updateTotalValue() {
+    const coinPriceValue = document.getElementById("coinPriceValue");
+    const coinQuantity = document.getElementById("coinQuantity");
+    let coinPrice = parseFloat(coinPriceValue.dataset.originalPrice);
+    if (isNaN(coinPrice)) // If the data attribute is not set or not a valid number, use the text content
+    coinPrice = parseFloat(coinPriceValue.textContent);
+    const quantity = parseFloat(coinQuantity.value) || 1; // Default to 1 if input is empty or NaN
+    const totalValue = coinPrice * quantity; // Calculate the total value
+    coinPriceValue.textContent = totalValue.toFixed(2); // Display the total value with 2 decimal places
+}
+function updateValueOfCoinByQuantity() {
+    const coinQuantity = document.getElementById("coinQuantity");
+    // Event listener to update total value when quantity changes
+    coinQuantity.addEventListener("input", updateTotalValue);
+    // Initial calculation
+    updateTotalValue();
+}
+function insertFlags() {
+    const select = document.getElementById("currencySelect");
+    const cryptoIcon = document.getElementById("cryptoIcon");
+    const flagIcon = document.getElementById("flagIcon");
+    // Map currency codes to icon URLs
+    const iconMap = {
+        btc: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
+        eth: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+        ltc: "https://cryptologos.cc/logos/litecoin-ltc-logo.png",
+        bch: "https://cryptologos.cc/logos/bitcoin-cash-bch-logo.png",
+        bnb: "https://cryptologos.cc/logos/binance-coin-bnb-logo.png",
+        eos: "https://cryptologos.cc/logos/eos-eos-logo.png",
+        xrp: "https://cryptologos.cc/logos/xrp-xrp-logo.png",
+        xlm: "https://cryptologos.cc/logos/stellar-xlm-logo.png",
+        link: "https://cryptologos.cc/logos/chainlink-link-logo.png",
+        dot: "https://coin-images.coingecko.com/coins/images/12171/small/polkadot.png?1696512008",
+        yfi: "https://cryptologos.cc/logos/yearn-finance-yfi-logo.png"
+    };
+    function updateIcon(currencyCode) {
+        let iconUrl = "";
+        if (currencyCode in iconMap) {
+            iconUrl = iconMap[currencyCode];
+            cryptoIcon.style.display = "inline-block";
+            flagIcon.style.display = "none";
+            cryptoIcon.innerHTML = `<img src="${iconUrl}" alt="${currencyCode}" style="width: 24px; height: 24px;">`;
+        } else {
+            const countryCode = currencyCode.slice(0, 2).toLowerCase();
+            cryptoIcon.style.display = "none";
+            flagIcon.style.display = "inline-block";
+            flagIcon.className = `flag-icon flag-icon-${countryCode}`;
+        }
+    }
+    // Initial setup
+    if (select && select.value) updateIcon(select.value);
+    // Update icon on change
+    if (select) select.addEventListener("change", ()=>{
+        updateIcon(select.value);
+    });
+}
+function handleCoinValueInCurrency() {
+    const currencySelect = document.getElementById("currencySelect");
+    const coinPriceValue = document.getElementById("coinPriceValue");
+    currencySelect.addEventListener("change", async ()=>{
+        const selectedCurrency = currencySelect.value.toLowerCase();
+        const coinPriceUsd = parseFloat(document.getElementById("coinPriceUsd").value);
+        try {
+            const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=usd&vs_currencies=${selectedCurrency}`);
+            const data = await response.json();
+            const conversionRate = data.usd[selectedCurrency];
+            const newPrice = coinPriceUsd * conversionRate;
+            // Update the original price in the data attribute
+            coinPriceValue.dataset.originalPrice = newPrice.toFixed(2);
+            // Display the new price (without multiplication by quantity yet)
+            coinPriceValue.textContent = newPrice.toFixed(2);
+            updateTotalValue(); // Recalculate the total value after changing the currency
+        } catch (error) {
+            console.error("Error fetching conversion rate:", error);
+        }
+    });
+}
+
+},{"./handleElements":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7iSl7":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleSortData", ()=>handleSortData);
@@ -36509,68 +36595,6 @@ function sortTable(column, ascending) {
     rows.forEach((row)=>tbody.appendChild(row));
 }
 
-},{"./handleElements":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hYVWg":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "insertFlags", ()=>insertFlags);
-parcelHelpers.export(exports, "handleCoinValueInCurrency", ()=>handleCoinValueInCurrency);
-var _handleElements = require("./handleElements");
-function insertFlags() {
-    const select = document.getElementById("currencySelect");
-    const cryptoIcon = document.getElementById("cryptoIcon");
-    const flagIcon = document.getElementById("flagIcon");
-    // Map currency codes to icon URLs
-    const iconMap = {
-        btc: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
-        eth: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
-        ltc: "https://cryptologos.cc/logos/litecoin-ltc-logo.png",
-        bch: "https://cryptologos.cc/logos/bitcoin-cash-bch-logo.png",
-        bnb: "https://cryptologos.cc/logos/binance-coin-bnb-logo.png",
-        eos: "https://cryptologos.cc/logos/eos-eos-logo.png",
-        xrp: "https://cryptologos.cc/logos/xrp-xrp-logo.png",
-        xlm: "https://cryptologos.cc/logos/stellar-xlm-logo.png",
-        link: "https://cryptologos.cc/logos/chainlink-link-logo.png",
-        dot: "https://coin-images.coingecko.com/coins/images/12171/small/polkadot.png?1696512008",
-        yfi: "https://cryptologos.cc/logos/yearn-finance-yfi-logo.png"
-    };
-    function updateIcon(currencyCode) {
-        let iconUrl = "";
-        if (currencyCode in iconMap) {
-            iconUrl = iconMap[currencyCode];
-            cryptoIcon.style.display = "inline-block";
-            flagIcon.style.display = "none";
-            cryptoIcon.innerHTML = `<img src="${iconUrl}" alt="${currencyCode}" style="width: 24px; height: 24px;">`;
-        } else {
-            const countryCode = currencyCode.slice(0, 2).toLowerCase();
-            cryptoIcon.style.display = "none";
-            flagIcon.style.display = "inline-block";
-            flagIcon.className = `flag-icon flag-icon-${countryCode}`;
-        }
-    }
-    // Initial setup
-    if (select && select.value) updateIcon(select.value);
-    // Update icon on change
-    if (select) select.addEventListener("change", ()=>{
-        updateIcon(select.value);
-    });
-}
-function handleCoinValueInCurrency() {
-    (0, _handleElements.currencySelect).addEventListener("change", async ()=>{
-        const selectedCurrency = (0, _handleElements.currencySelect).value.toLowerCase();
-        try {
-            const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=usd&vs_currencies=${selectedCurrency}`);
-            const data = await response.json();
-            const conversionRate = data.usd[selectedCurrency];
-            // Calculate the new price by multiplying the coin's price in USD by the conversion rate
-            const newPrice = (0, _handleElements.coinPriceUsd) * conversionRate;
-            // Update the price and currency symbol in the DOM
-            (0, _handleElements.coinPriceElement).textContent = `${newPrice.toLocaleString()} ${selectedCurrency.toUpperCase()}`;
-        } catch (error) {
-            console.error("Error fetching conversion rate:", error);
-        }
-    });
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./handleElements":"3akdP"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
+},{"./handleElements":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
 
 //# sourceMappingURL=index.js.map

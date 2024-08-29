@@ -77,8 +77,8 @@ block content
                 h2.font-semibold.text-2xl.font-medium.text-black Coin convert
 
 
-              .quantityOfCoin.flex.flex-row.items-center.rounded-lg.p-4.border-2.gap-4
-                .currency-selector.flex-grow.flex.flex-row.items-center.gap-4
+              .quantityOfCoin.flex.flex-col.rounded-lg.p-4.border-2.gap-4
+                .currency-selector.flex.flex-row.items-center.rounded-lg.p-4.border-2.gap-4
                   .icon-container.flex.items-center
                     span#cryptoIcon.hidden
                     span#flagIcon.hidden
@@ -86,19 +86,13 @@ block content
                     each currency in currencies
                       option(value=`${currency}`)= currency.toUpperCase()
                   .body-info.flex.flex-col.items-end
-                    span#coinPrice.font-semibold.text-lg.text-black= `R$ ${coin.current_price}`
+                    span#coinPriceValue= coin.current_price
                   input(type="hidden", id="coinPriceUsd", value=coin.current_price_usd)
 
-              .valueInCurrency.flex.flex-row.items-center.rounded-lg.p-4.border-2.gap-4
-                img.w-6.h-6.m-1(src=coin.thumb alt=coin.name) 
-                .currency-selector.flex-grow.flex.flex-row.items-center
-                  select#currencySelect.p-2.border.rounded.w-fit
-                    each currency in currencies
-                      option(value=`${currency}`)= currency.toUpperCase()
+                .valueInCurrency.flex.flex-row.items-center.rounded-lg.p-4.border-2.gap-4
+                  img.w-6.h-6.m-1(src=coin.thumb alt=coin.name) 
                   .body-info.flex.flex-col.items-end
-                    span#coinPrice.font-semibold.text-lg.text-black= `R$ ${coin.current_price}`
-                  input(type="hidden", id="coinPriceUsd", value=coin.current_price_usd)
-
+                    input(type="text" value="1" id="coinQuantity")
 
 
           .Exchanges(class="   flex flex-col")
