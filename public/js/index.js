@@ -1,7 +1,7 @@
 const updateSpeedDoMeter = require("./fearGreed");
 const { handleUserClicks } = require("./handleClicks");
 const { handleCoinsFunctions } = require("./handleCoinsFunctions");
-const { fearGreedValue } = require("./handleElements");
+const { fearGreedValue, feedGreedCoinContainer } = require("./handleElements");
 const {
   handleCoinValueInCurrency,
   insertFlags,
@@ -22,6 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Update speedometer
 
-if (fearGreedNeedlePosition) {
-  updateSpeedDoMeter(parseInt(fearGreedValue, 10));
+if (feedGreedCoinContainer) {
+  if (fearGreedNeedlePosition && fearGreedValue !== null) {
+    updateSpeedDoMeter(parseInt(fearGreedValue, 10));
+  }
 }

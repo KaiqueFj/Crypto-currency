@@ -587,7 +587,7 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 const updateSpeedDoMeter = require("e2366ba8a8f4b6a3");
 const { handleUserClicks } = require("7d07fb8481c76f64");
 const { handleCoinsFunctions } = require("dea15e5a0d486318");
-const { fearGreedValue } = require("71b77643ce512d0");
+const { fearGreedValue, feedGreedCoinContainer } = require("71b77643ce512d0");
 const { handleCoinValueInCurrency, insertFlags, updateValueOfCoinByQuantity } = require("fe3fbbf1f03d049c");
 const { handleSortData } = require("b710d7c996a067e0");
 const fearGreedNeedlePosition = fearGreedValue;
@@ -600,7 +600,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     handleUserClicks();
 });
 // Update speedometer
-if (fearGreedNeedlePosition) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
+if (feedGreedCoinContainer) {
+    if (fearGreedNeedlePosition && fearGreedValue !== null) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
+}
 
 },{"e2366ba8a8f4b6a3":"iLZtn","7d07fb8481c76f64":"7bD5q","dea15e5a0d486318":"jcvt7","fe3fbbf1f03d049c":"hYVWg","b710d7c996a067e0":"7iSl7","71b77643ce512d0":"3akdP"}],"iLZtn":[function(require,module,exports) {
 const { needle } = require("85fb5a8de257146");
@@ -642,6 +644,7 @@ parcelHelpers.export(exports, "sentimentProfitBarDown", ()=>sentimentProfitBarDo
 parcelHelpers.export(exports, "lostBar", ()=>lostBar);
 parcelHelpers.export(exports, "greed", ()=>greed);
 parcelHelpers.export(exports, "navItems", ()=>navItems);
+parcelHelpers.export(exports, "feedGreedCoinContainer", ()=>feedGreedCoinContainer);
 parcelHelpers.export(exports, "fearGreedValue", ()=>fearGreedValue);
 parcelHelpers.export(exports, "needle", ()=>needle);
 parcelHelpers.export(exports, "coinPriceValue", ()=>coinPriceValue);
@@ -674,7 +677,9 @@ const sentimentProfitBarDown = document.querySelector(".sentimentDown");
 const lostBar = document.querySelector(".lost-bar");
 const greed = document.querySelector(".fear-greed-indicator");
 const navItems = document.querySelectorAll(".asideNavigation [data-target]");
-const fearGreedValue = document.querySelector(".fear-greed-value").dataset.value;
+const feedGreedCoinContainer = document.querySelector(".fearGreedCoin");
+const fearGreedElement = document.querySelector(".fear-greed-value");
+const fearGreedValue = fearGreedElement ? fearGreedElement.dataset.value : null;
 const needle = document.querySelector(".speedometer-needle");
 const coinPriceValue = document.getElementById("coinPriceValue");
 const coinQuantity = document.getElementById("coinQuantity");

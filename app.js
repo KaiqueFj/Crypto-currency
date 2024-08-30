@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const rateLimit = require("express-rate-limit");
-const CoinGeckoRoutes = require("./routes/coinGeckoRoutes");
 const viewRoutes = require("./routes/viewRoutes");
 const app = express();
 
@@ -19,6 +18,5 @@ const limiter = rateLimit({
 });
 app.use("/api", limiter);
 app.use("/", viewRoutes);
-app.use("/api", CoinGeckoRoutes);
 
 module.exports = app;
