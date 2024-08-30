@@ -587,26 +587,27 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 const updateSpeedDoMeter = require("e2366ba8a8f4b6a3");
 const { handleUserClicks } = require("7d07fb8481c76f64");
 const { handleCoinsFunctions } = require("dea15e5a0d486318");
+const { fearGreedValue } = require("71b77643ce512d0");
 const { handleCoinValueInCurrency, insertFlags, updateValueOfCoinByQuantity } = require("fe3fbbf1f03d049c");
 const { handleSortData } = require("b710d7c996a067e0");
+const fearGreedNeedlePosition = fearGreedValue;
 document.addEventListener("DOMContentLoaded", ()=>{
     handleCoinsFunctions();
     handleSortData();
-    handleUserClicks();
     handleCoinValueInCurrency();
     insertFlags();
     updateValueOfCoinByQuantity();
-    // Update speedometer
-    const fearGreedValue = document.querySelector(".fear-greed-value").dataset.value;
-    if (fearGreedValue) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
+    handleUserClicks();
 });
+// Update speedometer
+if (fearGreedNeedlePosition) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
 
-},{"e2366ba8a8f4b6a3":"iLZtn","7d07fb8481c76f64":"7bD5q","dea15e5a0d486318":"jcvt7","fe3fbbf1f03d049c":"hYVWg","b710d7c996a067e0":"7iSl7"}],"iLZtn":[function(require,module,exports) {
+},{"e2366ba8a8f4b6a3":"iLZtn","7d07fb8481c76f64":"7bD5q","dea15e5a0d486318":"jcvt7","fe3fbbf1f03d049c":"hYVWg","b710d7c996a067e0":"7iSl7","71b77643ce512d0":"3akdP"}],"iLZtn":[function(require,module,exports) {
+const { needle } = require("85fb5a8de257146");
 // Function to update the speedometer needle
 function updateSpeedDoMeter(value) {
     const maxValue = 100;
     const angle = value / maxValue * 180 - 90;
-    const needle = document.querySelector(".speedometer-needle");
     if (needle) {
         needle.style.transform = "";
         needle.style.transform = `rotate(${angle}deg)`;
@@ -614,44 +615,7 @@ function updateSpeedDoMeter(value) {
 }
 module.exports = updateSpeedDoMeter;
 
-},{}],"7bD5q":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);
-const { iconsInfo, marketCapInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar } = require("eaddd84cc2e28a4a");
-function handleUserClicks() {
-    iconsInfo.each(function(e) {
-        $(this).on("click", function(e) {
-            e.preventDefault(); // Get the position of the clicked element
-            const offset = $(this).offset();
-            const height = $(this).outerHeight();
-            const width = $(this).outerWidth();
-            // Position the popup next to the clicked element
-            marketCapInfo.css({
-                top: offset.top + height + 5,
-                left: offset.left + width / 2 - marketCapInfo.outerWidth() / 2
-            });
-            // Show the popup
-            marketCapInfo.toggleClass("hidden");
-        });
-    });
-    saveAsButtonDropdown.on("click", function(e) {
-        var containerPosition = $(this).offset();
-        optionsContainerDownloads.css({
-            top: containerPosition.top + $(this).outerHeight() + "px",
-            left: containerPosition.left + "px",
-            position: "absolute"
-        });
-        // Toggle the dropdown visibility
-        optionsContainerDownloads.toggleClass("show");
-    });
-    const sentimentPercentageUp = parseFloat(sentimentProfitBarUp.textContent.replace("%", ""));
-    const sentimentPercentageDown = parseFloat(sentimentProfitBarDown.textContent.replace("%", ""));
-    profitBar.style.width = `${sentimentPercentageUp}%`;
-    lostBar.style.width = `${sentimentPercentageDown}%`;
-}
-
-},{"eaddd84cc2e28a4a":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3akdP":[function(require,module,exports) {
+},{"85fb5a8de257146":"3akdP"}],"3akdP":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "dropDownQtdOptions", ()=>dropDownQtdOptions);
@@ -677,10 +641,15 @@ parcelHelpers.export(exports, "profitBar", ()=>profitBar);
 parcelHelpers.export(exports, "sentimentProfitBarDown", ()=>sentimentProfitBarDown);
 parcelHelpers.export(exports, "lostBar", ()=>lostBar);
 parcelHelpers.export(exports, "greed", ()=>greed);
+parcelHelpers.export(exports, "navItems", ()=>navItems);
+parcelHelpers.export(exports, "fearGreedValue", ()=>fearGreedValue);
+parcelHelpers.export(exports, "needle", ()=>needle);
+parcelHelpers.export(exports, "coinPriceValue", ()=>coinPriceValue);
+parcelHelpers.export(exports, "coinQuantity", ()=>coinQuantity);
 parcelHelpers.export(exports, "currencySelect", ()=>currencySelect);
-parcelHelpers.export(exports, "coinPriceElement", ()=>coinPriceElement);
-parcelHelpers.export(exports, "selectedCurrencyElement", ()=>selectedCurrencyElement);
-parcelHelpers.export(exports, "coinPriceUsd", ()=>coinPriceUsd);
+parcelHelpers.export(exports, "select", ()=>select);
+parcelHelpers.export(exports, "cryptoIcon", ()=>cryptoIcon);
+parcelHelpers.export(exports, "flagIcon", ()=>flagIcon);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -704,10 +673,15 @@ const profitBar = document.querySelector(".profit-bar");
 const sentimentProfitBarDown = document.querySelector(".sentimentDown");
 const lostBar = document.querySelector(".lost-bar");
 const greed = document.querySelector(".fear-greed-indicator");
+const navItems = document.querySelectorAll(".asideNavigation [data-target]");
+const fearGreedValue = document.querySelector(".fear-greed-value").dataset.value;
+const needle = document.querySelector(".speedometer-needle");
+const coinPriceValue = document.getElementById("coinPriceValue");
+const coinQuantity = document.getElementById("coinQuantity");
 const currencySelect = document.getElementById("currencySelect");
-const coinPriceElement = document.getElementById("coinPrice");
-const selectedCurrencyElement = document.getElementById("selectedCurrency");
-const coinPriceUsd = parseFloat(document.getElementById("coinPriceUsd").value);
+const select = document.getElementById("currencySelect");
+const cryptoIcon = document.getElementById("cryptoIcon");
+const flagIcon = document.getElementById("flagIcon");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -739,7 +713,60 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"jcvt7":[function(require,module,exports) {
+},{}],"7bD5q":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);
+const { iconsInfo, marketCapInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar, navItems } = require("eaddd84cc2e28a4a");
+function handleUserClicks() {
+    //handle the infoContainer for each stats of the coin
+    iconsInfo.each(function(e) {
+        $(this).on("click", function(e) {
+            e.preventDefault(); // Get the position of the clicked element
+            const offset = $(this).offset();
+            const height = $(this).outerHeight();
+            const width = $(this).outerWidth();
+            // Position the popup next to the clicked element
+            marketCapInfo.css({
+                top: offset.top + height + 5,
+                left: offset.left + width / 2 - marketCapInfo.outerWidth() / 2
+            });
+            // Show the popup
+            marketCapInfo.toggleClass("hidden");
+        });
+    });
+    //handle aside navigation
+    navItems.forEach((item)=>{
+        item.addEventListener("click", function() {
+            const targetId = this.getAttribute("data-target");
+            console.log(targetId);
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) targetElement.scrollIntoView({
+                behavior: "smooth"
+            });
+        });
+    });
+    // Handle save chart as image
+    saveAsButtonDropdown.on("click", function(e) {
+        var containerPosition = $(this).offset();
+        optionsContainerDownloads.css({
+            top: containerPosition.top + $(this).outerHeight() + "px",
+            left: containerPosition.left + "px",
+            position: "absolute"
+        });
+        // Toggle the dropdown visibility
+        optionsContainerDownloads.toggleClass("show");
+    });
+    // get the percent on the sentiment up
+    const sentimentPercentageUp = parseFloat(sentimentProfitBarUp.textContent.replace("%", ""));
+    // get the percent on the sentiment down
+    const sentimentPercentageDown = parseFloat(sentimentProfitBarDown.textContent.replace("%", ""));
+    // Set the width of the bars for sentiment up or down
+    profitBar.style.width = `${sentimentPercentageUp}%`;
+    lostBar.style.width = `${sentimentPercentageDown}%`;
+}
+
+},{"eaddd84cc2e28a4a":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jcvt7":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleCoinsFunctions", ()=>handleCoinsFunctions);
@@ -36465,26 +36492,20 @@ parcelHelpers.export(exports, "insertFlags", ()=>insertFlags);
 parcelHelpers.export(exports, "handleCoinValueInCurrency", ()=>handleCoinValueInCurrency);
 var _handleElements = require("./handleElements");
 function updateTotalValue() {
-    const coinPriceValue = document.getElementById("coinPriceValue");
-    const coinQuantity = document.getElementById("coinQuantity");
-    let coinPrice = parseFloat(coinPriceValue.dataset.originalPrice);
+    let coinPrice = parseFloat((0, _handleElements.coinPriceValue).dataset.originalPrice);
     if (isNaN(coinPrice)) // If the data attribute is not set or not a valid number, use the text content
-    coinPrice = parseFloat(coinPriceValue.textContent);
-    const quantity = parseFloat(coinQuantity.value) || 1; // Default to 1 if input is empty or NaN
+    coinPrice = parseFloat((0, _handleElements.coinPriceValue).textContent);
+    const quantity = parseFloat((0, _handleElements.coinQuantity).value) || 1; // Default to 1 if input is empty or NaN
     const totalValue = coinPrice * quantity; // Calculate the total value
-    coinPriceValue.textContent = totalValue.toFixed(2); // Display the total value with 2 decimal places
+    (0, _handleElements.coinPriceValue).textContent = totalValue.toFixed(2); // Display the total value with 2 decimal places
 }
 function updateValueOfCoinByQuantity() {
-    const coinQuantity = document.getElementById("coinQuantity");
     // Event listener to update total value when quantity changes
-    coinQuantity.addEventListener("input", updateTotalValue);
+    (0, _handleElements.coinQuantity).addEventListener("input", updateTotalValue);
     // Initial calculation
     updateTotalValue();
 }
 function insertFlags() {
-    const select = document.getElementById("currencySelect");
-    const cryptoIcon = document.getElementById("cryptoIcon");
-    const flagIcon = document.getElementById("flagIcon");
     // Map currency codes to icon URLs
     const iconMap = {
         btc: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
@@ -36503,28 +36524,26 @@ function insertFlags() {
         let iconUrl = "";
         if (currencyCode in iconMap) {
             iconUrl = iconMap[currencyCode];
-            cryptoIcon.style.display = "inline-block";
-            flagIcon.style.display = "none";
-            cryptoIcon.innerHTML = `<img src="${iconUrl}" alt="${currencyCode}" style="width: 24px; height: 24px;">`;
+            (0, _handleElements.cryptoIcon).style.display = "inline-block";
+            (0, _handleElements.flagIcon).style.display = "none";
+            (0, _handleElements.cryptoIcon).innerHTML = `<img src="${iconUrl}" alt="${currencyCode}" style="width: 24px; height: 24px;">`;
         } else {
             const countryCode = currencyCode.slice(0, 2).toLowerCase();
-            cryptoIcon.style.display = "none";
-            flagIcon.style.display = "inline-block";
-            flagIcon.className = `flag-icon flag-icon-${countryCode}`;
+            (0, _handleElements.cryptoIcon).style.display = "none";
+            (0, _handleElements.flagIcon).style.display = "inline-block";
+            (0, _handleElements.flagIcon).className = `flag-icon flag-icon-${countryCode}`;
         }
     }
     // Initial setup
-    if (select && select.value) updateIcon(select.value);
+    if ((0, _handleElements.select) && (0, _handleElements.select).value) updateIcon((0, _handleElements.select).value);
     // Update icon on change
-    if (select) select.addEventListener("change", ()=>{
-        updateIcon(select.value);
+    if (0, _handleElements.select) (0, _handleElements.select).addEventListener("change", ()=>{
+        updateIcon((0, _handleElements.select).value);
     });
 }
 function handleCoinValueInCurrency() {
-    const currencySelect = document.getElementById("currencySelect");
-    const coinPriceValue = document.getElementById("coinPriceValue");
-    currencySelect.addEventListener("change", async ()=>{
-        const selectedCurrency = currencySelect.value.toLowerCase();
+    (0, _handleElements.currencySelect).addEventListener("change", async ()=>{
+        const selectedCurrency = (0, _handleElements.currencySelect).value.toLowerCase();
         const coinPriceUsd = parseFloat(document.getElementById("coinPriceUsd").value);
         try {
             const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=usd&vs_currencies=${selectedCurrency}`);
@@ -36532,9 +36551,9 @@ function handleCoinValueInCurrency() {
             const conversionRate = data.usd[selectedCurrency];
             const newPrice = coinPriceUsd * conversionRate;
             // Update the original price in the data attribute
-            coinPriceValue.dataset.originalPrice = newPrice.toFixed(2);
+            (0, _handleElements.coinPriceValue).dataset.originalPrice = newPrice.toFixed(2);
             // Display the new price (without multiplication by quantity yet)
-            coinPriceValue.textContent = newPrice.toFixed(2);
+            (0, _handleElements.coinPriceValue).textContent = newPrice.toFixed(2);
             updateTotalValue(); // Recalculate the total value after changing the currency
         } catch (error) {
             console.error("Error fetching conversion rate:", error);

@@ -1,6 +1,7 @@
 const updateSpeedDoMeter = require("./fearGreed");
 const { handleUserClicks } = require("./handleClicks");
 const { handleCoinsFunctions } = require("./handleCoinsFunctions");
+const { fearGreedValue } = require("./handleElements");
 const {
   handleCoinValueInCurrency,
   insertFlags,
@@ -8,19 +9,19 @@ const {
 } = require("./handlePriceChange");
 const { handleSortData } = require("./HandleSortValues");
 
+const fearGreedNeedlePosition = fearGreedValue;
+
 document.addEventListener("DOMContentLoaded", () => {
   handleCoinsFunctions();
   handleSortData();
-  handleUserClicks();
   handleCoinValueInCurrency();
   insertFlags();
   updateValueOfCoinByQuantity();
-
-  // Update speedometer
-  const fearGreedValue =
-    document.querySelector(".fear-greed-value").dataset.value;
-
-  if (fearGreedValue) {
-    updateSpeedDoMeter(parseInt(fearGreedValue, 10));
-  }
+  handleUserClicks();
 });
+
+// Update speedometer
+
+if (fearGreedNeedlePosition) {
+  updateSpeedDoMeter(parseInt(fearGreedValue, 10));
+}

@@ -21,11 +21,21 @@ export const profitBar = document.querySelector(".profit-bar");
 export const sentimentProfitBarDown = document.querySelector(".sentimentDown");
 export const lostBar = document.querySelector(".lost-bar");
 export const greed = document.querySelector(".fear-greed-indicator");
-export const currencySelect = document.getElementById("currencySelect");
-export const coinPriceElement = document.getElementById("coinPrice");
-export const selectedCurrencyElement =
-  document.getElementById("selectedCurrency");
-
-export const coinPriceUsd = parseFloat(
-  document.getElementById("coinPriceUsd").value
+export const navItems = document.querySelectorAll(
+  ".asideNavigation [data-target]"
 );
+
+// Fear & Greed
+export const fearGreedValue =
+  document.querySelector(".fear-greed-value").dataset.value;
+
+export const needle = document.querySelector(".speedometer-needle");
+
+//  Handle of price change based on currency
+export const coinPriceValue = document.getElementById("coinPriceValue");
+export const coinQuantity = document.getElementById("coinQuantity");
+export const currencySelect = document.getElementById("currencySelect");
+
+export const select = document.getElementById("currencySelect");
+export const cryptoIcon = document.getElementById("cryptoIcon");
+export const flagIcon = document.getElementById("flagIcon");

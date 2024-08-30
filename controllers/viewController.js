@@ -1,9 +1,11 @@
 const axios = require("axios");
 const catchAsync = require("../utils/catchAsync");
-const formatCurrency = require("../utils/formatCurrency");
-const formatDateWithRelativeTime = require("../utils/formatDate");
-const formatDescription = require("../utils/formatText");
-const convertUsdToBrl = require("../utils/convertToCurrency");
+const {
+  convertUsdToCurrency,
+  formatCurrency,
+  formatDateWithRelativeTime,
+  formatDescription,
+} = require("../utils/formatting");
 
 exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = req.query.per_page
@@ -81,26 +83,86 @@ exports.getOverview = catchAsync(async (req, res, next) => {
   }
 });
 
-exports.getSpecificCoin = catchAsync(async (req, res, next) => {
-  const { coin, currency } = req.params;
-
-  // Get pagination parameters from query
-  const itemsPerPage = req.query.per_page
-    ? parseInt(req.query.per_page, 10)
-    : 10; // Default to 10 items per page if not provided
-  const currentPage = req.query.page ? parseInt(req.query.page, 10) : 1;
-
-  try {
-    const response = await axios({
-      method: "GET",
-      url: `https://api.coingecko.com/api/v3/coins/${coin}`,
+const fetchCoinData = async (coin) => {
+  const response = await axios.get(
+    `https://api.coingecko.com/api/v3/coins/${coin}`,
+    {
       headers: {
         accept: "application/json",
         "x-cg-demo-api-key": process.env.API_KEY_Cry,
       },
-    });
+    }
+  );
+  return response.data;
+};
 
-    const coinData = response.data;
+const fetchCoinTickers = async (coin) => {
+  const response = await axios.get(
+    `https://api.coingecko.com/api/v3/coins/${coin}/tickers?include_exchange_logo=true&depth=true&order=volume_desc`,
+    {
+      headers: {
+        accept: "application/json",
+        "x-cg-demo-api-key": process.env.API_KEY_Cry,
+      },
+    }
+  );
+  return response.data.tickers;
+};
+
+const fetchSupportedCurrencies = async () => {
+  const response = await axios.get(
+    "https://api.coingecko.com/api/v3/simple/supported_vs_currencies",
+    {
+      headers: {
+        accept: "application/json",
+        "x-cg-demo-api-key": process.env.API_KEY_Cry,
+      },
+    }
+  );
+  return response.data.sort();
+};
+
+const fetchExchangeRate = async () => {
+  const response = await axios.get(
+    `https://api.coingecko.com/api/v3/simple/price?ids=usd&vs_currencies=brl`,
+    {
+      headers: {
+        accept: "application/json",
+        "x-cg-demo-api-key": process.env.API_KEY_Cry,
+      },
+    }
+  );
+  return response.data.usd.brl;
+};
+
+const paginateTickers = (tickers, perPage, currentPage) => {
+  const totalItems = tickers.length;
+  const totalPages = Math.ceil(totalItems / perPage);
+  const startIndex = (currentPage - 1) * perPage;
+  const paginatedTickers = tickers.slice(startIndex, startIndex + perPage);
+
+  return {
+    paginatedTickers,
+    totalPages,
+    totalItems,
+    currentPage,
+    itemsPerPage: perPage,
+  };
+};
+
+exports.getSpecificCoin = catchAsync(async (req, res, next) => {
+  const { coin } = req.params;
+  const itemsPerPage = parseInt(req.query.per_page, 10) || 10;
+  const currentPage = parseInt(req.query.page, 10) || 1;
+
+  try {
+    const [coinData, coinTicker, currencies, exchangeRate] = await Promise.all([
+      fetchCoinData(coin),
+      fetchCoinTickers(coin),
+      fetchSupportedCurrencies(),
+      fetchExchangeRate(),
+    ]);
+
     if (!coinData) {
       return res.status(404).render("error", {
         title: "Coin Not Found",
@@ -108,59 +170,17 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       });
     }
 
-    const getTicker = await axios({
-      method: "GET",
-      url: `https://api.coingecko.com/api/v3/coins/${coin}/tickers?include_exchange_logo=true&depth=true&order=volume_desc`,
-      headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": process.env.API_KEY_Cry,
-      },
-    });
-
-    const coinTicker = getTicker.data.tickers;
-
-    const getFearGreed = await axios({
-      url: `https://api.alternative.me/fng/?limit=7`,
-      headers: {
-        accept: "application/json",
-      },
-    });
-
-    const fearGreed = getFearGreed.data.data;
-
-    const fearGreedData = fearGreed.map((item) => ({
-      value: item.value,
-      classification: item.value_classification,
-      timestamp: item.timestamp,
-    }));
-
-    const getAllCurrencies = await axios({
-      method: "GET",
-      url: "https://api.coingecko.com/api/v3/simple/supported_vs_currencies",
-      headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": process.env.API_KEY_Cry,
-      },
-    });
-
-    const currencies = getAllCurrencies.data;
-
-    const getValueToCurrentCurrency = await axios({
-      method: "GET",
-      url: `https://api.coingecko.com/api/v3/simple/price?ids=usd&vs_currencies=brl`,
-      headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": process.env.API_KEY_Cry,
-      },
-    });
-    const rate = getValueToCurrentCurrency.data.usd.brl;
+    const paginatedTickersData = paginateTickers(
+      coinTicker,
+      itemsPerPage,
+      currentPage
+    );
 
     const totalPercentageOfCirculatingSupply =
       (coinData.market_data.circulating_supply /
         coinData.market_data.max_supply) *
       100;
 
-    // Process the data about the selected coin
     const coinDataInfo = {
       id: coinData.id,
       symbol: coinData.symbol,
@@ -202,32 +222,6 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       total: formatCurrency(totalPercentageOfCirculatingSupply),
     };
 
-    // Paginate the tickers
-    const paginateTickers = (tickers, perPage, currentPage) => {
-      const totalItems = tickers.length;
-      const totalPages = Math.ceil(totalItems / perPage);
-      const itemsPerPage = perPage;
-
-      const startIndex = (currentPage - 1) * perPage;
-      const endIndex = startIndex + perPage;
-      const paginatedTickers = tickers.slice(startIndex, endIndex);
-
-      return {
-        paginatedTickers,
-        totalPages,
-        totalItems,
-        currentPage,
-        itemsPerPage,
-      };
-    };
-
-    const paginatedTickersData = paginateTickers(
-      coinTicker,
-      itemsPerPage,
-      currentPage
-    );
-
-    // Process the tickers array
     const formattedTickers = paginatedTickersData.paginatedTickers.map(
       (ticker) => ({
         base: ticker.base,
@@ -236,15 +230,16 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
         marketIdentifier: ticker.market.identifier,
         hasTradingIncentive: ticker.market.has_trading_incentive,
         logo: ticker.market.logo,
-        lastPrice: formatCurrency(convertUsdToBrl(ticker.last, rate)),
+        lastPrice: formatCurrency(
+          convertUsdToCurrency(ticker.last, exchangeRate)
+        ),
         volume: formatCurrency(ticker.volume),
         trustScore: ticker.trust_score,
-
         cost_to_move_up_usd: formatCurrency(
-          convertUsdToBrl(ticker.cost_to_move_up_usd, rate)
+          convertUsdToCurrency(ticker.cost_to_move_up_usd, exchangeRate)
         ),
         cost_to_move_down_usd: formatCurrency(
-          convertUsdToBrl(ticker.cost_to_move_down_usd, rate)
+          convertUsdToCurrency(ticker.cost_to_move_down_usd, exchangeRate)
         ),
         bidAskSpreadPercentage: ticker.bid_ask_spread_percentage,
         tradeUrl: ticker.trade_url,
@@ -264,8 +259,37 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       totalPages: paginatedTickersData.totalPages,
       totalItems: paginatedTickersData.totalItems,
       itemsPerPage: paginatedTickersData.itemsPerPage,
+      currencies,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).render("error", {
+      title: "Error",
+      message: "Failed to fetch data",
+    });
+  }
+});
+
+const fetchFearGreedIndex = async () => {
+  const response = await axios.get(`https://api.alternative.me/fng/?limit=7`, {
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  return response.data.data.map((item) => ({
+    value: item.value,
+    classification: item.value_classification,
+    timestamp: item.timestamp,
+  }));
+};
+
+exports.getFearGreedIndex = catchAsync(async (req, res, next) => {
+  try {
+    const fearGreedData = await fetchFearGreedIndex();
+    res.status(200).render("fearGreed", {
+      title: `Overview of Fear Greed`,
       fearGreedValue: fearGreedData,
-      currencies: currencies,
     });
   } catch (err) {
     console.error(err);

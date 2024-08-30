@@ -1,13 +1,13 @@
 import {
+  coinPriceValue,
+  coinQuantity,
+  select,
+  cryptoIcon,
+  flagIcon,
   currencySelect,
-  coinPriceElement,
-  coinPriceUsd,
 } from "./handleElements";
 
 function updateTotalValue() {
-  const coinPriceValue = document.getElementById("coinPriceValue");
-  const coinQuantity = document.getElementById("coinQuantity");
-
   let coinPrice = parseFloat(coinPriceValue.dataset.originalPrice);
 
   if (isNaN(coinPrice)) {
@@ -22,8 +22,6 @@ function updateTotalValue() {
 }
 
 export function updateValueOfCoinByQuantity() {
-  const coinQuantity = document.getElementById("coinQuantity");
-
   // Event listener to update total value when quantity changes
   coinQuantity.addEventListener("input", updateTotalValue);
 
@@ -32,10 +30,6 @@ export function updateValueOfCoinByQuantity() {
 }
 
 export function insertFlags() {
-  const select = document.getElementById("currencySelect");
-  const cryptoIcon = document.getElementById("cryptoIcon");
-  const flagIcon = document.getElementById("flagIcon");
-
   // Map currency codes to icon URLs
   const iconMap = {
     btc: "https://cryptologos.cc/logos/bitcoin-btc-logo.png",
@@ -80,9 +74,6 @@ export function insertFlags() {
 }
 
 export function handleCoinValueInCurrency() {
-  const currencySelect = document.getElementById("currencySelect");
-  const coinPriceValue = document.getElementById("coinPriceValue");
-
   currencySelect.addEventListener("change", async () => {
     const selectedCurrency = currencySelect.value.toLowerCase();
     const coinPriceUsd = parseFloat(

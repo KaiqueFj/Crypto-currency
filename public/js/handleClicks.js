@@ -7,9 +7,11 @@ const {
   profitBar,
   sentimentProfitBarDown,
   lostBar,
+  navItems,
 } = require("./handleElements");
 
 export function handleUserClicks() {
+  //handle the infoContainer for each stats of the coin
   iconsInfo.each(function (e) {
     $(this).on("click", function (e) {
       e.preventDefault(); // Get the position of the clicked element
@@ -28,6 +30,20 @@ export function handleUserClicks() {
     });
   });
 
+  //handle aside navigation
+  navItems.forEach((item) => {
+    item.addEventListener("click", function () {
+      const targetId = this.getAttribute("data-target");
+      console.log(targetId);
+      const targetElement = document.querySelector(targetId);
+
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  });
+
+  // Handle save chart as image
   saveAsButtonDropdown.on("click", function (e) {
     var containerPosition = $(this).offset();
 
@@ -41,14 +57,17 @@ export function handleUserClicks() {
     optionsContainerDownloads.toggleClass("show");
   });
 
+  // get the percent on the sentiment up
   const sentimentPercentageUp = parseFloat(
     sentimentProfitBarUp.textContent.replace("%", "")
   );
 
+  // get the percent on the sentiment down
   const sentimentPercentageDown = parseFloat(
     sentimentProfitBarDown.textContent.replace("%", "")
   );
 
+  // Set the width of the bars for sentiment up or down
   profitBar.style.width = `${sentimentPercentageUp}%`;
   lostBar.style.width = `${sentimentPercentageDown}%`;
 }

@@ -1,3 +1,9 @@
+extends base
+
+block append head
+  script(defer src="/js/bundled/index.js")
+
+block content
   .feedGreedCoin
     .header.flex
       span.font-semibold.text-sm.text-black Fear & Greed index

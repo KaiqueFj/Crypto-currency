@@ -8,29 +8,29 @@ block content
     h1 Coin Overview: #{coin.name}
     .coin-container(class="w-full max-w-full px-6 flex flex-row")
       .asideNavigation.sticky.top-0.h-screen.w-auto.flex.flex-col.gap-3
-        .overviewContainer.flex.flex-row.gap-4.p-2.items-center.font-medium.text-lg.text-black.cursor-pointer
+        .overviewContainer.flex.flex-row.gap-4.p-2.items-center.font-medium.text-lg.text-black.cursor-pointer(data-target="#overview")
           .icon.bg-gray-200.rounded-lg.flex.items-center.w-9.h-8.justify-center
             i.fa-solid.fa-coins
           .info Overview
 
-        .MarketsContainer.flex.flex-row.gap-4.p-2.items-center.font-medium.text-lg.text-black.cursor-pointer
+        .MarketsContainer.flex.flex-row.gap-4.p-2.items-center.font-medium.text-lg.text-black.cursor-pointer(data-target="#Exchanges")
           .icon.bg-gray-200.rounded-lg.flex.items-center.w-9.h-8.justify-center
             i.fa-solid.fa-chart-simple
           .info Markets
 
-        .StatsContainer.flex.flex-row.gap-4.p-2.items-center.font-medium.text-lg.text-black.cursor-pointer
+        .StatsContainer.flex.flex-row.gap-4.p-2.items-center.font-medium.text-lg.text-black.cursor-pointer(data-target="#marketStats")
           .icon.bg-gray-200.rounded-lg.flex.items-center.w-9.h-8.justify-center
             i.fa-solid.fa-money-check
           .info Stats
 
-        .communitySentimentContainer.flex.flex-row.gap-4.p-2.items-center.font-medium.text-lg.text-black.cursor-pointer
+        .communitySentimentContainer.flex.flex-row.gap-4.p-2.items-center.font-medium.text-lg.text-black.cursor-pointer(data-target="#coinSentiment")
           .icon.bg-gray-200.rounded-lg.flex.items-center.w-9.h-8.justify-center
             i.fa-regular.fa-face-smile
           .info Sentiment
 
 
       .mainSection(class="p-5 flex flex-col flex-grow w-[calc(100vw-272px)] ")
-        .coinStats.flex.flex-col.flex-1.gap-7
+        .coinStats#overview.flex.flex-col.flex-1.gap-7
           .coinHeader
             .flex.flex-col.items-start.gap-2
               .coinName(id=`${coin.name}` data-coin=`${coin.id}`).flex.flex-row.items-center
@@ -47,10 +47,10 @@ block content
               button.bg-gray-200.rounded-md.py-1.px-2
                 i.icon.fa-solid.fa-link.text-sm
 
-          .chartAndConvertContainer(class="max-h-1/3 flex flex-row justify-center gap-4 ")
+          .chartAndConvertContainer#chartContainer(class="max-h-1/3 flex flex-row justify-center gap-4 ")
             .charContainer(class="w-3/4")
               .header
-                h2.font-semibold.text-2xl.font-medium.text-black= `${coin.name} Price Chart`
+                h2.font-semibold.text-2xl.font-medium.text-black.mb-4= `${coin.name} Price Chart`
 
 
               .charCanvas-info(class="w-full border-2 rounded-xl")
@@ -77,14 +77,17 @@ block content
                 h2.font-semibold.text-2xl.font-medium.text-black Coin convert
 
 
-              .quantityOfCoin.flex.flex-col.rounded-lg.p-4.border-2.gap-4
+              .quantityOfCoin.flex.flex-col.rounded-lg.p-4.gap-4
                 .currency-selector.flex.flex-row.items-center.rounded-lg.p-4.border-2.gap-4
                   .icon-container.flex.items-center
                     span#cryptoIcon.hidden
                     span#flagIcon.hidden
                   select#currencySelect.p-2.border.rounded.w-fit.border-none
                     each currency in currencies
-                      option(value=`${currency}`)= currency.toUpperCase()
+                      option(value=`${currency}` selected=(currency === "brl"))= currency.toUpperCase()
+                    #iconDisplay.flex.items-center.ml-2
+                      span#cryptoIcon
+                      span#flagIcon
                   .body-info.flex.flex-col.items-end
                     span#coinPriceValue= coin.current_price
                   input(type="hidden", id="coinPriceUsd", value=coin.current_price_usd)
@@ -95,9 +98,9 @@ block content
                     input(type="text" value="1" id="coinQuantity")
 
 
-          .Exchanges(class="   flex flex-col")
+          .Exchanges#Exchanges(class="flex flex-col")
             .header
-              h2.font-semibold.text-2xl.font-medium.text-black= `${coin.name} Markets`
+              h2.font-semibold.text-2xl.font-medium.text-black.mb-4= `${coin.name} Markets`
 
             .body-info(class="w-full p-5 border-2 rounded-lg ") 
               div(class="w-full overflow-x-auto")
@@ -215,13 +218,13 @@ block content
                   button.option(class=" px-4 py-2 hover:bg-gray-100 rounded-lg") 10
                   button.option(class=" px-4 py-2 hover:bg-gray-100 rounded-lg") 20
 
-          .aboutContainer.flex.flex-col.p-3
-          .header
-            h2.text-3xl.text-black.font-bold.mt-8.mb-4= `About the ${coin.name}`
-          .bodyInfo.border-2.rounded-lg.p-4
-            h3.text-lg.text-black.font-semibold.mb-4= `What is the ${coin.name}`
-            .descriptionContainer.text-gray-400-font-normal.text-base
-              != coin.descriptionEn
+          .aboutContainer#aboutContainer.flex.flex-col.p-3
+            .header
+              h2.font-semibold.text-2xl.font-medium.text-black.mb-4= `About the ${coin.name}`
+            .bodyInfo.border-2.rounded-lg.p-4
+              h3.text-lg.text-black.font-semibold.mb-4= `What is the ${coin.name}`
+              .descriptionContainer.text-gray-400-font-normal.text-base
+                != coin.descriptionEn
 
 
 
@@ -241,7 +244,7 @@ block content
                   a.font-medium.text-gray-700.text-xs.gap-1.flex.items-center(href=`${coin.github[0]}`) github
 
 
-          .coinInfo.flex.flex-col.gap-4
+          .coinInfo#marketStats.flex.flex-col.gap-4
           h2.font-semibold.text-2xl.font-medium.text-black Market Stats
           .coinBody.grid.grid-cols-3.gap-4.border-2.rounded-xl.p-8
 
@@ -321,7 +324,7 @@ block content
             p.text-sm.mx-0.my-1 market capitalization is the total value of all the coins that have been mined. 
             p.text-sm.mx-0.my-1 It’s calculated by multiplying the number of coins in circulation by the current market price of a single coin
 
-          .sentimentAboutTheCoin
+          .sentimentAboutTheCoin#coinSentiment
             .header.flex
               h2.font-semibold.text-2xl.font-medium.text-black Community Sentiment
 
