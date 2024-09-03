@@ -604,7 +604,7 @@ if (feedGreedCoinContainer) {
     if (fearGreedNeedlePosition && fearGreedValue !== null) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
 }
 
-},{"e2366ba8a8f4b6a3":"iLZtn","7d07fb8481c76f64":"7bD5q","dea15e5a0d486318":"jcvt7","fe3fbbf1f03d049c":"hYVWg","b710d7c996a067e0":"7iSl7","71b77643ce512d0":"3akdP"}],"iLZtn":[function(require,module,exports) {
+},{"e2366ba8a8f4b6a3":"iLZtn","7d07fb8481c76f64":"7bD5q","dea15e5a0d486318":"jcvt7","71b77643ce512d0":"3akdP","fe3fbbf1f03d049c":"hYVWg","b710d7c996a067e0":"7iSl7"}],"iLZtn":[function(require,module,exports) {
 const { needle } = require("85fb5a8de257146");
 // Function to update the speedometer needle
 function updateSpeedDoMeter(value) {
@@ -722,12 +722,17 @@ exports.export = function(dest, destName, get) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);
-const { iconsInfo, marketCapInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar, navItems } = require("eaddd84cc2e28a4a");
+const { iconsInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar, navItems } = require("eaddd84cc2e28a4a");
 function handleUserClicks() {
     //handle the infoContainer for each stats of the coin
     iconsInfo.each(function(e) {
         $(this).on("click", function(e) {
-            e.preventDefault(); // Get the position of the clicked element
+            e.preventDefault();
+            // Get the data-info attribute of the clicked icon
+            const infoType = $(this).data("info");
+            // Get the corresponding message container
+            const marketCapInfo = $(`.coinMessage[data-info='${infoType}']`);
+            // Get the position of the clicked element
             const offset = $(this).offset();
             const height = $(this).outerHeight();
             const width = $(this).outerWidth();
@@ -736,7 +741,7 @@ function handleUserClicks() {
                 top: offset.top + height + 5,
                 left: offset.left + width / 2 - marketCapInfo.outerWidth() / 2
             });
-            // Show the popup
+            // Show the corresponding popup
             marketCapInfo.toggleClass("hidden");
         });
     });

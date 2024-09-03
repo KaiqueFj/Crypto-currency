@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Update speedometer
-
 if (feedGreedCoinContainer) {
   if (fearGreedNeedlePosition && fearGreedValue !== null) {
     updateSpeedDoMeter(parseInt(fearGreedValue, 10));
