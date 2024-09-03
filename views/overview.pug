@@ -7,16 +7,58 @@ block append head
 
 block content
 
-  .container(class="flex flex-col w-full")
+  main.mainOverview(class="flex flex-col w-full self-center pt-16 ")
+    .overviewAdditionalContainer.flex.flex-row.p-3.self-center.gap-4
 
-    main.main(class="flex flex-col mx-auto ")
 
-      h1(class="text-2xl font-bold mb-4")= `Top ${itemsPerPage} coins in the market`
+      .Trending.flex.flex-row.p-3.shadow-md.rounded-xl-border-2.rounded-xl.h-40.w-64
+        .coin.flex.flex-col.p-3
+          each coin of fetchTrendingData
+            .coinContainerData.flex.flex-row
+              .image
+                img.coin-image.w-6.h-6.object-cover.rounded-full(src=coin.thumb alt=coin.name)
+              .name
+                p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= coin.name
+              .value
+                p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= coin.data.price
+              .percent
+                p(class="changeValue text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `${coin.priceChangePercentage24h.toFixed(2)}%`
 
-      .coin-container(class="flex flex-col  p-4")
-        h2.text-xl.font-semibold.mt-8.mb-4 CryptoCurrency list
+      .coinDominance.flex.flex-row.p-3.shadow-md.rounded-xl-border-2.rounded-xl.h-40.w-64
+        .coin.flex.flex-col.p-3
+          each coin of fetchTrendingData
+            .coinContainerData.flex.flex-row
+              .image
+                img.coin-image.w-6.h-6.object-cover.rounded-full(src=coin.thumb alt=coin.name)
+              .name
+                p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= coin.name
+              .value
+                p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= coin.data.price
+              .percent
+                p(class="changeValue text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `${coin.priceChangePercentage24h.toFixed(2)}%`
+
+
+      .volumeCapitalization.flex.flex-row.p-3.shadow-md.rounded-xl-border-2.rounded-xl.h-40.w-64
+        .coin.flex.flex-col.p-3
+          each coin of fetchTrendingData
+            .coinContainerData.flex.flex-row
+              .image
+                img.coin-image.w-6.h-6.object-cover.rounded-full(src=coin.thumb alt=coin.name)
+              .name
+                p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= coin.name
+              .value
+                p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= coin.data.price
+              .percent
+                p(class="changeValue text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `${coin.priceChangePercentage24h.toFixed(2)}%`
+
+
+
+
+    .coin-container(class="flex flex-col w-full  p-4")
+      h2.font-semibold.text-2xl.font-medium.text-black.mb-4 Crypto list
+      .table-container(class=" w-full p-4 border-2 rounded-xl")
         table.min-w-full.divide-y.divide-gray-200
-          thead.bg-gray-50
+          thead
             tr
               th.px-8.py-2.text-center.text-xs.font-bold.text-gray-700.tracking-wider.cursor-pointer(data-sort="index") 
                 .container.flex.flex-row.items-center.justify-center
@@ -80,38 +122,38 @@ block content
 
 
 
-        .infoPagination(class=" flex flex-row justify-between items-center")
+      .infoPagination(class=" flex flex-row justify-between items-center")
 
-          span.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `Showing ${(currentPage -1 ) * itemsPerPage} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
+        span.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500= `Showing ${(currentPage -1 ) * itemsPerPage} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
 
-          nav(class="  inline-flex items-center space-x-1 rounded-lg")
-            ul.pagination(class= "flex flex-row gap-1")
+        nav(class="  inline-flex items-center space-x-1 rounded-lg")
+          ul.pagination(class= "flex flex-row gap-1")
+            li
+              a( class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=1&per_page=${itemsPerPage}`)= `1`
+
+            if currentPage > 1
               li
-                a( class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=1&per_page=${itemsPerPage}`)= `1`
-
-              if currentPage > 1
-                li
-                  a( class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage}&per_page=${itemsPerPage}`)= `${currentPage}`
+                a( class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage}&per_page=${itemsPerPage}`)= `${currentPage}`
 
 
-              if currentPage < totalPages
-                li
-                  a(class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage + 1}&per_page=${itemsPerPage}`)= `${currentPage + 1}`
-                  a(class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage + 2}&per_page=${itemsPerPage}`)= `${currentPage + 2}`
-
-
-              li= `...`
+            if currentPage < totalPages
               li
-                a(class="px-4 py-2 text-zinc-950 rounded-lg" href=`/overview?page=${totalPages}&per_page=${itemsPerPage}`)= `${totalPages}`
+                a(class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage + 1}&per_page=${itemsPerPage}`)= `${currentPage + 1}`
+                a(class="px-4 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage + 2}&per_page=${itemsPerPage}`)= `${currentPage + 2}`
+
+
+            li= `...`
+            li
+              a(class="px-4 py-2 text-zinc-950 rounded-lg" href=`/overview?page=${totalPages}&per_page=${itemsPerPage}`)= `${totalPages}`
 
 
 
-          .dropdown(class="flex relative items-center")
-            button.dropdownButton(class="block px-1 ") Show rows
-            .coinsToShow(class="show px-1 py-1 m-1 rounded-lg bg-gray-100 cursor-pointer")
-              span.rowValue=totalRows
-              i.fa-solid.fa-chevron-down(class="ml-2") 
-            .dropdownOptions(class= "dropdownOptions hidden px-2 py-2 top-full flex-col absolute  left-20 shadow-xl drop-shadow-xl rounded-lg bg-gray-200 ")
-              button.option(class=" px-4 py-2 hover:bg-gray-100 rounded-lg") 5 
-              button.option(class=" px-4 py-2 hover:bg-gray-100 rounded-lg") 10
-              button.option(class=" px-4 py-2 hover:bg-gray-100 rounded-lg") 20
+        .dropdown(class="flex relative items-center")
+          button.dropdownButton(class="block px-1 ") Show rows
+          .coinsToShow(class="show px-1 py-1 m-1 rounded-lg bg-gray-100 cursor-pointer")
+            span.rowValue=totalRows
+            i.fa-solid.fa-chevron-down(class="ml-2") 
+          .dropdownOptions(class= "dropdownOptions hidden px-2 py-2 top-full flex-col absolute  left-20 shadow-xl drop-shadow-xl rounded-lg bg-gray-200 ")
+            button.option(class=" px-4 py-2 hover:bg-gray-100 rounded-lg") 5 
+            button.option(class=" px-4 py-2 hover:bg-gray-100 rounded-lg") 10
+            button.option(class=" px-4 py-2 hover:bg-gray-100 rounded-lg") 20

@@ -24,6 +24,43 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       },
     });
 
+    // Fetch trending data
+
+    const fetchTrendingData = async () => {
+      const response = await axios.get(
+        "https://api.coingecko.com/api/v3/search/trending",
+        {
+          headers: {
+            accept: "application/json",
+            "x-cg-demo-api-key": process.env.API_KEY_Cry,
+          },
+        }
+      );
+      const trendingCoins = response.data.coins.map((coin) => {
+        const { id, name, symbol, thumb, data } = coin.item;
+
+        const priceChangePercentage24h = data.price_change_percentage_24h
+          ? data.price_change_percentage_24h.brl
+          : "N/A";
+
+        return {
+          id,
+          name,
+          symbol,
+          thumb,
+          priceChangePercentage24h, // Include the price change percentage
+          data: {
+            price: formatCurrency(data.price),
+            marketCap: data.market_cap,
+            totalVolume: data.total_volume,
+            sparkline: data.sparkline,
+          },
+        };
+      });
+
+      return trendingCoins.slice(0, 3); // Get only the first 3 coins
+    };
+
     // Fetch to get all the coins on the first page
     const coinsInPage = await axios({
       method: "GET",
@@ -62,6 +99,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     const totalCoins = allCoin.length;
     const totalPages = Math.ceil(totalCoins / itemsPerPage);
     const totalRows = itemsPerPage;
+    const trendingData = await fetchTrendingData();
 
     // Render the overview template with the fetched coin data
     res.status(200).render("overview", {
@@ -73,6 +111,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       itemsPerPage: itemsPerPage,
       totalPages: totalPages,
       totalRows: totalRows,
+      fetchTrendingData: trendingData,
     });
   } catch (err) {
     console.error(err);

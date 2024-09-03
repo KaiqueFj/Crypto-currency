@@ -8,7 +8,7 @@
   margin: 0;
   padding: 0;
   -webkit-box-sizing: inherit;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 html {
@@ -64,7 +64,8 @@ body {
   margin: 0 auto;
 }
 
-.asideNavigation {
+.asideNavigation,
+.mainOverview {
   top: calc(3rem + 1rem);
 }
 
