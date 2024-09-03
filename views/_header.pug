@@ -1,1 +1,16 @@
-header.header 
+header(class="bg-white text-black fixed top-0 left-0 w-full z-50")
+  nav(class="container mx-auto px-6 py-3 flex justify-between items-center")
+    a(href="#" class="text-2xl font-bold") Crypto Market Tracker
+    ul(class="flex space-x-6")
+      li
+        a(href="/overview" class="hover:text-gray-300") Home
+      li
+        a(href="/fearGreed" class="hover:text-gray-300") Fear & Greed 
+      li
+        a(href="#services" class="hover:text-gray-300") Services
+      li
+        a(href="#contact" class="hover:text-gray-300") Contact
+    button(class="md:hidden flex items-center bg-gray-700 px-3 py-2 rounded text-gray-300 hover:text-white hover:bg-gray-600")
+      svg(class="fill-current h-6 w-6")
+        use(xlink:href="#menu")
+

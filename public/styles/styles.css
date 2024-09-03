@@ -64,6 +64,10 @@ body {
   margin: 0 auto;
 }
 
+.asideNavigation {
+  top: calc(3rem + 1rem);
+}
+
 .mainSection {
   width: calc(100vw - 272px);
 }
