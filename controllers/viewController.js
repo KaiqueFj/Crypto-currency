@@ -25,6 +25,26 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     });
 
     // Fetch trending data
+    const fetchGlobalCapVolume = async () => {
+      const response = await axios.get(
+        "https://api.coingecko.com/api/v3/global",
+        {
+          headers: {
+            accept: "application/json",
+            "x-cg-demo-api-key": process.env.API_KEY_Cry,
+          },
+        }
+      );
+      const globalData = response.data.data;
+
+      const formattedData = {
+        totalMarketCap: formatCurrency(globalData.total_market_cap.brl),
+        totalVolume: formatCurrency(globalData.total_volume.brl),
+        marketDominanceBtc: globalData.market_cap_percentage.btc,
+      };
+
+      return formattedData;
+    };
 
     const fetchTrendingData = async () => {
       const response = await axios.get(
@@ -100,6 +120,9 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     const totalPages = Math.ceil(totalCoins / itemsPerPage);
     const totalRows = itemsPerPage;
     const trendingData = await fetchTrendingData();
+    const globalDataVolCap = await fetchGlobalCapVolume();
+
+    console.log(globalDataVolCap);
 
     // Render the overview template with the fetched coin data
     res.status(200).render("overview", {
@@ -112,6 +135,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       totalPages: totalPages,
       totalRows: totalRows,
       fetchTrendingData: trendingData,
+      globalData: globalDataVolCap,
     });
   } catch (err) {
     console.error(err);

@@ -29,43 +29,31 @@ block content
                 .percent
                   p(class="changeValue text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `${coin.priceChangePercentage24h.toFixed(2)}%`
 
-
       .volumeCapitalization.flex.flex-row.p-3.shadow-md.rounded-xl-border-2.rounded-xl.h-48.w-96
         .coin.flex.flex-col.p-3.w-full.justify-between
           .header
-            h2.font-semibold.text-xl.font-medium.text-black.mb-4 Volume Cap 🔥
-
-          each coin of fetchTrendingData
+            h2.font-semibold.text-xl.font-medium.text-black.mb-4 Market Cap&Vol 🔥
             .coinContainerData.flex.flex-row.justify-between
               .mainInfo.flex.flex-row.items-center
-                .image
-                  img.coin-image.w-6.h-6.object-cover.rounded-full(src=coin.thumb alt=coin.name)
-                .name.ml-1.flex.flex-row
-                  p(class="text-gray-700 font-bold text-sm px-1")= coin.name
-                  p(class="text-gray-400 font-semibold text-sm px-1")= coin.symbol
+                .name.ml-1.flex.flex-col.gap-14
+                  p(class="text-gray-700 font-bold text-md") Market cap
+                  p(class="text-gray-700 font-bold text-md") Volume 24h
 
               .values.flex.flex-row.items-center
-                .percent
-                  p(class="changeValue text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `${coin.priceChangePercentage24h.toFixed(2)}%`
+                .percent.flex.flex-col.gap-14
+                  p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `$ ${globalData.totalMarketCap}`
+                  p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `$ ${globalData.totalVolume}`
+
 
 
       .coinDominance.flex.flex-row.p-3.shadow-md.rounded-xl-border-2.rounded-xl.h-48.w-96
         .coin.flex.flex-col.p-3.w-full.justify-between
           .header
-            h2.font-semibold.text-xl.font-medium.text-black.mb-4 Trending 🔥
-
-          each coin of fetchTrendingData
+            h2.font-semibold.text-xl.font-medium.text-black.mb-4 BTC Dominance 🔥
             .coinContainerData.flex.flex-row.justify-between
-              .mainInfo.flex.flex-row.items-center
-                .image
-                  img.coin-image.w-6.h-6.object-cover.rounded-full(src=coin.thumb alt=coin.name)
-                .name.ml-1.flex.flex-row
-                  p(class="text-gray-700 font-bold text-sm px-1")= coin.name
-                  p(class="text-gray-400 font-semibold text-sm px-1")= coin.symbol
-
               .values.flex.flex-row.items-center
                 .percent
-                  p(class="changeValue text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `${coin.priceChangePercentage24h.toFixed(2)}%`
+                  p(class=" text-gray-700 font-bold text-sm px-1")= `${globalData.marketDominanceBtc.toFixed(2)}%`
 
 
 
