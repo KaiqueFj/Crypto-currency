@@ -113,6 +113,23 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       },
     });
 
+    const fetchFearGreedIndex = async () => {
+      const response = await axios.get(
+        `https://api.alternative.me/fng/?limit=7`,
+        {
+          headers: {
+            accept: "application/json",
+          },
+        }
+      );
+
+      return response.data.data.map((item) => ({
+        value: item.value,
+        classification: item.value_classification,
+        timestamp: item.timestamp,
+      }));
+    };
+
     const allCoin = allCoins.data;
     const coinInPage = coinsInPage.data;
     const coins = cryptoCoins.data;
@@ -121,8 +138,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     const totalRows = itemsPerPage;
     const trendingData = await fetchTrendingData();
     const globalDataVolCap = await fetchGlobalCapVolume();
-
-    console.log(globalDataVolCap);
+    const fearGreedData = await fetchFearGreedIndex();
 
     // Render the overview template with the fetched coin data
     res.status(200).render("overview", {
@@ -136,6 +152,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       totalRows: totalRows,
       fetchTrendingData: trendingData,
       globalData: globalDataVolCap,
+      fearGreedValue: fearGreedData,
     });
   } catch (err) {
     console.error(err);
