@@ -5,6 +5,7 @@ const {
   formatCurrency,
   formatDateWithRelativeTime,
   formatDescription,
+  formatLargeNumber,
 } = require("../utils/formatting");
 
 exports.getOverview = catchAsync(async (req, res, next) => {
@@ -38,9 +39,10 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       const globalData = response.data.data;
 
       const formattedData = {
-        totalMarketCap: formatCurrency(globalData.total_market_cap.brl),
-        totalVolume: formatCurrency(globalData.total_volume.brl),
+        totalMarketCap: formatLargeNumber(globalData.total_market_cap.brl),
+        totalVolume: formatLargeNumber(globalData.total_volume.brl),
         marketDominanceBtc: globalData.market_cap_percentage.btc,
+        marketCapChangePercent: globalData.market_cap_change_percentage_24h_usd,
       };
 
       return formattedData;

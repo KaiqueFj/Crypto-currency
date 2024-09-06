@@ -48,9 +48,22 @@ function formatDescription(description) {
     .join(""); // Join all the <p> tags into a single string
 }
 
+function formatLargeNumber(num) {
+  if (num >= 1e12) {
+    return (num / 1e12).toFixed(1) + "T"; // Trillions
+  } else if (num >= 1e9) {
+    return (num / 1e9).toFixed(1) + "B"; // Billions
+  } else if (num >= 1e6) {
+    return (num / 1e6).toFixed(1) + "M"; // Millions
+  } else {
+    return num.toLocaleString();
+  }
+}
+
 module.exports = {
   convertUsdToCurrency,
   formatCurrency,
   formatDateWithRelativeTime,
   formatDescription,
+  formatLargeNumber,
 };

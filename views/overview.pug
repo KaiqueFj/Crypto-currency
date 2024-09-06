@@ -8,6 +8,14 @@ block append head
 block content
 
   main.mainOverview(class="flex flex-col w-full self-center pt-16 ")
+    .introduction.flex.flex-col.items-center.bg-gradient-to-r.from-purple-400.to-blue-500.p-6.rounded-lg.shadow-md.mb-8.mx-4.gap-2
+      h2.font-semibold.text-4xl.text-white.mb-2 Crypto List
+      p.text-lg.text-white Leading the way with top trends, market insights, and up-to-date analytics.
+      p.text-lg.text-white=`The global cryptocurrency market cap stands at ${globalData.totalMarketCap}, with a ${globalData.marketCapChangePercent.toFixed(2)}% change in the last 24 hours. Total trading volume is ${globalData.totalVolume}, and Bitcoin holds ${globalData.marketDominanceBtc.toFixed(2)}% market dominance.`
+      p(class= "mt-4 px-4 py-2 bg-white text-blue-500 font-bold rounded-lg shadow-md  ") Explore the market bellow   
+
+
+
     .overviewAdditionalContainer.flex.flex-row.p-3.justify-center.gap-5
 
 
@@ -77,10 +85,7 @@ block content
 
 
 
-
-
     .coin-container(class="flex flex-col w-full  p-4")
-      h2.font-semibold.text-2xl.font-medium.text-black.mb-4 Crypto list
       .table-container(class=" w-full p-4 border-2 rounded-xl")
         table.min-w-full.divide-y.divide-gray-200
           thead
