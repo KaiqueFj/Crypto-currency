@@ -1,10 +1,12 @@
-footer.footer
-  .footer__logo 
-    img(src='/img/logo-green.png' alt='Natours Logo')
-  ul.footer__nav
-    li: a(href='#') About us
-    li: a(href='#') Download apps
-    li: a(href='#') Become a guide 
-    li: a(href='#') Carrers 
-    li: a(href='#') Contact
-  p.footer__copyright &copy; by Jonas Schemedtmann.
+footer.bg-gray-800.py-8.text-white
+  .container.mx-auto.px-4
+    div(class=" flex flex-col md:flex-row items-center justify-between")
+      .footer__logo.mb-4(class="md:mb-0")
+      img(src='/images/icons/crypto-logo-black.png' alt='Natours Logo' class='object-cover w-16 h-16 rounded-full')   
+      ul.footer__nav.flex.space-x-4.mb-4(class="md:mb-0")
+        li: a(href='#' class='hover:underline') About us
+        li: a(href='#' class='hover:underline') Download apps
+        li: a(href='#' class='hover:underline') Become a guide
+        li: a(href='#' class='hover:underline') Careers
+        li: a(href='#' class='hover:underline') Contact
+      p.footer__copyright(class="text-center md:text-left") &copy; 2024 by Your Name. All rights reserved.

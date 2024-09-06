@@ -7,7 +7,7 @@ block append head
 
 block content
 
-  main.mainOverview(class="flex flex-col w-full self-center pt-16 ")
+  main.mainOverview(class="flex flex-col w-full self-center pt-16 mt-8 ")
     .introduction.flex.flex-col.items-center.bg-gradient-to-r.from-purple-400.to-blue-500.p-6.rounded-lg.shadow-md.mb-8.mx-4.gap-2
       h2.font-semibold.text-4xl.text-white.mb-2 Crypto List
       p.text-lg.text-white Leading the way with top trends, market insights, and up-to-date analytics.
@@ -19,7 +19,7 @@ block content
     .overviewAdditionalContainer.flex.flex-row.p-3.justify-center.gap-5
 
 
-      .Trending.flex.flex-row.p-3.shadow-md.rounded-xl-border-2.rounded-xl.h-48.w-96
+      .Trending.flex.flex-row.p-3.shadow-lg.rounded-xl-border-2.rounded-xl.h-48.w-96
         .coin.flex.flex-col.p-3.w-full.justify-between
           .header
             h2.font-semibold.text-xl.font-medium.text-black.mb-4 Trending 🔥
@@ -37,7 +37,7 @@ block content
                 .percent
                   p(class="changeValue text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `${coin.priceChangePercentage24h.toFixed(2)}%`
 
-      .volumeCapitalization.flex.flex-row.p-3.shadow-md.rounded-xl-border-2.rounded-xl.h-48.w-96
+      .volumeCapitalization.flex.flex-row.p-3.shadow-lg.rounded-xl-border-2.rounded-xl.h-48.w-96
         .coin.flex.flex-col.p-3.w-full.justify-between
           .header
             h2.font-semibold.text-xl.font-medium.text-black.mb-4 Market Cap&Vol 🔥
@@ -52,9 +52,7 @@ block content
                   p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `$ ${globalData.totalMarketCap}`
                   p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `$ ${globalData.totalVolume}`
 
-
-
-      .fearGreed.flex.flex-row.p-3.shadow-md.rounded-xl-border-2.rounded-xl.h-48.w-96
+      .fearGreed.flex.flex-row.p-3.shadow-lg.rounded-xl-border-2.rounded-xl.h-48.w-96
         .coin.flex.flex-col.p-3.w-full.justify-between
           .header
             h2.font-semibold.text-xl.font-medium.text-black.mb-1 Fear & Greed Index 🔥
