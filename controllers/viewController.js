@@ -6,6 +6,7 @@ const {
   formatDateWithRelativeTime,
   formatDescription,
   formatLargeNumber,
+  formatTimesTamp,
 } = require("../utils/formatting");
 
 exports.getOverview = catchAsync(async (req, res, next) => {
@@ -128,7 +129,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       return response.data.data.map((item) => ({
         value: item.value,
         classification: item.value_classification,
-        timestamp: item.timestamp,
+        timestamp: formatDateWithRelativeTime(item.timestamp),
       }));
     };
 
@@ -362,7 +363,7 @@ const fetchFearGreedIndex = async () => {
   return response.data.data.map((item) => ({
     value: item.value,
     classification: item.value_classification,
-    timestamp: item.timestamp,
+    timestamp: formatTimesTamp(item.timestamp),
   }));
 };
 

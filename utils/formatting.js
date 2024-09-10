@@ -60,10 +60,23 @@ function formatLargeNumber(num) {
   }
 }
 
+function formatTimesTamp(timestamp) {
+  const date = new Date(timestamp * 1000);
+
+  const formattedDate = date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  return formattedDate;
+}
+
 module.exports = {
   convertUsdToCurrency,
   formatCurrency,
   formatDateWithRelativeTime,
   formatDescription,
   formatLargeNumber,
+  formatTimesTamp,
 };

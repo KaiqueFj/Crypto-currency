@@ -4,35 +4,56 @@ block append head
   script(defer src="/js/bundled/index.js")
 
 block content
+  main.mainOverview(class="flex flex-col w-full self-center pt-16 mt-8 ")
   .feedGreedCoin
-    .header.flex
-      span.font-semibold.text-sm.text-black Fear & Greed index
+    .introduction.flex.flex-col.items-center.bg-gradient-to-r.from-red-400.to-green-500.p-6.rounded-lg.shadow-md.mb-8.mx-4.gap-2
+      h2.font-semibold.text-4xl.text-white.mb-2 Fear & Greed Index
+      p.text-lg.text-white Track the emotions driving the market, from extreme fear to extreme greed.
+      p.text-lg.text-white=`The current Fear & Greed Index stands at ${fearGreedValue[0].value}, classified as "${fearGreedValue[0].classification}".`
+      p.text-lg.text-white=`Yesterday's value was ${fearGreedValue[1].value}, and last week's value was ${fearGreedValue[6].value}.`
+      p(class="mt-4 px-4 py-2 bg-white text-green-600 font-bold rounded-lg shadow-md") Explore the latest market sentiment below
+
+    div(class="bg-white shadow-md rounded-lg p-6 max-w-xl mx-auto mt-8")
+      // Header Section
+      div(class="flex justify-between items-center mb-6")
+        h2(class="font-semibold text-xl") Crypto Fear and Greed Indicator
+        p(class="text-gray-500 text-sm")= `Last updated: ${fearGreedValue[0].timestamp}`
+
+      // Body Section
+      div(class="flex")
+        // Left Side: Fear and Greed Indicator SVG
+        div(class="w-1/2 flex flex-col items-center justify-center bg-transparent")
+          svg(width="300" height="200" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg")
+            // Group for the doughnut chart, centered at the middle
+            g(transform="translate(150, 150)")
+              // Arc segments
+              g.arc
+                // Red segment
+                path(d="M-107.94971126755703,-3.2954267175996574A108,108,0,0,1,-78.66219144333746,-74.00175428550142L-55.736679624136755,-51.07624246630069A75.6,75.6,0,0,0,-75.5281415284987,-3.2954267175996588Z" fill="#f02934")
+                // Orange segment
+                path(d="M-74.00175428550139,-78.66219144333748A108,108,0,0,1,-3.2954267175996614,-107.94971126755703L-3.295426717599662,-75.5281415284987A75.6,75.6,0,0,0,-51.07624246630068,-55.73667962413676Z" fill="#f07d29")
+                // Green segment
+                path(d="M3.295426717599675,-107.94971126755703A108,108,0,0,1,74.00175428550139,-78.66219144333749L51.07624246630068,-55.73667962413677A75.6,75.6,0,0,0,3.295426717599671,-75.5281415284987Z" fill="#9acd7a")
+                // Dark Green segment
+                path(d="M78.66219144333749,-74.00175428550138A108,108,0,0,1,107.94971126755703,-3.295426717599666L75.5281415284987,-3.2954267175996654A75.6,75.6,0,0,0,55.73667962413677,-51.07624246630066Z" fill="#34b349")
+
+              // Needle
+              g.speedometer-needle
+                path(d="M -5.904645882113434 1.494831558022378 L -40.66209809216411 -47.350736468831855 L 5.904645882113432 -9.594831558022381" fill="#000")
+                circle(cx="0" cy="-4.05" r="8.1" fill="#464a4f")
+          span(class="text-orange-500 font-bold ml-2")=`Now: ${fearGreedValue[0].value} ${fearGreedValue[0].classification}`
 
 
-    div.fear-greed-index.flex.flex-col.items-center.p-4.bg-gray-100.rounded-lg
 
-      svg(width="300" height="135" xmlns="http://www.w3.org/2000/svg")
-        // Group for the doughnut chart, centered at the middle
-        g(transform="translate(150, 135)")
-          // Arc segments
-          g.arc
-            // Red segment
-            path(d="M-107.94971126755703,-3.2954267175996574A108,108,0,0,1,-78.66219144333746,-74.00175428550142L-55.736679624136755,-51.07624246630069A75.6,75.6,0,0,0,-75.5281415284987,-3.2954267175996588Z" fill="#f02934")
-            // Orange segment
-            path(d="M-74.00175428550139,-78.66219144333748A108,108,0,0,1,-3.2954267175996614,-107.94971126755703L-3.295426717599662,-75.5281415284987A75.6,75.6,0,0,0,-51.07624246630068,-55.73667962413676Z" fill="#f07d29")
-            // Green segment
-            path(d="M3.295426717599675,-107.94971126755703A108,108,0,0,1,74.00175428550139,-78.66219144333749L51.07624246630068,-55.73667962413677A75.6,75.6,0,0,0,3.295426717599671,-75.5281415284987Z" fill="#9acd7a")
-            // Dark Green segment
-            path(d="M78.66219144333749,-74.00175428550138A108,108,0,0,1,107.94971126755703,-3.295426717599666L75.5281415284987,-3.2954267175996654A75.6,75.6,0,0,0,55.73667962413677,-51.07624246630066Z" fill="#34b349")
 
-          // Needle
-          g.speedometer-needle
-            path(d="M -5.904645882113434 1.494831558022378 L -40.66209809216411 -47.350736468831855 L 5.904645882113432 -9.594831558022381" fill="#000")
-            circle(cx="0" cy="-4.05" r="8.1" fill="#464a4f")
-
-      span.fear-greed-value(data-value=`${fearGreedValue[0].value}`)= `${fearGreedValue[0].classification}`
-      span.fear-greed-classification.text-xl.text-gray-600=`Now: ${fearGreedValue[0].value}`
-
-      span.fear-greed-classification.text-xl.text-gray-600=`yesterday: ${fearGreedValue[1].value}`
-      span.fear-greed-classification.text-xl.text-gray-600=`last week: ${fearGreedValue[6].value}`
-
+        // Right Side: Fear Values
+        div(class="w-1/2 flex flex-col items-start justify-center")
+          div(class="mb-2")
+            span(class="font-semibold text-lg") Now:
+            span(class="text-orange-500 font-bold ml-2")=`${fearGreedValue[0].value} ${fearGreedValue[0].classification}`
+          div(class="mb-2")
+            span(class="font-semibold text-lg") Yesterday:
+            span(class="text-orange-400 font-bold ml-2")=`${fearGreedValue[1].value} ${fearGreedValue[1].classification}`
+          div(class="mb-2")
+            span(class="font-semibold text-lg") Last Week:
+            span(class="text-orange-400 font-bold ml-2")=`${fearGreedValue[6].value} ${fearGreedValue[6].classification}`
