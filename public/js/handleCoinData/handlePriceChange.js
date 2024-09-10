@@ -5,7 +5,7 @@ import {
   cryptoIcon,
   flagIcon,
   currencySelect,
-} from "./handleElements";
+} from "../handleElements/handleElements";
 
 function updateTotalValue() {
   let coinPrice = parseFloat(coinPriceValue.dataset.originalPrice);

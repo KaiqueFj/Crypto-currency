@@ -1,4 +1,7 @@
-import { createChartForAllCoins, createUniqueChart } from "./chart.js";
+import {
+  createChartForAllCoins,
+  createUniqueChart,
+} from "../handleCoinData/chart.js";
 import {
   coinName,
   coins,
@@ -12,7 +15,7 @@ import {
   saveAsPdf,
   saveAsPng,
   valuesPercentage,
-} from "./handleElements.js";
+} from "../handleElements/handleElements.js";
 
 import { saveChartAsImage, saveChartAsPdf } from "./handleDownloads.js";
 

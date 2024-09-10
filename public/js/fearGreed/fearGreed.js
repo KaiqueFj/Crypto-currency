@@ -1,4 +1,4 @@
-const { needle } = require("./handleElements");
+const { needle } = require("../handleElements/handleElements");
 
 // Function to update the speedometer needle
 function updateSpeedDoMeter(value) {

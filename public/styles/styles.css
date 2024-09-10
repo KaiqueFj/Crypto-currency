@@ -49,7 +49,7 @@ body {
 .chartContainer {
   width: 100% !important;
   height: auto !important; /* Allow the canvas to size naturally */
-  max-height: 400px; /* Optional: set a max height to prevent overflow */
+  max-height: 400px;
 }
 
 .sort-icon::before {

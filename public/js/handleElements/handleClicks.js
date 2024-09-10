@@ -65,16 +65,18 @@ export function handleUserClicks() {
   });
 
   // get the percent on the sentiment up
-  const sentimentPercentageUp = parseFloat(
-    sentimentProfitBarUp.textContent.replace("%", "")
-  );
+  if (sentimentProfitBarUp && sentimentProfitBarDown && profitBar && lostBar) {
+    const sentimentPercentageUp = parseFloat(
+      sentimentProfitBarUp.textContent.replace("%", "")
+    );
 
-  // get the percent on the sentiment down
-  const sentimentPercentageDown = parseFloat(
-    sentimentProfitBarDown.textContent.replace("%", "")
-  );
+    // get the percent on the sentiment down
+    const sentimentPercentageDown = parseFloat(
+      sentimentProfitBarDown.textContent.replace("%", "")
+    );
 
-  // Set the width of the bars for sentiment up or down
-  profitBar.style.width = `${sentimentPercentageUp}%`;
-  lostBar.style.width = `${sentimentPercentageDown}%`;
+    // Set the width of the bars for sentiment up or down
+    profitBar.style.width = `${sentimentPercentageUp}%`;
+    lostBar.style.width = `${sentimentPercentageDown}%`;
+  }
 }

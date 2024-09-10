@@ -584,28 +584,29 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"f2QDv":[function(require,module,exports) {
-const updateSpeedDoMeter = require("e2366ba8a8f4b6a3");
-const { handleUserClicks } = require("7d07fb8481c76f64");
-const { handleCoinsFunctions } = require("dea15e5a0d486318");
-const { fearGreedValue, feedGreedCoinContainer } = require("71b77643ce512d0");
-const { handleCoinValueInCurrency, insertFlags, updateValueOfCoinByQuantity } = require("fe3fbbf1f03d049c");
-const { handleSortData } = require("b710d7c996a067e0");
+const updateSpeedDoMeter = require("67cae37c61cb61ea");
+const { handleUserClicks } = require("5bdcf2804befa2fb");
+const { handleCoinsFunctions } = require("88fddf9f7ffe2d0");
+const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select } = require("5082ea269ed0b977");
+const { handleCoinValueInCurrency, insertFlags, updateValueOfCoinByQuantity } = require("a7d37ed595fc46a5");
+const { handleSortData } = require("2c6e91297df9cd6d");
 const fearGreedNeedlePosition = fearGreedValue;
 document.addEventListener("DOMContentLoaded", ()=>{
     handleCoinsFunctions();
     handleSortData();
-    handleCoinValueInCurrency();
-    insertFlags();
-    updateValueOfCoinByQuantity();
     handleUserClicks();
 });
+// Handle the price change on coin page
+if (select) insertFlags();
+if (currencySelect) handleCoinValueInCurrency();
+if (coinQuantity) updateValueOfCoinByQuantity();
 // Update speedometer
 if (feedGreedCoinContainer) {
     if (fearGreedNeedlePosition && fearGreedValue !== null) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
 }
 
-},{"e2366ba8a8f4b6a3":"iLZtn","7d07fb8481c76f64":"7bD5q","dea15e5a0d486318":"jcvt7","71b77643ce512d0":"3akdP","fe3fbbf1f03d049c":"hYVWg","b710d7c996a067e0":"7iSl7"}],"iLZtn":[function(require,module,exports) {
-const { needle } = require("85fb5a8de257146");
+},{"67cae37c61cb61ea":"gVYJX","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2"}],"gVYJX":[function(require,module,exports) {
+const { needle } = require("335ffdcd8dc8da1a");
 // Function to update the speedometer needle
 function updateSpeedDoMeter(value) {
     const maxValue = 100;
@@ -617,7 +618,7 @@ function updateSpeedDoMeter(value) {
 }
 module.exports = updateSpeedDoMeter;
 
-},{"85fb5a8de257146":"3akdP"}],"3akdP":[function(require,module,exports) {
+},{"335ffdcd8dc8da1a":"aJLPg"}],"aJLPg":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "dropDownQtdOptions", ()=>dropDownQtdOptions);
@@ -718,11 +719,11 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"7bD5q":[function(require,module,exports) {
+},{}],"4Y7Xa":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);
-const { iconsInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar, navItems } = require("eaddd84cc2e28a4a");
+const { iconsInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar, navItems } = require("b7db570592d68645");
 function handleUserClicks() {
     //handle the infoContainer for each stats of the coin
     iconsInfo.each(function(e) {
@@ -768,20 +769,22 @@ function handleUserClicks() {
         optionsContainerDownloads.toggleClass("show");
     });
     // get the percent on the sentiment up
-    const sentimentPercentageUp = parseFloat(sentimentProfitBarUp.textContent.replace("%", ""));
-    // get the percent on the sentiment down
-    const sentimentPercentageDown = parseFloat(sentimentProfitBarDown.textContent.replace("%", ""));
-    // Set the width of the bars for sentiment up or down
-    profitBar.style.width = `${sentimentPercentageUp}%`;
-    lostBar.style.width = `${sentimentPercentageDown}%`;
+    if (sentimentProfitBarUp && sentimentProfitBarDown && profitBar && lostBar) {
+        const sentimentPercentageUp = parseFloat(sentimentProfitBarUp.textContent.replace("%", ""));
+        // get the percent on the sentiment down
+        const sentimentPercentageDown = parseFloat(sentimentProfitBarDown.textContent.replace("%", ""));
+        // Set the width of the bars for sentiment up or down
+        profitBar.style.width = `${sentimentPercentageUp}%`;
+        lostBar.style.width = `${sentimentPercentageDown}%`;
+    }
 }
 
-},{"eaddd84cc2e28a4a":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jcvt7":[function(require,module,exports) {
+},{"b7db570592d68645":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jFoI4":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleCoinsFunctions", ()=>handleCoinsFunctions);
-var _chartJs = require("./chart.js");
-var _handleElementsJs = require("./handleElements.js");
+var _chartJs = require("../handleCoinData/chart.js");
+var _handleElementsJs = require("../handleElements/handleElements.js");
 var _handleDownloadsJs = require("./handleDownloads.js");
 function handleCoinsFunctions() {
     // Get the value of the per_page to persist
@@ -858,7 +861,7 @@ function handleCoinsFunctions() {
     });
 }
 
-},{"./chart.js":"cC087","./handleElements.js":"3akdP","./handleDownloads.js":"krMLf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cC087":[function(require,module,exports) {
+},{"../handleCoinData/chart.js":"2oPl5","../handleElements/handleElements.js":"aJLPg","./handleDownloads.js":"Aiare","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2oPl5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Chart", ()=>(0, _autoDefault.default)) // Export Chart for use in other files
@@ -36453,7 +36456,7 @@ Object.entries(HttpStatusCode).forEach(([key, value])=>{
 });
 exports.default = HttpStatusCode;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"krMLf":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Aiare":[function(require,module,exports) {
 // chartUtils.js
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -36494,13 +36497,13 @@ function saveChartAsPdf(coinName) {
     }
 }
 
-},{"chart.js/auto":"d8NN9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hYVWg":[function(require,module,exports) {
+},{"chart.js/auto":"d8NN9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6BRsH":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "updateValueOfCoinByQuantity", ()=>updateValueOfCoinByQuantity);
 parcelHelpers.export(exports, "insertFlags", ()=>insertFlags);
 parcelHelpers.export(exports, "handleCoinValueInCurrency", ()=>handleCoinValueInCurrency);
-var _handleElements = require("./handleElements");
+var _handleElements = require("../handleElements/handleElements");
 function updateTotalValue() {
     let coinPrice = parseFloat((0, _handleElements.coinPriceValue).dataset.originalPrice);
     if (isNaN(coinPrice)) // If the data attribute is not set or not a valid number, use the text content
@@ -36571,7 +36574,7 @@ function handleCoinValueInCurrency() {
     });
 }
 
-},{"./handleElements":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7iSl7":[function(require,module,exports) {
+},{"../handleElements/handleElements":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kTzD2":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleSortData", ()=>handleSortData);
@@ -36624,6 +36627,6 @@ function sortTable(column, ascending) {
     rows.forEach((row)=>tbody.appendChild(row));
 }
 
-},{"./handleElements":"3akdP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
+},{"./handleElements":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
 
 //# sourceMappingURL=index.js.map
