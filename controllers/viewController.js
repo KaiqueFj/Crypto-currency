@@ -8,151 +8,124 @@ const {
   formatLargeNumber,
   formatTimesTamp,
 } = require("../utils/formatting");
+// Helper function to make API requests
+const fetchData = async (url, headers = {}, params = {}) => {
+  try {
+    const response = await axios.get(url, { headers, params });
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching data from ${url}:`, error);
+    throw new Error("Failed to fetch data");
+  }
+};
+
+// Fetch global market cap and volume data
+const fetchGlobalCapVolume = async () => {
+  const data = await fetchData("https://api.coingecko.com/api/v3/global", {
+    accept: "application/json",
+    "x-cg-demo-api-key": process.env.API_KEY_Cry,
+  });
+
+  const globalData = data.data;
+
+  return {
+    totalMarketCap: formatLargeNumber(globalData.total_market_cap.brl),
+    totalVolume: formatLargeNumber(globalData.total_volume.brl),
+    marketDominanceBtc: globalData.market_cap_percentage.btc,
+    marketCapChangePercent: globalData.market_cap_change_percentage_24h_usd,
+  };
+};
+
+// Fetch trending data
+const fetchTrendingData = async () => {
+  const data = await fetchData(
+    "https://api.coingecko.com/api/v3/search/trending",
+    { accept: "application/json", "x-cg-demo-api-key": process.env.API_KEY_Cry }
+  );
+
+  return data.coins.slice(0, 3).map((coin) => {
+    const { id, name, symbol, thumb, data } = coin.item;
+    const priceChangePercentage24h = data.price_change_percentage_24h
+      ? data.price_change_percentage_24h.brl
+      : "N/A";
+
+    return {
+      id,
+      name,
+      symbol,
+      thumb,
+      priceChangePercentage24h,
+      data: {
+        price: formatCurrency(data.price),
+        marketCap: data.market_cap,
+        totalVolume: data.total_volume,
+        sparkline: data.sparkline,
+      },
+    };
+  });
+};
+
+// Fetch Fear & Greed Index data
+const fetchFearGreedIndexO = async () => {
+  const data = await fetchData("https://api.alternative.me/fng/?limit=7");
+
+  return data.data.map((item) => ({
+    value: item.value,
+    classification: item.value_classification,
+    timestamp: formatTimesTamp(item.timestamp),
+  }));
+};
 
 exports.getOverview = catchAsync(async (req, res, next) => {
-  const itemsPerPage = req.query.per_page
-    ? parseInt(req.query.per_page, 10)
-    : 5;
-  const currentPage = req.query.page ? parseInt(req.query.page, 10) : 1;
+  const itemsPerPage = parseInt(req.query.per_page, 10) || 5;
+  const currentPage = parseInt(req.query.page, 10) || 1;
 
   try {
-    // Fetch to get all the coins available
-    const allCoins = await axios({
-      method: "GET",
-      url: "https://api.coingecko.com/api/v3/coins/list",
-      headers: {
+    const [allCoins, coinsInPage, cryptoCoins] = await Promise.all([
+      fetchData("https://api.coingecko.com/api/v3/coins/list", {
         accept: "application/json",
         "x-cg-demo-api-key": process.env.API_KEY_Cry,
-      },
-    });
-
-    // Fetch trending data
-    const fetchGlobalCapVolume = async () => {
-      const response = await axios.get(
-        "https://api.coingecko.com/api/v3/global",
+      }),
+      fetchData(
+        "https://api.coingecko.com/api/v3/coins/markets",
         {
-          headers: {
-            accept: "application/json",
-            "x-cg-demo-api-key": process.env.API_KEY_Cry,
-          },
-        }
-      );
-      const globalData = response.data.data;
-
-      const formattedData = {
-        totalMarketCap: formatLargeNumber(globalData.total_market_cap.brl),
-        totalVolume: formatLargeNumber(globalData.total_volume.brl),
-        marketDominanceBtc: globalData.market_cap_percentage.btc,
-        marketCapChangePercent: globalData.market_cap_change_percentage_24h_usd,
-      };
-
-      return formattedData;
-    };
-
-    const fetchTrendingData = async () => {
-      const response = await axios.get(
-        "https://api.coingecko.com/api/v3/search/trending",
+          accept: "application/json",
+          "x-cg-demo-api-key": process.env.API_KEY_Cry,
+        },
+        { vs_currency: "brl", order: "market_cap_desc", sparkline: false }
+      ),
+      fetchData(
+        "https://api.coingecko.com/api/v3/coins/markets",
         {
-          headers: {
-            accept: "application/json",
-            "x-cg-demo-api-key": process.env.API_KEY_Cry,
-          },
-        }
-      );
-      const trendingCoins = response.data.coins.map((coin) => {
-        const { id, name, symbol, thumb, data } = coin.item;
-
-        const priceChangePercentage24h = data.price_change_percentage_24h
-          ? data.price_change_percentage_24h.brl
-          : "N/A";
-
-        return {
-          id,
-          name,
-          symbol,
-          thumb,
-          priceChangePercentage24h, // Include the price change percentage
-          data: {
-            price: formatCurrency(data.price),
-            marketCap: data.market_cap,
-            totalVolume: data.total_volume,
-            sparkline: data.sparkline,
-          },
-        };
-      });
-
-      return trendingCoins.slice(0, 3); // Get only the first 3 coins
-    };
-
-    // Fetch to get all the coins on the first page
-    const coinsInPage = await axios({
-      method: "GET",
-      url: "https://api.coingecko.com/api/v3/coins/markets?price_change_percentage=1h%2C24h%2C7d&locale=pt&precision=2",
-      params: {
-        vs_currency: "brl",
-        order: "market_cap_desc",
-        sparkline: false,
-      },
-      headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": process.env.API_KEY_Cry,
-      },
-    });
-
-    // Fetch to get the first 20 coins
-    const cryptoCoins = await axios({
-      method: "GET",
-      url: "https://api.coingecko.com/api/v3/coins/markets?price_change_percentage=1h%2C24h%2C7d&locale=pt&precision=2",
-      params: {
-        vs_currency: "brl",
-        order: "market_cap_desc",
-        page: currentPage,
-        per_page: itemsPerPage,
-        sparkline: false,
-      },
-      headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": process.env.API_KEY_Cry,
-      },
-    });
-
-    const fetchFearGreedIndex = async () => {
-      const response = await axios.get(
-        `https://api.alternative.me/fng/?limit=7`,
+          accept: "application/json",
+          "x-cg-demo-api-key": process.env.API_KEY_Cry,
+        },
         {
-          headers: {
-            accept: "application/json",
-          },
+          vs_currency: "brl",
+          order: "market_cap_desc",
+          page: currentPage,
+          per_page: itemsPerPage,
+          sparkline: false,
+          price_change_percentage: "1h,24h,7d",
         }
-      );
+      ),
+    ]);
 
-      return response.data.data.map((item) => ({
-        value: item.value,
-        classification: item.value_classification,
-        timestamp: formatTimesTamp(item.timestamp),
-      }));
-    };
-
-    const allCoin = allCoins.data;
-    const coinInPage = coinsInPage.data;
-    const coins = cryptoCoins.data;
-    const totalCoins = allCoin.length;
+    const totalCoins = allCoins.length;
     const totalPages = Math.ceil(totalCoins / itemsPerPage);
-    const totalRows = itemsPerPage;
     const trendingData = await fetchTrendingData();
     const globalDataVolCap = await fetchGlobalCapVolume();
-    const fearGreedData = await fetchFearGreedIndex();
+    const fearGreedData = await fetchFearGreedIndexO();
 
-    // Render the overview template with the fetched coin data
     res.status(200).render("overview", {
       title: "Coins Overview",
-      allCoin: allCoin,
-      coinInPage: coinInPage,
-      coins: coins,
-      currentPage: currentPage,
-      itemsPerPage: itemsPerPage,
-      totalPages: totalPages,
-      totalRows: totalRows,
+      allCoin: allCoins,
+      coinInPage: coinsInPage,
+      coins: cryptoCoins,
+      currentPage,
+      itemsPerPage,
+      totalPages,
+      totalRows: itemsPerPage,
       fetchTrendingData: trendingData,
       globalData: globalDataVolCap,
       fearGreedValue: fearGreedData,
