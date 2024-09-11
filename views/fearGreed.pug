@@ -18,8 +18,8 @@ block content
       div(class="flex justify-between items-center mb-6")
         h2(class="font-semibold text-xl") Crypto Fear and Greed Indicator
         p(class="text-gray-500 text-sm")= `Last updated: ${fearGreedValue[0].timestamp}`
-
       // Body Section
+
       div(class="flex")
         // Left Side: Fear and Greed Indicator SVG
         div(class="w-1/2 flex flex-col items-center justify-center bg-transparent")
@@ -41,12 +41,10 @@ block content
               g.speedometer-needle
                 path(d="M -5.904645882113434 1.494831558022378 L -40.66209809216411 -47.350736468831855 L 5.904645882113432 -9.594831558022381" fill="#000")
                 circle(cx="0" cy="-4.05" r="8.1" fill="#464a4f")
-          span(class="text-orange-500 font-bold ml-2")=`Now: ${fearGreedValue[0].value} ${fearGreedValue[0].classification}`
+          // Span positioned below the SVG
+          span(class="text-orange-500 font-bold mt-4")=`Now: ${fearGreedValue[0].value} ${fearGreedValue[0].classification}`
 
-
-
-
-        // Right Side: Fear Values
+            // Right Side: Fear Values
         div(class="w-1/2 flex flex-col items-start justify-center")
           div(class="mb-2")
             span(class="font-semibold text-lg") Now:

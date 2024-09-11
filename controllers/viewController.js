@@ -129,7 +129,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       return response.data.data.map((item) => ({
         value: item.value,
         classification: item.value_classification,
-        timestamp: formatDateWithRelativeTime(item.timestamp),
+        timestamp: formatTimesTamp(item.timestamp),
       }));
     };
 
