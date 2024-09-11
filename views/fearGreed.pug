@@ -6,24 +6,23 @@ block append head
 block content
   main.mainOverview(class="flex flex-col w-full self-center pt-16 mt-8 ")
   .feedGreedCoin
-    .introduction.flex.flex-col.items-center.bg-gradient-to-r.from-red-400.to-green-500.p-6.rounded-lg.shadow-md.mb-8.mx-4.gap-2
+    .introduction.flex.flex-col.items-center.bg-gradient-to-r.from-purple-400.to-blue-500.p-6.rounded-lg.shadow-md.mb-8.mx-4.gap-2
       h2.font-semibold.text-4xl.text-white.mb-2 Fear & Greed Index
       p.text-lg.text-white Track the emotions driving the market, from extreme fear to extreme greed.
-      p.text-lg.text-white=`The current Fear & Greed Index stands at ${fearGreedValue[0].value}, classified as "${fearGreedValue[0].classification}".`
-      p.text-lg.text-white=`Yesterday's value was ${fearGreedValue[1].value}, and last week's value was ${fearGreedValue[6].value}.`
-      p(class="mt-4 px-4 py-2 bg-white text-green-600 font-bold rounded-lg shadow-md") Explore the latest market sentiment below
+      p.text-lg.text-white=`The current Fear & Greed Index stands at ${fearGreedValue[0].value}, classified as "${fearGreedValue[0].classification}". Yesterday's value was ${fearGreedValue[1].value}, and last week's value was ${fearGreedValue[6].value}.`
+      p(class= "mt-4 px-4 py-2 bg-white text-blue-500 font-bold rounded-lg shadow-md  ") Explore the market sentiment bellow   
 
     div(class="bg-white shadow-md rounded-lg p-6 max-w-xl mx-auto mt-8")
       // Header Section
       div(class="flex justify-between items-center mb-6")
-        h2(class="font-semibold text-xl") Crypto Fear and Greed Indicator
-        p(class="text-gray-500 text-sm")= `Last updated: ${fearGreedValue[0].timestamp}`
+        h2(class="font-semibold text-black text-xl") Crypto Fear and Greed Indicator
+        p(class="text-black text-sm")= `Last updated: ${fearGreedValue[0].timestamp}`
       // Body Section
 
       div(class="flex")
         // Left Side: Fear and Greed Indicator SVG
         div(class="w-1/2 flex flex-col items-center justify-center bg-transparent")
-          svg(width="300" height="200" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg")
+          svg(width="300" height="200" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg")
             // Group for the doughnut chart, centered at the middle
             g(transform="translate(150, 150)")
               // Arc segments
@@ -41,17 +40,15 @@ block content
               g.speedometer-needle
                 path(d="M -5.904645882113434 1.494831558022378 L -40.66209809216411 -47.350736468831855 L 5.904645882113432 -9.594831558022381" fill="#000")
                 circle(cx="0" cy="-4.05" r="8.1" fill="#464a4f")
-          // Span positioned below the SVG
-          span(class="text-orange-500 font-bold mt-4")=`Now: ${fearGreedValue[0].value} ${fearGreedValue[0].classification}`
 
             // Right Side: Fear Values
         div(class="w-1/2 flex flex-col items-start justify-center")
           div(class="mb-2")
-            span(class="font-semibold text-lg") Now:
-            span(class="text-orange-500 font-bold ml-2")=`${fearGreedValue[0].value} ${fearGreedValue[0].classification}`
+            span(class="font-semibold text-lg text-black") Now:
+            span(class="text-amber-400 font-bold ml-2")=`${fearGreedValue[0].value} ${fearGreedValue[0].classification}`
           div(class="mb-2")
-            span(class="font-semibold text-lg") Yesterday:
-            span(class="text-orange-400 font-bold ml-2")=`${fearGreedValue[1].value} ${fearGreedValue[1].classification}`
+            span(class="font-semibold text-lg text-black") Yesterday:
+            span(class="text-amber-400 font-bold ml-2")=`${fearGreedValue[1].value} ${fearGreedValue[1].classification}`
           div(class="mb-2")
-            span(class="font-semibold text-lg") Last Week:
-            span(class="text-orange-400 font-bold ml-2")=`${fearGreedValue[6].value} ${fearGreedValue[6].classification}`
+            span(class="font-semibold text-lg text-black") Last Week:
+            span(class="text-amber-400 font-bold ml-2")=`${fearGreedValue[6].value} ${fearGreedValue[6].classification}`
