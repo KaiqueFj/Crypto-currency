@@ -399,15 +399,15 @@ block content
             .header.flex
               h2.font-semibold.text-2xl.font-medium.text-black= `${coin.name} Latest News`
 
-            .coinNews(class="flex flex-row border-2 rounded-md mt-4 p-4")
+            .coinNews(class="flex flex-row border-2 rounded-md mt-4 gap-2 p-4")
               each news in newsData
-                div(class="flex flex-col lg:flex-col lg:items-center bg-white shadow-md p-4 rounded-lg flex-grow mb-4")
+                div(class="flex flex-col lg:flex-col lg:items-center bg-white shadow-md p-4 rounded-lg  flex-grow mb-4")
                   div(class="lg:w-64 w-full h-48 lg:h-40 overflow-hidden rounded-lg")
                     picture
-                      img(class="w-full h-full object-cover" src=`${news.imageUrl}` loading="lazy" alt="Image news...")
-
-                  div(class="flex flex-col justify-between mb-auto mt-4")
-                    h4(class="text-lg font-bold text-gray-900 hover:text-blue-500")= news.title
+                      img(class="w-full h-full rounded-md object-cover" src=`${news.imageUrl}` loading="lazy" alt="Image news...")
+                  a(href=`${news.url}`)
+                    div(class="flex flex-col justify-between mb-auto mt-4")
+                      h4(class="text-lg font-bold text-gray-900 hover:text-blue-500")= news.title
 
                   div(class="flex self-start mt-4")
                     div(class="flex self-start text-gray-500 hover:text-gray-700 cursor-pointer")

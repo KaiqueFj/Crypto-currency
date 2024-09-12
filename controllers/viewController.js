@@ -208,16 +208,15 @@ const paginateTickers = (tickers, perPage, currentPage) => {
 
 const getNewsAboutTheCoin = async (coin) => {
   const response = await axios.get(
-    `https://newsapi.org/v2/everything?q=${coin}&sortBy=publishedAt`,
+    `https://newsapi.org/v2/everything?q=${coin}&sortBy=relevancy&pageSize=4&language=en`,
     {
       headers: {
         accept: "application/json",
-        Authorization: `Bearer ${process.env.API_KEY_News}`, // Include API key in headers
-        sortBy: "publishedAt",
+        Authorization: `Bearer ${process.env.API_KEY_News}`,
       },
     }
   );
-  return response.data.articles.slice(0, 4);
+  return response.data.articles;
 };
 
 exports.getSpecificCoin = catchAsync(async (req, res, next) => {
