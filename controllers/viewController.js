@@ -66,7 +66,7 @@ const fetchTrendingData = async () => {
 };
 
 // Fetch Fear & Greed Index data
-const fetchFearGreedIndexO = async () => {
+const fetchFearGreedIndex = async () => {
   const data = await fetchData("https://api.alternative.me/fng/?limit=7");
 
   return data.data.map((item) => ({
@@ -115,7 +115,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     const totalPages = Math.ceil(totalCoins / itemsPerPage);
     const trendingData = await fetchTrendingData();
     const globalDataVolCap = await fetchGlobalCapVolume();
-    const fearGreedData = await fetchFearGreedIndexO();
+    const fearGreedData = await fetchFearGreedIndex();
 
     res.status(200).render("overview", {
       title: "Coins Overview",
@@ -208,7 +208,7 @@ const paginateTickers = (tickers, perPage, currentPage) => {
 
 exports.getSpecificCoin = catchAsync(async (req, res, next) => {
   const { coin } = req.params;
-  const itemsPerPage = parseInt(req.query.per_page, 10) || 10;
+  const itemsPerPage = parseInt(req.query.per_page, 5) || 5;
   const currentPage = parseInt(req.query.page, 10) || 1;
 
   try {
@@ -325,20 +325,6 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
     });
   }
 });
-
-const fetchFearGreedIndex = async () => {
-  const response = await axios.get(`https://api.alternative.me/fng/?limit=7`, {
-    headers: {
-      accept: "application/json",
-    },
-  });
-
-  return response.data.data.map((item) => ({
-    value: item.value,
-    classification: item.value_classification,
-    timestamp: formatTimesTamp(item.timestamp),
-  }));
-};
 
 exports.getFearGreedIndex = catchAsync(async (req, res, next) => {
   try {
