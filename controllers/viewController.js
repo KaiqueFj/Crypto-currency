@@ -76,12 +76,25 @@ const fetchFearGreedIndex = async () => {
   }));
 };
 
+const getNewsAboutAllCoins = async () => {
+  const response = await axios.get(
+    `https://newsapi.org/v2/everything?q=Crypto&sortBy=relevancy&pageSize=4&language=en`,
+    {
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${process.env.API_KEY_News}`,
+      },
+    }
+  );
+  return response.data.articles;
+};
+
 exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = parseInt(req.query.per_page, 10) || 5;
   const currentPage = parseInt(req.query.page, 10) || 1;
 
   try {
-    const [allCoins, coinsInPage, cryptoCoins] = await Promise.all([
+    const [allCoins, coinsInPage, cryptoCoins, cryptoNews] = await Promise.all([
       fetchData("https://api.coingecko.com/api/v3/coins/list", {
         accept: "application/json",
         "x-cg-demo-api-key": process.env.API_KEY_Cry,
@@ -109,7 +122,30 @@ exports.getOverview = catchAsync(async (req, res, next) => {
           price_change_percentage: "1h,24h,7d",
         }
       ),
+      getNewsAboutAllCoins(),
     ]);
+
+    const formattedNews = cryptoNews
+      .filter(
+        (article) =>
+          article.source &&
+          article.source.name &&
+          article.author &&
+          article.title &&
+          article.url &&
+          article.urlToImage &&
+          article.publishedAt
+      )
+      .map((article) => ({
+        source: article.source.name,
+        author: article.author,
+        title: article.title,
+        url: article.url,
+        imageUrl: article.urlToImage,
+        publishedAt: formatDateWithRelativeTime(article.publishedAt),
+      }));
+
+    console.log(formattedNews);
 
     const totalCoins = allCoins.length;
     const totalPages = Math.ceil(totalCoins / itemsPerPage);
@@ -129,6 +165,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       fetchTrendingData: trendingData,
       globalData: globalDataVolCap,
       fearGreedValue: fearGreedData,
+      newsDataAboutCoin: formattedNews,
     });
   } catch (err) {
     console.error(err);
@@ -138,6 +175,8 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     });
   }
 });
+
+// API calls related to the specific coin page
 
 const fetchCoinData = async (coin) => {
   const response = await axios.get(
