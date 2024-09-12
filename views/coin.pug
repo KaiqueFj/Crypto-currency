@@ -27,6 +27,13 @@ block content
             i.fa-regular.fa-face-smile
           .info Sentiment
 
+        .newsContainer(class=" flex flex-row gap-4 p-2 items-center font-medium text-lg text-black cursor-pointer  rounded-md hover:bg-gray-200" data-target="#newsContainer")
+          .icon.bg-gray-200.rounded-lg.flex.items-center.w-9.h-8.justify-center
+            i.fa-regular.fa-newspaper
+          .info News
+
+
+
 
       .mainSection(class="p-5 flex flex-col flex-grow w-[calc(100vw-272px)] ")
         .coinStats#overview.flex.flex-col.flex-1.gap-7
@@ -386,5 +393,28 @@ block content
 
                 .coinMessage.flex.flex-col.bg-white.hidden.max-w-xs.w-xs.absolute.p-2.rounded-xl.shadow-lg(data-info="ath-high")
                   p.text-sm.mx-0.my-1 The all-time high (ATH) is the highest price ever recorded for a cryptocurrency since it was first launched.
+
+
+          .coinNewsContainer#newsContainer(class="flex flex-col")
+            .header.flex
+              h2.font-semibold.text-2xl.font-medium.text-black= `${coin.name} Latest News`
+
+            .coinNews(class="flex flex-row border-2 rounded-md mt-4 p-4")
+              each news in newsData
+                div(class="flex flex-col lg:flex-col lg:items-center bg-white shadow-md p-4 rounded-lg flex-grow mb-4")
+                  div(class="lg:w-64 w-full h-48 lg:h-40 overflow-hidden rounded-lg")
+                    picture
+                      img(class="w-full h-full object-cover" src=`${news.imageUrl}` loading="lazy" alt="Image news...")
+
+                  div(class="flex flex-col justify-between mb-auto mt-4")
+                    h4(class="text-lg font-bold text-gray-900 hover:text-blue-500")= news.title
+
+                  div(class="flex self-start mt-4")
+                    div(class="flex self-start text-gray-500 hover:text-gray-700 cursor-pointer")
+                      div(class="flex flex-col  text-gray-500 text-sm")
+                        a(href=`${news.url}` target="_blank" class="hover:text-blue-500")
+                          p(class="hover:underline")= news.source
+                        p(class="mr-2")= news.publishedAt
+
 
 

@@ -206,18 +206,34 @@ const paginateTickers = (tickers, perPage, currentPage) => {
   };
 };
 
+const getNewsAboutTheCoin = async (coin) => {
+  const response = await axios.get(
+    `https://newsapi.org/v2/everything?q=${coin}&sortBy=publishedAt`,
+    {
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${process.env.API_KEY_News}`, // Include API key in headers
+        sortBy: "publishedAt",
+      },
+    }
+  );
+  return response.data.articles.slice(0, 4);
+};
+
 exports.getSpecificCoin = catchAsync(async (req, res, next) => {
   const { coin } = req.params;
   const itemsPerPage = parseInt(req.query.per_page, 5) || 5;
   const currentPage = parseInt(req.query.page, 10) || 1;
 
   try {
-    const [coinData, coinTicker, currencies, exchangeRate] = await Promise.all([
-      fetchCoinData(coin),
-      fetchCoinTickers(coin),
-      fetchSupportedCurrencies(),
-      fetchExchangeRate(),
-    ]);
+    const [coinData, coinTicker, currencies, exchangeRate, newsCoin] =
+      await Promise.all([
+        fetchCoinData(coin),
+        fetchCoinTickers(coin),
+        fetchSupportedCurrencies(),
+        fetchExchangeRate(),
+        getNewsAboutTheCoin(coin),
+      ]);
 
     if (!coinData) {
       return res.status(404).render("error", {
@@ -306,6 +322,26 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       })
     );
 
+    const formattedNews = newsCoin
+      .filter(
+        (article) =>
+          article.source &&
+          article.source.name &&
+          article.author &&
+          article.title &&
+          article.url &&
+          article.urlToImage &&
+          article.publishedAt
+      )
+      .map((article) => ({
+        source: article.source.name,
+        author: article.author,
+        title: article.title,
+        url: article.url,
+        imageUrl: article.urlToImage,
+        publishedAt: formatDateWithRelativeTime(article.publishedAt),
+      }));
+
     res.status(200).render("coin", {
       title: `Overview of ${coinData.name}`,
       coin: coinDataInfo,
@@ -316,6 +352,7 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       totalItems: paginatedTickersData.totalItems,
       itemsPerPage: paginatedTickersData.itemsPerPage,
       currencies,
+      newsData: formattedNews,
     });
   } catch (err) {
     console.error(err);
