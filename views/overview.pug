@@ -83,7 +83,7 @@ block content
 
 
 
-    .coin-container(class="flex flex-col w-full  p-4")
+    .coin-container(class="flex flex-col   p-4")
       .table-container(class=" w-full p-4 border-2 rounded-xl")
         table.min-w-full.divide-y.divide-gray-200
           thead
@@ -197,8 +197,8 @@ block content
         .coinNews(class="flex flex-col border-2 rounded-md mt-4 gap-2 p-4")
           .news(class="flex flex-row")
             each news in newsDataAboutCoin
-              div(class="flex flex-col lg:flex-col lg:items-center bg-white shadow-md p-4 rounded-lg  flex-grow mb-4")
-                div(class="lg:w-64 w-full h-48 lg:h-40 overflow-hidden rounded-lg")
+              div(class="flex flex-col lg:flex-col lg:items-center bg-white shadow-md p-4 rounded-lg  justify-between flex-grow mb-4")
+                div(class="lg:w-80 w-full h-48 lg:h-40 overflow-hidden rounded-lg")
                   picture
                     img(class="w-full h-full rounded-md object-cover" src=`${news.imageUrl}` loading="lazy" alt="Image news...")
                 a(href=`${news.url}`)
@@ -213,5 +213,5 @@ block content
                       p(class="mr-2")= news.publishedAt
 
 
-          .ReadMore
-            a(href="/#" class="flex flex-row items-center justify-center bg-blue-500 text-white font-bold rounded-lg shadow-md p-2 mt-4") Read More News
+          .ReadMore(class="w-1/5 self-center ")
+            a(href="#" class="flex flex-row items-center justify-center bg-blue-500 text-white font-bold rounded-lg shadow-md p-2 mt-4") Read More News

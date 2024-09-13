@@ -69,7 +69,8 @@ body {
   top: calc(3rem + 1rem);
 }
 
-.mainSection {
+.mainSection,
+.mainOverview {
   width: calc(100vw - 272px);
 }
 

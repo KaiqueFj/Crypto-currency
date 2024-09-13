@@ -145,8 +145,6 @@ exports.getOverview = catchAsync(async (req, res, next) => {
         publishedAt: formatDateWithRelativeTime(article.publishedAt),
       }));
 
-    console.log(formattedNews);
-
     const totalCoins = allCoins.length;
     const totalPages = Math.ceil(totalCoins / itemsPerPage);
     const trendingData = await fetchTrendingData();
