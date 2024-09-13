@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start:dev": "SET NODE_ENV=development & nodemon server.js",
-    "start": "export NODE_ENV=development && nodemon server.js",
+    "start": "export NODE_ENV=development && node server.js",
     "watch:js": "parcel watch --dist-dir public/js/bundled --no-cache",
     "build:js": "parcel build --dist-dir public/js/bundled --no-cache"
   },
