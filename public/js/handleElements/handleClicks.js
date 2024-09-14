@@ -84,7 +84,6 @@ export function handleUserClicks() {
 
   buttonMobile.addEventListener('click', (e) => {
     e.preventDefault();
-    console.log('clicked');
     menu.classList.toggle('hidden');
   });
 }
