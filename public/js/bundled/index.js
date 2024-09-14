@@ -654,6 +654,8 @@ parcelHelpers.export(exports, "currencySelect", ()=>currencySelect);
 parcelHelpers.export(exports, "select", ()=>select);
 parcelHelpers.export(exports, "cryptoIcon", ()=>cryptoIcon);
 parcelHelpers.export(exports, "flagIcon", ()=>flagIcon);
+parcelHelpers.export(exports, "buttonMobile", ()=>buttonMobile);
+parcelHelpers.export(exports, "menu", ()=>menu);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -688,6 +690,8 @@ const currencySelect = document.getElementById("currencySelect");
 const select = document.getElementById("currencySelect");
 const cryptoIcon = document.getElementById("cryptoIcon");
 const flagIcon = document.getElementById("flagIcon");
+const buttonMobile = document.querySelector("#menu-button");
+const menu = document.querySelector("#nav-menu");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -723,7 +727,7 @@ exports.export = function(dest, destName, get) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);
-const { iconsInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar, navItems } = require("b7db570592d68645");
+const { iconsInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar, navItems, buttonMobile, menu } = require("b7db570592d68645");
 function handleUserClicks() {
     //handle the infoContainer for each stats of the coin
     iconsInfo.each(function(e) {
@@ -777,6 +781,11 @@ function handleUserClicks() {
         profitBar.style.width = `${sentimentPercentageUp}%`;
         lostBar.style.width = `${sentimentPercentageDown}%`;
     }
+    buttonMobile.addEventListener("click", (e)=>{
+        e.preventDefault();
+        console.log("clicked");
+        menu.classList.toggle("hidden");
+    });
 }
 
 },{"b7db570592d68645":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jFoI4":[function(require,module,exports) {

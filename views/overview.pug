@@ -7,13 +7,12 @@ block append head
 
 block content
 
-  main.mainOverview(class="flex flex-col w-full self-center pt-16 mt-8 ")
+  main.mainOverview(class="flex flex-col w-full self-center pt-16 mt-8")
     .introduction.flex.flex-col.items-center.bg-gradient-to-r.from-purple-400.to-blue-500.p-6.rounded-lg.shadow-md.mb-8.mx-4.gap-2
-      h2.font-semibold.text-4xl.text-white.mb-2 Crypto List
-      p.text-lg.text-white Leading the way with top trends, market insights, and up-to-date analytics.
-      p.text-lg.text-white=`The global cryptocurrency market cap stands at ${globalData.totalMarketCap}, with a ${globalData.marketCapChangePercent.toFixed(2)}% change in the last 24 hours. Total trading volume is ${globalData.totalVolume}, and Bitcoin holds ${globalData.marketDominanceBtc.toFixed(2)}% market dominance.`
-      p(class= "mt-4 px-4 py-2 bg-white text-blue-500 font-bold rounded-lg shadow-md  ") Explore the market bellow   
-
+      h2(class="font-semibold text-4xl md:text-3xl lg:text-4xl text-white mb-2") Crypto List
+      p(class=" font-semibold text-xl md:text-md lg:text-xl text-white mb-2") Leading the way with top trends, market insights, and up-to-date analytics.
+      p(class=" font-semibold text-xl md:text-md lg:text-xl text-white mb-2")=`The global cryptocurrency market cap stands at ${globalData.totalMarketCap}, with a ${globalData.marketCapChangePercent.toFixed(2)}% change in the last 24 hours. Total trading volume is ${globalData.totalVolume}, and Bitcoin holds ${globalData.marketDominanceBtc.toFixed(2)}% market dominance.`
+      p(class="mt-4 px-4 py-2 bg-white text-blue-500 font-bold rounded-lg shadow-md hover:bg-blue-500 hover:text-white transition-colors duration-300 ease-in-out cursor-pointer") Explore the market below
 
 
     .overviewAdditionalContainer.flex.flex-row.p-3.justify-center.gap-5

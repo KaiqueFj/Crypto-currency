@@ -7,16 +7,18 @@ const {
   sentimentProfitBarDown,
   lostBar,
   navItems,
-} = require("./handleElements");
+  buttonMobile,
+  menu,
+} = require('./handleElements');
 
 export function handleUserClicks() {
   //handle the infoContainer for each stats of the coin
   iconsInfo.each(function (e) {
-    $(this).on("click", function (e) {
+    $(this).on('click', function (e) {
       e.preventDefault();
 
       // Get the data-info attribute of the clicked icon
-      const infoType = $(this).data("info");
+      const infoType = $(this).data('info');
 
       // Get the corresponding message container
       const marketCapInfo = $(`.coinMessage[data-info='${infoType}']`);
@@ -33,50 +35,56 @@ export function handleUserClicks() {
       });
 
       // Show the corresponding popup
-      marketCapInfo.toggleClass("hidden");
+      marketCapInfo.toggleClass('hidden');
     });
   });
 
   //handle aside navigation
   navItems.forEach((item) => {
-    item.addEventListener("click", function () {
-      const targetId = this.getAttribute("data-target");
+    item.addEventListener('click', function () {
+      const targetId = this.getAttribute('data-target');
       console.log(targetId);
       const targetElement = document.querySelector(targetId);
 
       if (targetElement) {
-        targetElement.scrollIntoView({ behavior: "smooth" });
+        targetElement.scrollIntoView({ behavior: 'smooth' });
       }
     });
   });
 
   // Handle save chart as image
-  saveAsButtonDropdown.on("click", function (e) {
+  saveAsButtonDropdown.on('click', function (e) {
     var containerPosition = $(this).offset();
 
     optionsContainerDownloads.css({
-      top: containerPosition.top + $(this).outerHeight() + "px",
-      left: containerPosition.left + "px",
-      position: "absolute",
+      top: containerPosition.top + $(this).outerHeight() + 'px',
+      left: containerPosition.left + 'px',
+      position: 'absolute',
     });
 
     // Toggle the dropdown visibility
-    optionsContainerDownloads.toggleClass("show");
+    optionsContainerDownloads.toggleClass('show');
   });
 
   // get the percent on the sentiment up
   if (sentimentProfitBarUp && sentimentProfitBarDown && profitBar && lostBar) {
     const sentimentPercentageUp = parseFloat(
-      sentimentProfitBarUp.textContent.replace("%", "")
+      sentimentProfitBarUp.textContent.replace('%', '')
     );
 
     // get the percent on the sentiment down
     const sentimentPercentageDown = parseFloat(
-      sentimentProfitBarDown.textContent.replace("%", "")
+      sentimentProfitBarDown.textContent.replace('%', '')
     );
 
     // Set the width of the bars for sentiment up or down
     profitBar.style.width = `${sentimentPercentageUp}%`;
     lostBar.style.width = `${sentimentPercentageDown}%`;
   }
+
+  buttonMobile.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('clicked');
+    menu.classList.toggle('hidden');
+  });
 }
