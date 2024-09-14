@@ -1,5 +1,5 @@
-const axios = require("axios");
-const catchAsync = require("../utils/catchAsync");
+const axios = require('axios');
+const catchAsync = require('../utils/catchAsync');
 const {
   convertUsdToCurrency,
   formatCurrency,
@@ -7,7 +7,7 @@ const {
   formatDescription,
   formatLargeNumber,
   formatTimesTamp,
-} = require("../utils/formatting");
+} = require('../utils/formatting');
 // Helper function to make API requests
 const fetchData = async (url, headers = {}, params = {}) => {
   try {
@@ -15,15 +15,15 @@ const fetchData = async (url, headers = {}, params = {}) => {
     return response.data;
   } catch (error) {
     console.error(`Error fetching data from ${url}:`, error);
-    throw new Error("Failed to fetch data");
+    throw new Error('Failed to fetch data');
   }
 };
 
 // Fetch global market cap and volume data
 const fetchGlobalCapVolume = async () => {
-  const data = await fetchData("https://api.coingecko.com/api/v3/global", {
-    accept: "application/json",
-    "x-cg-demo-api-key": process.env.API_KEY_Cry,
+  const data = await fetchData('https://api.coingecko.com/api/v3/global', {
+    accept: 'application/json',
+    'x-cg-demo-api-key': process.env.API_KEY_Cry,
   });
 
   const globalData = data.data;
@@ -39,15 +39,15 @@ const fetchGlobalCapVolume = async () => {
 // Fetch trending data
 const fetchTrendingData = async () => {
   const data = await fetchData(
-    "https://api.coingecko.com/api/v3/search/trending",
-    { accept: "application/json", "x-cg-demo-api-key": process.env.API_KEY_Cry }
+    'https://api.coingecko.com/api/v3/search/trending',
+    { accept: 'application/json', 'x-cg-demo-api-key': process.env.API_KEY_Cry }
   );
 
   return data.coins.slice(0, 3).map((coin) => {
     const { id, name, symbol, thumb, data } = coin.item;
     const priceChangePercentage24h = data.price_change_percentage_24h
       ? data.price_change_percentage_24h.brl
-      : "N/A";
+      : 'N/A';
 
     return {
       id,
@@ -67,7 +67,7 @@ const fetchTrendingData = async () => {
 
 // Fetch Fear & Greed Index data
 const fetchFearGreedIndex = async () => {
-  const data = await fetchData("https://api.alternative.me/fng/?limit=7");
+  const data = await fetchData('https://api.alternative.me/fng/?limit=7');
 
   return data.data.map((item) => ({
     value: item.value,
@@ -81,7 +81,7 @@ const getNewsAboutAllCoins = async () => {
     `https://newsapi.org/v2/everything?q=Crypto&sortBy=relevancy&pageSize=4&language=en`,
     {
       headers: {
-        accept: "application/json",
+        accept: 'application/json',
         Authorization: `Bearer ${process.env.API_KEY_News}`,
       },
     }
@@ -95,31 +95,31 @@ exports.getOverview = catchAsync(async (req, res, next) => {
 
   try {
     const [allCoins, coinsInPage, cryptoCoins, cryptoNews] = await Promise.all([
-      fetchData("https://api.coingecko.com/api/v3/coins/list", {
-        accept: "application/json",
-        "x-cg-demo-api-key": process.env.API_KEY_Cry,
+      fetchData('https://api.coingecko.com/api/v3/coins/list', {
+        accept: 'application/json',
+        'x-cg-demo-api-key': process.env.API_KEY_Cry,
       }),
       fetchData(
-        "https://api.coingecko.com/api/v3/coins/markets",
+        'https://api.coingecko.com/api/v3/coins/markets',
         {
-          accept: "application/json",
-          "x-cg-demo-api-key": process.env.API_KEY_Cry,
+          accept: 'application/json',
+          'x-cg-demo-api-key': process.env.API_KEY_Cry,
         },
-        { vs_currency: "brl", order: "market_cap_desc", sparkline: false }
+        { vs_currency: 'brl', order: 'market_cap_desc', sparkline: false }
       ),
       fetchData(
-        "https://api.coingecko.com/api/v3/coins/markets",
+        'https://api.coingecko.com/api/v3/coins/markets',
         {
-          accept: "application/json",
-          "x-cg-demo-api-key": process.env.API_KEY_Cry,
+          accept: 'application/json',
+          'x-cg-demo-api-key': process.env.API_KEY_Cry,
         },
         {
-          vs_currency: "brl",
-          order: "market_cap_desc",
+          vs_currency: 'brl',
+          order: 'market_cap_desc',
           page: currentPage,
           per_page: itemsPerPage,
           sparkline: false,
-          price_change_percentage: "1h,24h,7d",
+          price_change_percentage: '1h,24h,7d',
         }
       ),
       getNewsAboutAllCoins(),
@@ -151,8 +151,8 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     const globalDataVolCap = await fetchGlobalCapVolume();
     const fearGreedData = await fetchFearGreedIndex();
 
-    res.status(200).render("overview", {
-      title: "Coins Overview",
+    res.status(200).render('overview', {
+      title: 'Coins Overview',
       allCoin: allCoins,
       coinInPage: coinsInPage,
       coins: cryptoCoins,
@@ -167,9 +167,9 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).render("error", {
-      title: "Error",
-      message: "Failed to fetch data",
+    res.status(500).render('error', {
+      title: 'Error',
+      message: 'Failed to fetch data',
     });
   }
 });
@@ -181,8 +181,8 @@ const fetchCoinData = async (coin) => {
     `https://api.coingecko.com/api/v3/coins/${coin}`,
     {
       headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": process.env.API_KEY_Cry,
+        accept: 'application/json',
+        'x-cg-demo-api-key': process.env.API_KEY_Cry,
       },
     }
   );
@@ -194,8 +194,8 @@ const fetchCoinTickers = async (coin) => {
     `https://api.coingecko.com/api/v3/coins/${coin}/tickers?include_exchange_logo=true&depth=true&order=volume_desc`,
     {
       headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": process.env.API_KEY_Cry,
+        accept: 'application/json',
+        'x-cg-demo-api-key': process.env.API_KEY_Cry,
       },
     }
   );
@@ -204,11 +204,11 @@ const fetchCoinTickers = async (coin) => {
 
 const fetchSupportedCurrencies = async () => {
   const response = await axios.get(
-    "https://api.coingecko.com/api/v3/simple/supported_vs_currencies",
+    'https://api.coingecko.com/api/v3/simple/supported_vs_currencies',
     {
       headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": process.env.API_KEY_Cry,
+        accept: 'application/json',
+        'x-cg-demo-api-key': process.env.API_KEY_Cry,
       },
     }
   );
@@ -220,8 +220,8 @@ const fetchExchangeRate = async () => {
     `https://api.coingecko.com/api/v3/simple/price?ids=usd&vs_currencies=brl`,
     {
       headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": process.env.API_KEY_Cry,
+        accept: 'application/json',
+        'x-cg-demo-api-key': process.env.API_KEY_Cry,
       },
     }
   );
@@ -248,7 +248,7 @@ const getNewsAboutTheCoin = async (coin) => {
     `https://newsapi.org/v2/everything?q=${coin}&sortBy=relevancy&pageSize=4&language=en`,
     {
       headers: {
-        accept: "application/json",
+        accept: 'application/json',
         Authorization: `Bearer ${process.env.API_KEY_News}`,
       },
     }
@@ -272,9 +272,9 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       ]);
 
     if (!coinData) {
-      return res.status(404).render("error", {
-        title: "Coin Not Found",
-        message: "The requested coin data could not be found.",
+      return res.status(404).render('error', {
+        title: 'Coin Not Found',
+        message: 'The requested coin data could not be found.',
       });
     }
 
@@ -378,7 +378,7 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
         publishedAt: formatDateWithRelativeTime(article.publishedAt),
       }));
 
-    res.status(200).render("coin", {
+    res.status(200).render('coin', {
       title: `Overview of ${coinData.name}`,
       coin: coinDataInfo,
       coinTickerData: formattedTickers,
@@ -392,9 +392,9 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).render("error", {
-      title: "Error",
-      message: "Failed to fetch data",
+    res.status(500).render('error', {
+      title: 'Error',
+      message: 'Failed to fetch data',
     });
   }
 });
@@ -402,15 +402,15 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
 exports.getFearGreedIndex = catchAsync(async (req, res, next) => {
   try {
     const fearGreedData = await fetchFearGreedIndex();
-    res.status(200).render("fearGreed", {
+    res.status(200).render('fearGreed', {
       title: `Overview of Fear Greed`,
       fearGreedValue: fearGreedData,
     });
   } catch (err) {
     console.error(err);
-    res.status(500).render("error", {
-      title: "Error",
-      message: "Failed to fetch data",
+    res.status(500).render('error', {
+      title: 'Error',
+      message: 'Failed to fetch data',
     });
   }
 });
