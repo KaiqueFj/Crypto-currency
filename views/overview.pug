@@ -145,7 +145,7 @@ block content
                   td(class="px-8 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")
 
       // Info Pagination and Dropdown Container
-      div(class="infoPagination flex flex-col md:flex-row justify-between items-center p-4")
+      .infoPagination(class="flex flex-col md:flex-row justify-between items-center p-4")
 
         // Showing text with responsive padding
         span(class="px-4 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm text-gray-500")
@@ -185,28 +185,36 @@ block content
             button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 20
 
       // News Section
-      .newsAboutAllCoins(class="flex flex-col")
-        .header.flex
-          h2.font-semibold.text-2xl.font-medium.text-black= `Latest News about Crypto`
+      .newsAboutAllCoins(class="flex flex-col p-4")
 
-        .coinNews(class="flex flex-col border-2 rounded-md mt-4 gap-2 p-4")
-          .news(class="flex flex-row")
-            each news in newsDataAboutCoin
-              div(class="flex flex-col lg:flex-col lg:items-center bg-white shadow-md p-4 rounded-lg  justify-between flex-grow mb-4")
-                div(class="lg:w-80 w-full h-48 lg:h-40 overflow-hidden rounded-lg")
-                  picture
-                    img(class="w-full h-full rounded-md object-cover" src=`${news.imageUrl}` loading="lazy" alt="Image news...")
+        // Header
+        div(class="header flex flex-col mb-4")
+          h2(class="font-semibold text-2xl md:text-3xl font-medium text-black") Latest News about Crypto
+
+        // News Container
+        div(class="coinNews flex flex-col gap-4")
+
+          // News Items
+          each news in newsDataAboutCoin
+            div(class="flex flex-col bg-white shadow-md p-4 rounded-lg md:flex-row md:items-start md:gap-4")
+
+              // Image Container
+              div(class="w-full h-48 md:w-60 md:h-40 overflow-hidden rounded-lg mb-4 md:mb-0")
+                picture
+                  img(class="w-full h-full object-cover rounded-md" src=`${news.imageUrl}` loading="lazy" alt="Image news...")
+
+              // News Content
+              div(class="flex flex-col flex-grow")
                 a(href=`${news.url}`)
-                  div(class="flex flex-col justify-between mb-auto mt-4")
-                    h4(class="text-lg font-bold text-gray-900 hover:text-blue-500")= news.title
+                  div(class="flex flex-col flex-grow")
+                    h4(class="text-lg font-bold text-gray-900 hover:text-blue-500 mb-2")= news.title
 
-                div(class="flex self-start mt-4")
-                  div(class="flex self-start text-gray-500 hover:text-gray-700 cursor-pointer")
-                    div(class="flex flex-col  text-gray-500 text-sm")
+                    div(class="flex flex-col text-gray-500 text-sm")
                       a(href=`${news.url}` target="_blank" class="hover:text-blue-500")
                         p(class="hover:underline")= news.source
                       p(class="mr-2")= news.publishedAt
 
-
-          .ReadMore(class="w-1/5 self-center ")
-            a(href="#" class="flex flex-row items-center justify-center bg-blue-500 text-white font-bold rounded-lg shadow-md p-2 mt-4") Read More News
+        // Read More Button
+        div(class="ReadMore flex justify-center mt-4")
+          a(href="#" class="flex flex-row items-center justify-center bg-blue-500 text-white font-bold rounded-lg shadow-md px-4 py-2 md:px-6 md:py-3")
+            | Read More News
