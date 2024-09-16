@@ -754,7 +754,6 @@ function handleUserClicks() {
     navItems.forEach((item)=>{
         item.addEventListener("click", function() {
             const targetId = this.getAttribute("data-target");
-            console.log(targetId);
             const targetElement = document.querySelector(targetId);
             if (targetElement) targetElement.scrollIntoView({
                 behavior: "smooth"
