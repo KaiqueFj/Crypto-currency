@@ -19,7 +19,7 @@ block content
 
       // Trending Section
       .trending(class="flex flex-col sm:flex-row p-3 shadow-lg rounded-xl border-2 h-auto sm:h-48 w-full sm:w-96")
-        div(class="coin flex flex-col p-3 w-full justify-between")
+        div(class="coin flex flex-col gap-4 p-3 w-full justify-between")
           div(class="header")
             h2(class="font-semibold text-xl font-medium text-black mb-4") Trending 🔥
           each coin of fetchTrendingData
@@ -36,15 +36,15 @@ block content
 
 
       // Volume and Capitalization Section
-      .volumeCapitalization(class="flex flex-col sm:flex-row p-3 shadow-lg rounded-xl border-2 h-auto sm:h-48 w-full sm:w-96")
+      .volumeCapitalization(class="flex flex-row sm:flex-row p-3 shadow-lg rounded-xl border-2 h-auto sm:h-48 w-full sm:w-96")
         div(class="coin flex flex-col p-3 w-full justify-between")
           div(class="header")
             h2(class="font-semibold text-xl font-medium text-black mb-4") Market Cap & Vol 🔥
-          div(class="coinContainerData flex flex-col sm:flex-row justify-between")
-            div(class="mainInfo flex flex-col sm:flex-row items-center gap-2 sm:gap-14")
+          div(class="coinContainerData flex flex-row sm:flex-col justify-between")
+            div(class="mainInfo flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-14")
               p(class="text-gray-700 font-bold text-md") Market cap
               p(class="text-gray-700 font-bold text-md") Volume 24h
-            div(class="values flex flex-col sm:flex-row items-center gap-2 sm:gap-14")
+            div(class="values flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-14")
               p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `$ ${globalData.totalMarketCap}`
               p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `$ ${globalData.totalVolume}`
 
@@ -67,154 +67,157 @@ block content
                     path(d="M -5.904645882113434 1.494831558022378 L -40.66209809216411 -47.350736468831855 L 5.904645882113432 -9.594831558022381" fill="#000")
                     circle(cx="0" cy="-4.05" r="8.1" fill="#464a4f")
               span(class="fear-greed-value font-bold text-gray-700" data-value=`${fearGreedValue[0].value}`)= `${fearGreedValue[0].classification}`
-              span(class="fear-greed-classification text-md text-gray-700") Now: ${fearGreedValue[0].value}
+              span(class="fear-greed-classification text-md text-gray-700")= `Now: ${fearGreedValue[0].value}`
 
 
 
 
       // Coin Container
-      .coin-container(class="flex flex-col p-4")
-        // Table Container
-        div(class="table-container w-full p-4 border-2 rounded-xl")
-          table(class="min-w-full divide-y divide-gray-200")
-            thead
-              tr
-                // Column for Index
-                th(class="px-8 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='index'")
-                  .container.flex.flex-row.items-center.justify-center
-                    span.icon
-                    p.textHeader #
-                // Column for Icon and Name
-                th(class="px-8 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='name'")
-                  .container.flex.flex-row.items-center.justify-center
-                    span.icon
-                    p.textHeader Name
-                // Column for Symbol
-                th(class="px-8 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='symbol'")
-                  .container.flex.flex-row.items-center.justify-center
-                    span.icon
-                    p.textHeader Price
-                // Column for Price (Visible on larger screens)
-                th(class="px-8 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='1h'")
-                  .container.flex.flex-row.items-center.justify-center
-                    span.icon
-                    p.textHeader 1h
+    .coin-container(class="flex flex-col p-4")
+      // Table Container with horizontal scroll
+      div(class="table-container w-full p-4 border-2 rounded-xl overflow-x-auto")
+        table(class="min-w-full divide-y divide-gray-200")
+          thead
+            tr
+              // Column for Index
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='index'")
+                .container.flex.flex-row.items-center.justify-center
+                  span.icon
+                  p.textHeader #
+              // Column for Icon and Name
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='name'")
+                .container.flex.flex-row.items-center.justify-center
+                  span.icon
+                  p.textHeader Name
+              // Column for Symbol
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='symbol'")
+                .container.flex.flex-row.items-center.justify-center
+                  span.icon
+                  p.textHeader Price
+              // Column for Price (Visible on larger screens)
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='1h'")
+                .container.flex.flex-row.items-center.justify-center
+                  span.icon
+                  p.textHeader 1h
+              // Hidden columns for smaller screens
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='24h' hidden md:table-cell")
+                .container.flex.flex-row.items-center.justify-center
+                  span.icon
+                  p.textHeader 24h
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='7d' hidden md:table-cell")
+                .container.flex.flex-row.items-center.justify-center
+                  span.icon
+                  p.textHeader 7d
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='volume' hidden md:table-cell")
+                .container.flex.flex-row.items-center.justify-center
+                  span.icon
+                  p.textHeader 24h volume
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='marketCap' hidden md:table-cell")
+                .container.flex.flex-row.items-center.justify-center
+                  span.icon
+                  p.textHeader Market cap
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='last7Days' hidden md:table-cell")
+                .container.flex.flex-row.items-center.justify-center
+                  span.icon
+                  p.textHeader Last 7 days
+
+          tbody(class="bg-white divide-y divide-gray-200")
+            each coin, index in coins
+              tr(data-href=`/coin/${coin.id}`, class="cursor-pointer hover:bg-gray-100 transition")
+                td(class="px-4 whitespace-nowrap")
+                  p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 leading-5")= `${index + 1}`
+                td(class="px-1 py-1 whitespace-nowrap")
+                  .flex.items-center
+                    img(class="coin-image w-6 h-6 object-cover rounded-full" src=coin.image alt=coin.name)
+                    .flex.ml-4
+                      p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 leading-5")= coin.name
+                      p(class="text-gray-400 font-semibold text-sm leading-5")= `${coin.symbol.toUpperCase()}`
+                td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium")= `$${coin.current_price.toLocaleString()}`
+                td(class="px-4 changeValue whitespace-nowrap text-sm text-gray-500 font-medium")= `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
                 // Hidden columns for smaller screens
-                th(class="px-8 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='24h' hidden md:table-cell")
-                  .container.flex.flex-row.items-center.justify-center
-                    span.icon
-                    p.textHeader 24h
-                th(class="px-8 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='7d' hidden md:table-cell")
-                  .container.flex.flex-row.items-center.justify-center
-                    span.icon
-                    p.textHeader 7d
-                th(class="px-8 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='volume' hidden md:table-cell")
-                  .container.flex.flex-row.items-center.justify-center
-                    span.icon
-                    p.textHeader 24h volume
-                th(class="px-8 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='marketCap' hidden md:table-cell")
-                  .container.flex.flex-row.items-center.justify-center
-                    span.icon
-                    p.textHeader Market cap
-                th(class="px-8 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='last7Days' hidden md:table-cell")
-                  .container.flex.flex-row.items-center.justify-center
-                    span.icon
-                    p.textHeader Last 7 days
+                td(class="changeValue px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
+                td(class="changeValue px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `${coin.price_change_percentage_24h_in_currency.toLocaleString()}`
+                td(class="changeValue px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `${coin.price_change_percentage_7d_in_currency.toFixed(2)}%`
+                td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `$${coin.circulating_supply.toLocaleString()}`
+                td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `$${coin.market_cap.toLocaleString()}`
+                td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium w-48 h-20 hidden md:table-cell")
+                  canvas(class="chartContainer" id=`chart-${coin.id}`)
+                td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")
+          // Info Pagination and Dropdown Container
 
-            tbody(class="bg-white divide-y divide-gray-200")
-              each coin, index in coins
-                tr(data-href=`/coin/${coin.id}`, class="cursor-pointer hover:bg-gray-100 transition")
-                  td(class="px-8 whitespace-nowrap")
-                    p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 leading-5")= `${index + 1}`
-                  td(class="px-1 py-1 whitespace-nowrap")
-                    .flex.items-center
-                      img(class="coin-image w-6 h-6 object-cover rounded-full" src=coin.image alt=coin.name)
-                      .flex.ml-4
-                        p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 leading-5")= coin.name
-                        p(class="text-gray-400 font-semibold text-sm leading-5")= `${coin.symbol.toUpperCase()}`
-                  td(class="px-8 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `$${coin.current_price.toLocaleString()}`
-                  td(class="px-8 whitespace-nowrap text-sm text-gray-500 font-medium")= `${coin.current_price.toLocaleString()}`
-                  td(class="changeValue px-8 whitespace-nowrap text-sm text-gray-500 font-medium")= `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
-                  // Hidden columns for smaller screens
-                  td(class="px-8 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `${coin.price_change_percentage_24h_in_currency.toFixed(2)}%`
-                  td(class="px-8 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `${coin.price_change_percentage_7d_in_currency.toFixed(2)}%`
-                  td(class="px-8 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `$${coin.circulating_supply.toLocaleString()}`
-                  td(class="px-8 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `$${coin.market_cap.toLocaleString()}`
-                  td(class="px-8 whitespace-nowrap text-sm text-gray-500 font-medium w-48 h-20 hidden md:table-cell")
-                    canvas(class="chartContainer" id=`chart-${coin.id}`)
-                  td(class="px-8 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")
 
-      // Info Pagination and Dropdown Container
-      .infoPagination(class="flex flex-col md:flex-row justify-between items-center p-4")
+    .infoPagination(class="flex flex-col md:flex-row justify-between items-center p-4")
 
-        // Showing text with responsive padding
-        span(class="px-4 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm text-gray-500")
-          = `Showing ${(currentPage - 1) * itemsPerPage} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
+      // Showing text with responsive padding
+      span(class="px-4 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm text-gray-500")
+        = `Showing ${(currentPage - 1) * itemsPerPage} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
 
-        // Pagination navigation with responsive spacing
-        nav(class="inline-flex items-center space-x-2 md:space-x-1 rounded-lg")
-          ul(class="pagination flex flex-wrap gap-2 md:gap-1")
+      // Pagination navigation with responsive spacing
+      nav(class="inline-flex items-center space-x-2 md:space-x-1 rounded-lg")
+        ul(class="pagination flex flex-wrap gap-2 md:gap-1")
 
+          li
+            a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=1&per_page=${itemsPerPage}`)= 1
+
+          if currentPage > 1
             li
-              a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=1&per_page=${itemsPerPage}`)= 1
+              a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage - 1}&per_page=${itemsPerPage}`)= `${currentPage}`
 
-            if currentPage > 1
-              li
-                a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage - 1}&per_page=${itemsPerPage}`)= `${currentPage}`
-
-            if currentPage < totalPages
-              li
-                a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100 " href=`/overview?page=${currentPage + 1}&per_page=${itemsPerPage}`)= `${currentPage + 1}`
-              li
-                a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage + 2}&per_page=${itemsPerPage}`)= `${currentPage + 2}`
-
-            li= `...`
+          if currentPage < totalPages
             li
-              a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${totalPages}&per_page=${itemsPerPage}`)= `${totalPages}`
+              a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100 " href=`/overview?page=${currentPage + 1}&per_page=${itemsPerPage}`)= `${currentPage + 1}`
+            li
+              a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage + 2}&per_page=${itemsPerPage}`)= `${currentPage + 2}`
 
-        // Dropdown for showing rows with responsive adjustments
-        div(class="dropdown flex relative items-center mt-4 md:mt-0")
-          button(class="dropdownButton block px-3 py-2 md:px-4 md:py-2 text-sm md:text-base")
-            | Show rows
-          div(class="coinsToShow flex items-center px-3 py-2 md:px-4 md:py-2 m-1 rounded-lg bg-gray-100 cursor-pointer")
-            span(class="rowValue text-sm md:text-base")= totalRows
-            i(class="fa-solid fa-chevron-down ml-2 text-sm md:text-base")
-          div(class="dropdownOptions hidden px-2 py-2 top-full flex-col absolute left-0 md:left-20 shadow-xl drop-shadow-xl rounded-lg bg-gray-200")
-            button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 5
-            button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 10
-            button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 20
+          li= `...`
+          li
+            a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${totalPages}&per_page=${itemsPerPage}`)= `${totalPages}`
+
+      // Dropdown for showing rows with responsive adjustments
+      div(class="dropdown flex relative items-center mt-4 md:mt-0")
+        button(class="dropdownButton block px-3 py-2 md:px-4 md:py-2 text-sm md:text-base")
+          | Show rows
+        div(class="coinsToShow flex items-center px-3 py-2 md:px-4 md:py-2 m-1 rounded-lg bg-gray-100 cursor-pointer")
+          span(class="rowValue text-sm md:text-base")= totalRows
+          i(class="fa-solid fa-chevron-down ml-2 text-sm md:text-base")
+        div(class="dropdownOptions hidden px-2 py-2 top-full flex-col absolute left-0 md:left-20 shadow-xl drop-shadow-xl rounded-lg bg-gray-200")
+          button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 5
+          button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 10
+          button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 20
 
       // News Section
-      .newsAboutAllCoins(class="flex flex-col p-4")
 
-        // Header
-        div(class="header flex flex-col mb-4")
-          h2(class="font-semibold text-2xl md:text-3xl font-medium text-black") Latest News about Crypto
 
-        // News Container
-        div(class="coinNews flex flex-col gap-4")
+    .newsAboutAllCoins(class="flex flex-col p-4")
 
-          // News Items
-          each news in newsDataAboutCoin
-            div(class="flex flex-col bg-white shadow-md p-4 rounded-lg md:flex-row md:items-start md:gap-4")
+      // Header
+      div(class="header flex flex-col mb-4")
+        h2(class="font-semibold text-2xl md:text-3xl font-medium text-black") Latest News about Crypto
 
-              // Image Container
-              div(class="w-full h-48 md:w-60 md:h-40 overflow-hidden rounded-lg mb-4 md:mb-0")
-                picture
-                  img(class="w-full h-full object-cover rounded-md" src=`${news.imageUrl}` loading="lazy" alt="Image news...")
+      // News Container
+      div(class="coinNews flex flex-col gap-4")
 
-              // News Content
-              div(class="flex flex-col flex-grow")
-                a(href=`${news.url}`)
-                  div(class="flex flex-col flex-grow")
-                    h4(class="text-lg font-bold text-gray-900 hover:text-blue-500 mb-2")= news.title
+        // News Items
+        each news in newsDataAboutCoin
+          div(class="flex flex-col bg-white shadow-md p-4 rounded-lg md:flex-row md:items-start md:gap-4")
 
-                    div(class="flex flex-col text-gray-500 text-sm")
-                      a(href=`${news.url}` target="_blank" class="hover:text-blue-500")
-                        p(class="hover:underline")= news.source
-                      p(class="mr-2")= news.publishedAt
+            // Image Container
+            div(class="w-full h-48 md:w-60 md:h-40 overflow-hidden rounded-lg mb-4 md:mb-0")
+              picture
+                img(class="w-full h-full object-cover rounded-md" src=`${news.imageUrl}` loading="lazy" alt="Image news...")
 
-        // Read More Button
-        div(class="ReadMore flex justify-center mt-4")
-          a(href="#" class="flex flex-row items-center justify-center bg-blue-500 text-white font-bold rounded-lg shadow-md px-4 py-2 md:px-6 md:py-3")
-            | Read More News
+            // News Content
+            div(class="flex flex-col flex-grow")
+              a(href=`${news.url}`)
+                div(class="flex flex-col flex-grow")
+                  h4(class="text-lg font-bold text-gray-900 hover:text-blue-500 mb-2")= news.title
+
+                  div(class="flex flex-col text-gray-500 text-sm")
+                    a(href=`${news.url}` target="_blank" class="hover:text-blue-500")
+                      p(class="hover:underline")= news.source
+                    p(class="mr-2")= news.publishedAt
+
+      // Read More Button
+      div(class="ReadMore flex justify-center mt-4")
+        a(href="#" class="flex flex-row items-center justify-center bg-blue-500 text-white font-bold rounded-lg shadow-md px-4 py-2 md:px-6 md:py-3")
+          | Read More News

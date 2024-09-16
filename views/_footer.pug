@@ -1,12 +1,15 @@
 footer.bg-black.py-8.text-white
   .container.mx-auto.px-4
-    div(class=" flex flex-col md:flex-row items-center justify-between")
-      .footer__logo.mb-4(class="md:mb-0")
-      img(src='/images/icons/crypto-logo-coin.png' alt='Natours Logo' class='object-cover w-16 h-16 rounded-full')   
-      ul.footer__nav.flex.space-x-4.mb-4(class="md:mb-0")
+    div(class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0")
+      // Footer Logo
+      .footer__logo(class="mb-4 md:mb-0")
+        img(src='/images/icons/crypto-logo-coin.png' alt='Natours Logo' class='object-cover w-16 h-16 rounded-full')
+      // Footer Navigation Links
+      ul(class="footer__nav flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 mb-4 md:mb-0")
         li: a(href='#' class='hover:underline') About us
         li: a(href='#' class='hover:underline') Download apps
         li: a(href='#' class='hover:underline') Become a guide
         li: a(href='#' class='hover:underline') Careers
         li: a(href='#' class='hover:underline') Contact
-      p.footer__copyright(class="text-center md:text-left") &copy; 2024 by Kaique Ferraz. All rights reserved.
+      // Footer Copyright
+      p.footer__copyright(class="text-center md:text-left")= `&copy; 2024 by Kaique Ferraz. All rights reserved.`
