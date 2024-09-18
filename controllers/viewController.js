@@ -414,3 +414,58 @@ exports.getFearGreedIndex = catchAsync(async (req, res, next) => {
     });
   }
 });
+
+exports.getNewsPage = catchAsync(async (req, res, next) => {
+  const itemsPerPage = parseInt(req.query.pageSize, 10) || 4;
+
+  const getNewsAboutAllCoins = async () => {
+    const response = await axios.get(
+      `https://newsapi.org/v2/everything?q=Crypto&sortBy=relevancy&language=en`,
+      {
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${process.env.API_KEY_News}`,
+        },
+        params: {
+          pageSize: itemsPerPage,
+        },
+      }
+    );
+    return response.data.articles;
+  };
+
+  try {
+    const news = await getNewsAboutAllCoins();
+    const newsAboutCoins = news
+      .filter(
+        (article) =>
+          article.source &&
+          article.source.name &&
+          article.author &&
+          article.title &&
+          article.url &&
+          article.urlToImage &&
+          article.publishedAt
+      )
+      .map((article) => ({
+        source: article.source.name,
+        author: article.author,
+        title: article.title,
+        url: article.url,
+        imageUrl: article.urlToImage,
+        publishedAt: formatDateWithRelativeTime(article.publishedAt),
+      }));
+
+    res.status(200).render('newsPage', {
+      title: `Overview of all News`,
+      newsCoin: newsAboutCoins,
+      items: itemsPerPage,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).render('error', {
+      title: 'Error',
+      message: 'Failed to fetch data',
+    });
+  }
+});

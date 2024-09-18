@@ -1,0 +1,42 @@
+extends base
+
+block append head
+  script(defer src="/js/bundled/index.js")
+
+block content
+  main.mainOverview(class="flex flex-col w-full self-center pt-16 mt-8 ")
+
+    .newsAboutAllCoins(class="flex flex-col p-8")
+
+
+      // Header
+      div(class="header flex flex-col mb-4")
+      h2(class="font-semibold text-2xl md:text-3xl font-medium text-black") Latest News about Crypto
+
+      // News Container
+      div(class="coinNews grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4")
+
+        // News Items
+        each news in newsCoin
+          div(class="flex flex-col bg-white shadow-md p-4 rounded-lg")
+
+            // Image Container
+            div(class="w-full h-48 md:w-80 md:h-44 self-center md:aspect-square overflow-hidden rounded-lg mb-4")
+              picture
+                img(class="w-full h-full object-cover rounded-md" src=`${news.imageUrl}` loading="lazy" alt="Image news...")
+
+            // News Content
+            div(class="flex flex-col flex-grow")
+              a(href=`${news.url}` target="_blank")
+                div(class="flex flex-col flex-grow")
+                  h4(class="text-lg font-bold text-gray-900 hover:text-blue-500 mb-2")= news.title
+
+                  div(class="flex flex-col text-gray-500 text-sm mt-auto")
+                    a(href=`${news.url}` target="_blank" class="hover:text-blue-500")
+                      p(class="hover:underline")= news.source
+                    p(class="mr-2")= news.publishedAt
+
+      // Read More Button
+      div(class="ReadMore flex justify-center mt-4")
+        a(href=`/newsPage?pageSize=${items + 3}` class="flex flex-row items-center justify-center bg-blue-500 text-white font-bold rounded-lg shadow-md px-4 py-2 md:px-6 md:py-3")
+          | Read More News
