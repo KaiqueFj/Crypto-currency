@@ -19,9 +19,9 @@ block content
 
       // Trending Section
       .trending(class="flex flex-col sm:flex-row p-3 shadow-lg rounded-xl border-2 h-auto sm:h-48 w-full sm:w-96")
-        div(class="coin flex flex-col gap-4 p-3 w-full justify-between")
+        div(class="coin flex flex-col gap-2 p-3 w-full justify-between")
           div(class="header")
-            h2(class="font-semibold text-xl font-medium text-black mb-4") Trending 🔥
+            h2(class="font-semibold text-xl font-medium text-black mb-2") Trending 🔥
           each coin of fetchTrendingData
             div(class="coinContainerData flex flex-col sm:flex-row justify-between")
               div(class="mainInfo flex flex-col sm:flex-row items-center")
