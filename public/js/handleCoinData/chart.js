@@ -1,7 +1,7 @@
-import "chartjs-adapter-date-fns"; // or 'chartjs-adapter-moment'
-import Chart from "chart.js/auto";
-import axios from "axios";
-import { format } from "date-fns";
+import 'chartjs-adapter-date-fns'; // or 'chartjs-adapter-moment'
+import Chart from 'chart.js/auto';
+import axios from 'axios';
+import { format } from 'date-fns';
 export { Chart }; // Export Chart for use in other files
 
 let chartInstances = {};
@@ -9,18 +9,18 @@ let chartInstances = {};
 export async function fetchCoinData(coin, days = 7) {
   try {
     const response = await axios({
-      method: "GET",
+      method: 'GET',
       url: `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=brl&days=${days}`,
       headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": process.env.API_KEY_Cry,
+        accept: 'application/json',
+        'x-cg-demo-api-key': process.env.API_KEY_Cry,
       },
     });
 
     const data = response.data;
     return data;
   } catch (err) {
-    console.error("Error fetching coin data:", err);
+    console.error('Error fetching coin data:', err);
     throw err;
   }
 }
@@ -33,7 +33,7 @@ export async function getChartData(coin, days) {
 
     return { labels, prices };
   } catch (err) {
-    console.error("Error fetching chart data:", err);
+    console.error('Error fetching chart data:', err);
     return { labels: [], prices: [] };
   }
 }
@@ -46,12 +46,12 @@ export async function createChartForAllCoins(coin, days) {
     const finalPrice = prices[prices.length - 1];
     const isUp = finalPrice >= initialPrice;
 
-    const lineColor = isUp ? "#10b981" : "#f87171";
+    const lineColor = isUp ? '#10b981' : '#f87171';
 
-    const ctx = document.getElementById(`chart-${coin}`).getContext("2d");
+    const ctx = document.getElementById(`chart-${coin}`).getContext('2d');
 
     new Chart(ctx, {
-      type: "line",
+      type: 'line',
       data: {
         labels: labels,
         datasets: [
@@ -60,8 +60,8 @@ export async function createChartForAllCoins(coin, days) {
             data: prices,
             borderColor: lineColor, // Orange color for the line
             borderWidth: 1,
-            pointBackgroundColor: "#0000", // Orange color for dots
-            pointBorderColor: "#ffff", // Orange color for dot borders
+            pointBackgroundColor: '#0000', // Orange color for dots
+            pointBorderColor: '#ffff', // Orange color for dot borders
             pointBorderWidth: 2,
             pointRadius: 0,
             fill: false,
@@ -74,6 +74,9 @@ export async function createChartForAllCoins(coin, days) {
         plugins: {
           legend: {
             display: false, // Hide legend
+          },
+          tooltip: {
+            enabled: false, // Disable the tooltip on hover
           },
         },
         scales: {
@@ -98,12 +101,12 @@ export async function createChartForAllCoins(coin, days) {
         },
         interaction: {
           intersect: false,
-          mode: "nearest",
+          mode: 'nearest',
         },
       },
     });
   } catch (err) {
-    console.error("Error creating chart:", err);
+    console.error('Error creating chart:', err);
   }
 }
 
@@ -114,7 +117,7 @@ export async function createUniqueChart(coin, days) {
     // Format the labels (dates) using date-fns
     const formattedLabels = labels.map((dateString) => {
       const date = new Date(dateString);
-      return format(date, "MMM-dd");
+      return format(date, 'MMM-dd');
     });
 
     // Use a Map to get the first occurrence of each day
@@ -134,13 +137,13 @@ export async function createUniqueChart(coin, days) {
     const finalPrice = uniquePrices[uniquePrices.length - 1];
     const isUp = finalPrice >= initialPrice;
 
-    const lineColor = isUp ? "#10b981" : "#f87171";
+    const lineColor = isUp ? '#10b981' : '#f87171';
 
     const lineColorWithOpacity = isUp
-      ? "rgba(16, 185, 129, 0.1)"
-      : "rgba(248, 113, 113, 0.1)";
+      ? 'rgba(16, 185, 129, 0.1)'
+      : 'rgba(248, 113, 113, 0.1)';
 
-    const ctx = document.getElementById(`chart-${coin}`).getContext("2d");
+    const ctx = document.getElementById(`chart-${coin}`).getContext('2d');
 
     // Check if a chart instance already exists and destroy it
     if (chartInstances[coin]) {
@@ -148,7 +151,7 @@ export async function createUniqueChart(coin, days) {
     }
 
     chartInstances[coin] = new Chart(ctx, {
-      type: "line",
+      type: 'line',
       data: {
         labels: uniqueLabels,
         datasets: [
@@ -169,10 +172,10 @@ export async function createUniqueChart(coin, days) {
       options: {
         plugins: {
           tooltip: {
-            backgroundColor: "#ffffff",
-            titleColor: "#000000",
-            bodyColor: "#333333",
-            borderColor: "#dddddd",
+            backgroundColor: '#ffffff',
+            titleColor: '#000000',
+            bodyColor: '#333333',
+            borderColor: '#dddddd',
             borderWidth: 1,
             cornerRadius: 4,
             displayColors: false,
@@ -184,7 +187,7 @@ export async function createUniqueChart(coin, days) {
         scales: {
           y: {
             display: true,
-            position: "right", // Positioning y-axis on the right
+            position: 'right', // Positioning y-axis on the right
             ticks: {
               color: lineColor,
               font: {
@@ -209,6 +212,6 @@ export async function createUniqueChart(coin, days) {
       },
     });
   } catch (err) {
-    console.error("Error creating chart:", err);
+    console.error('Error creating chart:', err);
   }
 }

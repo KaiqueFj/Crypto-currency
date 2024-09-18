@@ -949,6 +949,9 @@ async function createChartForAllCoins(coin, days) {
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    tooltip: {
+                        enabled: false
                     }
                 },
                 scales: {
