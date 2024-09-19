@@ -520,11 +520,12 @@ exports.getTrendingCoinsPage = catchAsync(async (req, res, next) => {
 
   try {
     const trendingCoins = await fetchTrendingData();
-    console.log(trendingCoins);
+    const topCoins = trendingCoins.slice(0, 3);
 
     res.status(200).render('trending-crypto', {
       title: `Overview of all News`,
       coins: trendingCoins,
+      topCoins: topCoins,
     });
   } catch (err) {
     console.error(err);
