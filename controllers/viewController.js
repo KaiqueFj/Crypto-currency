@@ -469,3 +469,68 @@ exports.getNewsPage = catchAsync(async (req, res, next) => {
     });
   }
 });
+
+exports.getTrendingCoinsPage = catchAsync(async (req, res, next) => {
+  // Fetch trending data
+  const fetchTrendingData = async () => {
+    const data = await fetchData(
+      'https://api.coingecko.com/api/v3/search/trending',
+      {
+        accept: 'application/json',
+        'x-cg-demo-api-key': process.env.API_KEY_Cry,
+      }
+    );
+
+    // Map the data to extract necessary fields
+    return data.coins.map(({ item }) => {
+      const {
+        id,
+        name,
+        symbol,
+        thumb,
+        market_cap_rank,
+        price_btc,
+        data: {
+          price,
+          market_cap,
+          total_volume,
+          price_change_percentage_24h = {},
+          sparkline,
+        } = {},
+      } = item;
+
+      return {
+        id,
+        name,
+        symbol,
+        thumb,
+        market_cap_rank,
+        price_btc,
+        price: price || 'N/A',
+        market_cap: market_cap || 'N/A',
+        total_volume: total_volume || 'N/A',
+        price_change_percentage_24h_brl:
+          price_change_percentage_24h?.brl || 'N/A',
+        price_change_percentage_24h_usd:
+          price_change_percentage_24h?.usd || 'N/A',
+        sparkline,
+      };
+    });
+  };
+
+  try {
+    const trendingCoins = await fetchTrendingData();
+    console.log(trendingCoins);
+
+    res.status(200).render('trending-crypto', {
+      title: `Overview of all News`,
+      coins: trendingCoins,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).render('error', {
+      title: 'Error',
+      message: 'Failed to fetch data',
+    });
+  }
+});

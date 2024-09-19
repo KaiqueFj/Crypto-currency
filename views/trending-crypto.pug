@@ -1,0 +1,75 @@
+extends base
+
+block append head
+  script(defer src="/js/bundled/index.js")
+
+
+
+block content
+
+  main.mainOverview(class="flex flex-col w-full self-center pt-16 mt-8")
+    .introduction.flex.flex-col.items-center.bg-gradient-to-r.from-purple-400.to-blue-500.p-6.rounded-lg.shadow-md.mb-8.mx-4.gap-2
+      h2(class="font-semibold text-4xl md:text-3xl lg:text-4xl text-white mb-2") Explore the latest trending cryptocurrencies
+      p(class=" font-semibold text-xl md:text-md lg:text-xl text-white mb-2")  updated with the most searched coins from the last 3 hours. Leading the trends right now are Turbo, Sun Token, and Sui. Over the past 24 hours, Turbo has seen a price increase of 22.6%, Sun Token has risen by 11.3%, and Sui by 13.0%. 
+      p(class=" font-semibold text-xl md:text-md lg:text-xl text-white mb-2")=`Keep track of these top performers and stay ahead in the dynamic world of crypto!`
+
+
+    .coin-container(class="flex flex-col p-4")
+      // Table Container with horizontal scroll
+      div(class="table-container w-full p-4 border-2 border-gray-300 rounded-xl overflow-x-auto bg-white shadow-md")
+        table(class="min-w-full divide-y divide-gray-200")
+          thead
+            tr
+            // Column for Index
+            th(class="px-6 py-3 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="index")
+              .container.flex.flex-row.items-center.justify-center
+                span.icon.mr-2
+                p.textHeader #
+            // Column for Icon and Name
+            th(class="px-6 py-3 text-left text-xs font-bold text-gray-700 tracking-wider cursor-pointer"  data-sort="name")
+              .container.flex.flex-row.items-center
+                span.icon.mr-2
+                p.textHeader Name
+            // Column for Symbol
+            th(class="px-6 py-3 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer"  data-sort="price")
+              .container.flex.flex-row.items-center.justify-center
+                span.icon.mr-2
+                p.textHeader price
+            // Column for Price (Visible on larger screens)
+            th(class="px-6 py-3 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer"  data-sort="24h")
+              .container.flex.flex-row.items-center.justify-center
+                span.icon.mr-2
+                p.textHeader 24h
+            // Column for 24h Change
+            th(class="px-6 py-3 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer"  data-sort="volume")
+              .container.flex.flex-row.items-center.justify-center
+                span.icon.mr-2
+                p.textHeader Total volume
+            // Column for Total Volume
+            th(class="px-6 py-3 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer"  data-sort="Market cap")
+              .container.flex.flex-row.items-center.justify-center
+                span.icon.mr-2
+                p.textHeader Market cap
+            // Column for Market Cap
+            th(class="px-6 py-3 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer"  data-sort="7days")
+              .container.flex.flex-row.items-center.justify-center
+                span.icon.mr-2
+                p.textHeader Last 7 days
+
+
+          tbody(class="bg-white divide-y divide-gray-200")
+            each coin in coins
+              tr(data-href=`/coin/${coin.id}`, class="cursor-pointer hover:bg-gray-50 transition duration-150 ease-in-out")
+                td(class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-700")= `${coin.market_cap_rank}`
+                td(class="px-6 py-4 whitespace-nowrap flex items-center space-x-3")
+                  img(class="coin-image w-8 h-8 object-cover rounded-full" src=coin.thumb alt=coin.name)
+                  .flex.flex-col
+                    p(class="text-gray-900 font-semibold text-sm leading-5")= coin.name
+                    p(class="text-gray-500 text-sm leading-5")= `${coin.symbol.toUpperCase()}`
+                td(class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 font-medium")= `$${coin.price.toLocaleString()}`
+                // Hidden columns for smaller screens
+                td(class="changeValue px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 font-medium hidden md:table-cell")= `${coin.price_change_percentage_24h_brl.toFixed(2)}%`
+                td(class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 font-medium hidden md:table-cell")= `${coin.total_volume.toLocaleString()}`
+                td(class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 font-medium hidden md:table-cell")= `${coin.market_cap.toLocaleString()}`
+                td(class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 font-medium w-48 h-20 hidden md:table-cell")
+                  img(class="coin-image w-40 h-16 object-cover rounded-full" src=coin.sparkline alt=coin.name)

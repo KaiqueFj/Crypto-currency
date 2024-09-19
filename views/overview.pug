@@ -20,8 +20,12 @@ block content
       // Trending Section
       .trending(class="flex flex-col sm:flex-row p-3 shadow-lg rounded-xl border-2 h-auto sm:h-48 w-full sm:w-96")
         div(class="coin flex flex-col gap-2 p-3 w-full justify-between")
-          div(class="header")
-            h2(class="font-semibold text-xl font-medium text-black mb-2") Trending 🔥
+          div(class="header flex flex-row items-center justify-between")
+            h2(class="font-semibold text-xl font-medium text-black") Trending 🔥
+            a(href="/trending-crypto" class="font-semibold text-md font-medium text-black flex flex-row gap-1 items-baseline text-black hover:text-blue-500")
+              span View more
+              i(class="fa-solid fa-chevron-right text-sm")
+
           each coin of fetchTrendingData
             div(class="coinContainerData flex flex-col sm:flex-row justify-between")
               div(class="mainInfo flex flex-col sm:flex-row items-center")
@@ -73,6 +77,8 @@ block content
 
 
       // Coin Container
+
+
     .coin-container(class="flex flex-col p-4")
       // Table Container with horizontal scroll
       div(class="table-container w-full p-4 border-2 rounded-xl overflow-x-auto")
@@ -80,43 +86,43 @@ block content
           thead
             tr
               // Column for Index
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='index'")
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="index")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader #
               // Column for Icon and Name
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='name'")
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="name")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Name
               // Column for Symbol
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='symbol'")
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="symbol")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Price
               // Column for Price (Visible on larger screens)
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='1h'")
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="1h")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 1h
               // Hidden columns for smaller screens
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='24h' hidden md:table-cell")
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="24h")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 24h
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='7d' hidden md:table-cell")
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="7d")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 7d
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='volume' hidden md:table-cell")
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="volume")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 24h volume
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='marketCap' hidden md:table-cell")
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="marketCap")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Market cap
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer data-sort='last7Days' hidden md:table-cell")
+              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="last7Days")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Last 7 days
