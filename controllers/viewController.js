@@ -8,6 +8,7 @@ const {
   formatLargeNumber,
   formatTimesTamp,
 } = require('../utils/formatting');
+
 // Helper function to make API requests
 const fetchData = async (url, headers = {}, params = {}) => {
   try {
@@ -89,6 +90,28 @@ const getNewsAboutAllCoins = async () => {
   return response.data.articles;
 };
 
+const formatNewsArticles = (articles) => {
+  return articles
+    .filter(
+      (article) =>
+        article.source &&
+        article.source.name &&
+        article.author &&
+        article.title &&
+        article.url &&
+        article.urlToImage &&
+        article.publishedAt
+    )
+    .map((article) => ({
+      source: article.source.name,
+      author: article.author,
+      title: article.title,
+      url: article.url,
+      imageUrl: article.urlToImage,
+      publishedAt: formatDateWithRelativeTime(article.publishedAt),
+    }));
+};
+
 exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = parseInt(req.query.per_page, 10) || 5;
   const currentPage = parseInt(req.query.page, 10) || 1;
@@ -125,25 +148,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       getNewsAboutAllCoins(),
     ]);
 
-    const formattedNews = cryptoNews
-      .filter(
-        (article) =>
-          article.source &&
-          article.source.name &&
-          article.author &&
-          article.title &&
-          article.url &&
-          article.urlToImage &&
-          article.publishedAt
-      )
-      .map((article) => ({
-        source: article.source.name,
-        author: article.author,
-        title: article.title,
-        url: article.url,
-        imageUrl: article.urlToImage,
-        publishedAt: formatDateWithRelativeTime(article.publishedAt),
-      }));
+    const formattedNews = formatNewsArticles(cryptoNews);
 
     const totalCoins = allCoins.length;
     const totalPages = Math.ceil(totalCoins / itemsPerPage);
@@ -358,25 +363,7 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       })
     );
 
-    const formattedNews = newsCoin
-      .filter(
-        (article) =>
-          article.source &&
-          article.source.name &&
-          article.author &&
-          article.title &&
-          article.url &&
-          article.urlToImage &&
-          article.publishedAt
-      )
-      .map((article) => ({
-        source: article.source.name,
-        author: article.author,
-        title: article.title,
-        url: article.url,
-        imageUrl: article.urlToImage,
-        publishedAt: formatDateWithRelativeTime(article.publishedAt),
-      }));
+    const formattedNews = formatNewsArticles(newsCoin);
 
     res.status(200).render('coin', {
       title: `Overview of ${coinData.name}`,
@@ -418,43 +405,9 @@ exports.getFearGreedIndex = catchAsync(async (req, res, next) => {
 exports.getNewsPage = catchAsync(async (req, res, next) => {
   const itemsPerPage = parseInt(req.query.pageSize, 10) || 4;
 
-  const getNewsAboutAllCoins = async () => {
-    const response = await axios.get(
-      `https://newsapi.org/v2/everything?q=Crypto&sortBy=relevancy&language=en`,
-      {
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${process.env.API_KEY_News}`,
-        },
-        params: {
-          pageSize: itemsPerPage,
-        },
-      }
-    );
-    return response.data.articles;
-  };
-
   try {
     const news = await getNewsAboutAllCoins();
-    const newsAboutCoins = news
-      .filter(
-        (article) =>
-          article.source &&
-          article.source.name &&
-          article.author &&
-          article.title &&
-          article.url &&
-          article.urlToImage &&
-          article.publishedAt
-      )
-      .map((article) => ({
-        source: article.source.name,
-        author: article.author,
-        title: article.title,
-        url: article.url,
-        imageUrl: article.urlToImage,
-        publishedAt: formatDateWithRelativeTime(article.publishedAt),
-      }));
+    const newsAboutCoins = formatNewsArticles(news);
 
     res.status(200).render('newsPage', {
       title: `Overview of all News`,
