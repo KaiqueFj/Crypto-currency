@@ -46,3 +46,6 @@ export const flagIcon = document.getElementById('flagIcon');
 // Nav menu
 export const buttonMobile = document.querySelector('#menu-button');
 export const menu = document.querySelector('#nav-menu');
+
+// Handle the container for the table of coins in main page
+export const mainTableOfCoins = document.querySelector('.table-container-main');

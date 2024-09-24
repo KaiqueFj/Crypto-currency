@@ -656,6 +656,7 @@ parcelHelpers.export(exports, "cryptoIcon", ()=>cryptoIcon);
 parcelHelpers.export(exports, "flagIcon", ()=>flagIcon);
 parcelHelpers.export(exports, "buttonMobile", ()=>buttonMobile);
 parcelHelpers.export(exports, "menu", ()=>menu);
+parcelHelpers.export(exports, "mainTableOfCoins", ()=>mainTableOfCoins);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -692,6 +693,7 @@ const cryptoIcon = document.getElementById("cryptoIcon");
 const flagIcon = document.getElementById("flagIcon");
 const buttonMobile = document.querySelector("#menu-button");
 const menu = document.querySelector("#nav-menu");
+const mainTableOfCoins = document.querySelector(".table-container-main");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -797,11 +799,12 @@ function handleCoinsFunctions() {
     // Get the value of the per_page to persist
     const storedValue = localStorage.getItem("per_page");
     if (storedValue) (0, _handleElementsJs.rowValue).text(storedValue);
-    // Create the chart for each coins
+    if (0, _handleElementsJs.mainTableOfCoins) // Create the chart for each coins
     (0, _handleElementsJs.coins).forEach((coin)=>{
         const coinId = coin.getAttribute("data-href").split("/")[2];
         (0, _chartJs.createChartForAllCoins)(coinId);
     });
+    // Create the chart for unique coin
     (0, _handleElementsJs.coinName).forEach((coin)=>{
         constCoinIdName = coin.getAttribute("data-coin");
         (0, _chartJs.createUniqueChart)(constCoinIdName);
