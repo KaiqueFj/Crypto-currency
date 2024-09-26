@@ -10,7 +10,6 @@ router.get('/', (req, res) => {
 router.get('/overview', viewController.getOverview);
 router.get('/coin/:coin/', viewController.getSpecificCoin);
 router.get('/fearGreed', viewController.getFearGreedIndex);
-router.get('/newsPage', viewController.getNewsPage);
 router.get('/trending-crypto', viewController.getTrendingCoinsPage);
 
 module.exports = router;
