@@ -77,47 +77,12 @@ const fetchFearGreedIndex = async () => {
   }));
 };
 
-const getNewsAboutAllCoins = async () => {
-  const response = await axios.get(
-    `https://newsapi.org/v2/everything?q=Crypto&sortBy=relevancy&pageSize=4&language=en`,
-    {
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${process.env.API_KEY_News}`,
-      },
-    }
-  );
-  return response.data.articles;
-};
-
-const formatNewsArticles = (articles) => {
-  return articles
-    .filter(
-      (article) =>
-        article.source &&
-        article.source.name &&
-        article.author &&
-        article.title &&
-        article.url &&
-        article.urlToImage &&
-        article.publishedAt
-    )
-    .map((article) => ({
-      source: article.source.name,
-      author: article.author,
-      title: article.title,
-      url: article.url,
-      imageUrl: article.urlToImage,
-      publishedAt: formatDateWithRelativeTime(article.publishedAt),
-    }));
-};
-
 exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = parseInt(req.query.per_page, 10) || 5;
   const currentPage = parseInt(req.query.page, 10) || 1;
 
   try {
-    const [allCoins, coinsInPage, cryptoCoins, cryptoNews] = await Promise.all([
+    const [allCoins, coinsInPage, cryptoCoins] = await Promise.all([
       fetchData('https://api.coingecko.com/api/v3/coins/list', {
         accept: 'application/json',
         'x-cg-demo-api-key': process.env.API_KEY_Cry,
@@ -145,10 +110,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
           price_change_percentage: '1h,24h,7d',
         }
       ),
-      getNewsAboutAllCoins(),
     ]);
-
-    const formattedNews = formatNewsArticles(cryptoNews);
 
     const totalCoins = allCoins.length;
     const totalPages = Math.ceil(totalCoins / itemsPerPage);
@@ -168,7 +130,6 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       fetchTrendingData: trendingData,
       globalData: globalDataVolCap,
       fearGreedValue: fearGreedData,
-      newsDataAboutCoin: formattedNews,
     });
   } catch (err) {
     console.error(err);
@@ -248,33 +209,18 @@ const paginateTickers = (tickers, perPage, currentPage) => {
   };
 };
 
-const getNewsAboutTheCoin = async (coin) => {
-  const response = await axios.get(
-    `https://newsapi.org/v2/everything?q=${coin}&sortBy=relevancy&pageSize=4&language=en`,
-    {
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${process.env.API_KEY_News}`,
-      },
-    }
-  );
-  return response.data.articles;
-};
-
 exports.getSpecificCoin = catchAsync(async (req, res, next) => {
   const { coin } = req.params;
   const itemsPerPage = parseInt(req.query.per_page, 5) || 5;
   const currentPage = parseInt(req.query.page, 10) || 1;
 
   try {
-    const [coinData, coinTicker, currencies, exchangeRate, newsCoin] =
-      await Promise.all([
-        fetchCoinData(coin),
-        fetchCoinTickers(coin),
-        fetchSupportedCurrencies(),
-        fetchExchangeRate(),
-        getNewsAboutTheCoin(coin),
-      ]);
+    const [coinData, coinTicker, currencies, exchangeRate] = await Promise.all([
+      fetchCoinData(coin),
+      fetchCoinTickers(coin),
+      fetchSupportedCurrencies(),
+      fetchExchangeRate(),
+    ]);
 
     if (!coinData) {
       return res.status(404).render('error', {
@@ -363,8 +309,6 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       })
     );
 
-    const formattedNews = formatNewsArticles(newsCoin);
-
     res.status(200).render('coin', {
       title: `Overview of ${coinData.name}`,
       coin: coinDataInfo,
@@ -375,7 +319,6 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       totalItems: paginatedTickersData.totalItems,
       itemsPerPage: paginatedTickersData.itemsPerPage,
       currencies,
-      newsData: formattedNews,
     });
   } catch (err) {
     console.error(err);
@@ -392,27 +335,6 @@ exports.getFearGreedIndex = catchAsync(async (req, res, next) => {
     res.status(200).render('fearGreed', {
       title: `Overview of Fear Greed`,
       fearGreedValue: fearGreedData,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).render('error', {
-      title: 'Error',
-      message: 'Failed to fetch data',
-    });
-  }
-});
-
-exports.getNewsPage = catchAsync(async (req, res, next) => {
-  const itemsPerPage = parseInt(req.query.pageSize, 10) || 4;
-
-  try {
-    const news = await getNewsAboutAllCoins();
-    const newsAboutCoins = formatNewsArticles(news);
-
-    res.status(200).render('newsPage', {
-      title: `Overview of all News`,
-      newsCoin: newsAboutCoins,
-      items: itemsPerPage,
     });
   } catch (err) {
     console.error(err);
