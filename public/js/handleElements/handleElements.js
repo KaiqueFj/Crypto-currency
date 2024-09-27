@@ -26,7 +26,7 @@ export const navItems = document.querySelectorAll(
 );
 
 // Fear & Greed
-export const feedGreedCoinContainer = document.querySelector('.fearGreedCoin');
+export const feedGreedCoinContainer = document.querySelector('.fearGreed');
 const fearGreedElement = document.querySelector('.fear-greed-value');
 export const fearGreedValue = fearGreedElement
   ? fearGreedElement.dataset.value

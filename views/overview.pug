@@ -61,18 +61,17 @@ block content
           div(class="coinContainerData flex flex-col sm:flex-row justify-between items-center")
             div(class="fear-greed-index flex flex-col place-content-center w-full items-center")
               svg(width="210" height="70" viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg")
-                g(transform="translate(150, 135)")
+                g(transform="translate(150, 135)") // This centers the speedometer around (150, 135)
                   g.arc
                     path(d="M-107.94971126755703,-3.2954267175996574A108,108,0,0,1,-78.66219144333746,-74.00175428550142L-55.736679624136755,-51.07624246630069A75.6,75.6,0,0,0,-75.5281415284987,-3.2954267175996588Z" fill="#f02934")
                     path(d="M-74.00175428550139,-78.66219144333748A108,108,0,0,1,-3.2954267175996614,-107.94971126755703L-3.295426717599662,-75.5281415284987A75.6,75.6,0,0,0,-51.07624246630068,-55.73667962413676Z" fill="#f07d29")
                     path(d="M3.295426717599675,-107.94971126755703A108,108,0,0,1,74.00175428550139,-78.66219144333749L51.07624246630068,-55.73667962413677A75.6,75.6,0,0,0,3.295426717599671,-75.5281415284987Z" fill="#9acd7a")
                     path(d="M78.66219144333749,-74.00175428550138A108,108,0,0,1,107.94971126755703,-3.295426717599666L75.5281415284987,-3.2954267175996654A75.6,75.6,0,0,0,55.73667962413677,-51.07624246630066Z" fill="#34b349")
                   g.speedometer-needle
-                    path(d="M -5.904645882113434 1.494831558022378 L -40.66209809216411 -47.350736468831855 L 5.904645882113432 -9.594831558022381" fill="#000")
+                    path#needle-path(d="M -3.5 0 L 0 -90 L 3.5 0 Z" fill="#000")
                     circle(cx="0" cy="-4.05" r="8.1" fill="#464a4f")
               span(class="fear-greed-value font-bold text-gray-700" data-value=`${fearGreedValue[0].value}`)= `${fearGreedValue[0].classification}`
               span(class="fear-greed-classification text-md text-gray-700")= `Now: ${fearGreedValue[0].value}`
-
 
 
 

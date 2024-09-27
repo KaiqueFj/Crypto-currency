@@ -600,6 +600,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 if (select) insertFlags();
 if (currencySelect) handleCoinValueInCurrency();
 if (coinQuantity) updateValueOfCoinByQuantity();
+console.log(fearGreedNeedlePosition);
 // Update speedometer
 if (feedGreedCoinContainer) {
     if (fearGreedNeedlePosition && fearGreedValue !== null) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
@@ -607,14 +608,10 @@ if (feedGreedCoinContainer) {
 
 },{"67cae37c61cb61ea":"gVYJX","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2"}],"gVYJX":[function(require,module,exports) {
 const { needle } = require("335ffdcd8dc8da1a");
-// Function to update the speedometer needle
 function updateSpeedDoMeter(value) {
     const maxValue = 100;
-    const angle = value / maxValue * 180 - 90;
-    if (needle) {
-        needle.style.transform = "";
-        needle.style.transform = `rotate(${angle}deg)`;
-    }
+    const angle = value / maxValue * 180 - 90; // Calculate the angle correctly
+    if (needle) needle.style.transform = `rotate(${angle}deg)`;
 }
 module.exports = updateSpeedDoMeter;
 
@@ -681,7 +678,7 @@ const sentimentProfitBarDown = document.querySelector(".sentimentDown");
 const lostBar = document.querySelector(".lost-bar");
 const greed = document.querySelector(".fear-greed-indicator");
 const navItems = document.querySelectorAll(".asideNavigation [data-target]");
-const feedGreedCoinContainer = document.querySelector(".fearGreedCoin");
+const feedGreedCoinContainer = document.querySelector(".fearGreed");
 const fearGreedElement = document.querySelector(".fear-greed-value");
 const fearGreedValue = fearGreedElement ? fearGreedElement.dataset.value : null;
 const needle = document.querySelector(".speedometer-needle");

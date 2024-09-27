@@ -19,7 +19,7 @@ block content
         p(class="text-black text-sm")= `Last updated: ${fearGreedValue[0].timestamp}`
       // Body Section
 
-      div(class="flex")
+      .fearGreed.flex
         // Left Side: Fear and Greed Indicator SVG
         div(class="w-1/2 flex flex-col items-center justify-center bg-transparent")
           svg(width="300" height="200" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg")
@@ -38,14 +38,14 @@ block content
 
               // Needle
               g.speedometer-needle
-                path(d="M -5.904645882113434 1.494831558022378 L -40.66209809216411 -47.350736468831855 L 5.904645882113432 -9.594831558022381" fill="#000")
+                path#needle-path(d="M -3.5 0 L 0 -90 L 3.5 0 Z" fill="#000")
                 circle(cx="0" cy="-4.05" r="8.1" fill="#464a4f")
 
             // Right Side: Fear Values
         div(class="w-1/2 flex flex-col items-start justify-center")
           div(class="mb-2")
             span(class="font-semibold text-lg text-black") Now:
-            span(class="text-amber-400 font-bold ml-2")=`${fearGreedValue[0].value} ${fearGreedValue[0].classification}`
+            span(class="fear-greed-value text-amber-400 font-bold ml-2 " data-value=`${fearGreedValue[0].value}`)=`${fearGreedValue[0].value} ${fearGreedValue[0].classification}`
           div(class="mb-2")
             span(class="font-semibold text-lg text-black") Yesterday:
             span(class="text-amber-400 font-bold ml-2")=`${fearGreedValue[1].value} ${fearGreedValue[1].classification}`

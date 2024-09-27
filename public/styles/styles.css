@@ -19,7 +19,7 @@ html {
 body {
   line-height: 1.6;
   font-weight: 300;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 400;
   color: #777;
   height: 100vh;
@@ -74,8 +74,8 @@ body {
   width: calc(100vw - 272px);
 }
 
-.speedometer-needle {
-  transition: transform 0.3s ease;
+#needle {
+  transition: transform 0.5s ease-in-out;
 }
 
 .icon::before,
