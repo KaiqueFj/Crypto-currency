@@ -194,15 +194,15 @@ block content
               li
                 a(class="px-3 md:px-4 py-1 md:py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/coin/${coinName}?page=${totalPages}&per_page=${itemsPerPage}`)= totalPages
 
-        .dropdown(class="flex relative items-center self-center mt-2 md:mt-0")
-          button.dropdownButton(class="block px-1") Show rows
-          .coinsToShow(class="show px-1 py-1 m-1 rounded-lg bg-gray-100 cursor-pointer")
-            span.rowValue=totalRows
-            i.fa-solid.fa-chevron-down(class="ml-2") 
-          .dropdownOptions(class="dropdownOptions hidden px-2 py-2 top-full flex-col absolute left-20 shadow-xl drop-shadow-xl rounded-lg bg-gray-200")
-            button.option(class="px-4 py-2 hover:bg-gray-100 rounded-lg") 5 
-            button.option(class="px-4 py-2 hover:bg-gray-100 rounded-lg") 10
-            button.option(class="px-4 py-2 hover:bg-gray-100 rounded-lg") 20
+          .dropdown(class="flex relative items-center self-center mt-2 md:mt-0")
+            button.dropdownButton(class="block px-1") Show rows
+            .coinsToShow(class="show px-1 py-1 m-1 rounded-lg bg-gray-100 cursor-pointer")
+              span.rowValue=totalRows
+              i.fa-solid.fa-chevron-down(class="ml-2") 
+            .dropdownOptions(class="dropdownOptions hidden px-2 py-2 top-full flex-col absolute left-20 shadow-xl drop-shadow-xl rounded-lg bg-gray-200")
+              button.option(class="px-4 py-2 hover:bg-gray-100 rounded-lg") 5 
+              button.option(class="px-4 py-2 hover:bg-gray-100 rounded-lg") 10
+              button.option(class="px-4 py-2 hover:bg-gray-100 rounded-lg") 20
 
 
       .aboutContainer#aboutContainer(class="flex flex-col ")
