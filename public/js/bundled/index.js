@@ -600,7 +600,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 if (select) insertFlags();
 if (currencySelect) handleCoinValueInCurrency();
 if (coinQuantity) updateValueOfCoinByQuantity();
-console.log(fearGreedNeedlePosition);
 // Update speedometer
 if (feedGreedCoinContainer) {
     if (fearGreedNeedlePosition && fearGreedValue !== null) updateSpeedDoMeter(parseInt(fearGreedValue, 10));

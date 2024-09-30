@@ -69,11 +69,6 @@ body {
   top: calc(3rem + 1rem);
 }
 
-.mainSection,
-.mainOverview {
-  width: calc(100vw - 272px);
-}
-
 #needle {
   transition: transform 0.5s ease-in-out;
 }
@@ -100,4 +95,10 @@ body {
 
 .descriptionContainer a:hover {
   color: #1e40af;
+}
+
+@media (min-width: 768px) {
+  .mainSection {
+    width: calc(100vw - 272px) !important;
+  }
 }

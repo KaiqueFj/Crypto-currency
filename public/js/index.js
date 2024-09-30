@@ -38,7 +38,6 @@ if (coinQuantity) {
   updateValueOfCoinByQuantity();
 }
 
-console.log(fearGreedNeedlePosition);
 // Update speedometer
 if (feedGreedCoinContainer) {
   if (fearGreedNeedlePosition && fearGreedValue !== null) {
