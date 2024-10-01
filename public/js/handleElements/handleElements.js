@@ -49,3 +49,9 @@ export const menu = document.querySelector('#nav-menu');
 
 // Handle the container for the table of coins in main page
 export const mainTableOfCoins = document.querySelector('.table-container-main');
+
+// handle form for signUp
+export const signUpForm = document.querySelector('.userSignUp');
+
+// handle form for signIn
+export const signInForm = document.querySelector('.userSignIn');

@@ -3,6 +3,12 @@ const viewController = require('../controllers/viewController');
 
 const router = express.Router();
 
+// signUp page
+router.get('/signUp', viewController.getSignUpPageUser);
+
+// signIn page
+router.get('/signIn', viewController.getSignInPageUser);
+
 // Redirect root path to /overview
 router.get('/', (req, res) => {
   res.redirect('/overview');

@@ -1,0 +1,28 @@
+extends base
+
+
+block content
+  div(class=" flex flex-col w-full items-center pt-16 mt-8 ")
+    div(class="bg-white p-10 rounded-lg shadow-md w-full max-w-md")
+      h2(class="text-2xl font-bold mb-6 text-center") Sign Up
+      form(class="userSignUp")
+        div(class="mb-4")
+          label(for="name" class="block text-gray-700") Name
+          input.inputName(type="text" name="name" id="name" required 
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500")
+        div(class="mb-4")
+          label(for="email" class="block text-gray-700") Email
+          input.inputEmail(type="email" name="email" id="email" required 
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500")
+        div(class="mb-4")
+          label(for="password" class="block text-gray-700") Password
+          input.inputPassword(type="password" name="password" id="password" required 
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500")
+        div(class="mb-4")
+          label(for="passwordConfirm" class="block text-gray-700") Confirm Password
+          input.inputPasswordConfirm(type="password" name="passwordConfirm" id="passwordConfirm" required 
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500")
+        button( class="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-md mt-4") Sign Up
+      p(class="text-center text-sm text-gray-600 mt-4")
+        | Already have an account? 
+        a(href="/signIn" class="text-blue-500 hover:underline") Log in

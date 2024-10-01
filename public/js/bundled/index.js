@@ -584,10 +584,12 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"f2QDv":[function(require,module,exports) {
+var _signUp = require("./handleUserFunctions/signUp");
+var _signIn = require("./handleUserFunctions/signIn");
 const updateSpeedDoMeter = require("67cae37c61cb61ea");
 const { handleUserClicks } = require("5bdcf2804befa2fb");
 const { handleCoinsFunctions } = require("88fddf9f7ffe2d0");
-const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select } = require("5082ea269ed0b977");
+const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select, signUpForm, signInForm } = require("5082ea269ed0b977");
 const { handleCoinValueInCurrency, insertFlags, updateValueOfCoinByQuantity } = require("a7d37ed595fc46a5");
 const { handleSortData } = require("2c6e91297df9cd6d");
 const fearGreedNeedlePosition = fearGreedValue;
@@ -595,6 +597,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
     handleCoinsFunctions();
     handleSortData();
     handleUserClicks();
+});
+if (signUpForm) signUpForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const name = document.querySelector(".inputName").value;
+    const email = document.querySelector(".inputEmail").value;
+    const password = document.querySelector(".inputPassword").value;
+    const passwordConfirm = document.querySelector(".inputPasswordConfirm").value;
+    (0, _signUp.signUp)(name, email, password, passwordConfirm);
+});
+if (signInForm) signInForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const email = document.querySelector(".inputEmail").value;
+    const password = document.querySelector(".inputPassword").value;
+    (0, _signIn.signIn)(email, password);
 });
 // Handle the price change on coin page
 if (select) insertFlags();
@@ -605,7 +621,7 @@ if (feedGreedCoinContainer) {
     if (fearGreedNeedlePosition && fearGreedValue !== null) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
 }
 
-},{"67cae37c61cb61ea":"gVYJX","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2"}],"gVYJX":[function(require,module,exports) {
+},{"67cae37c61cb61ea":"gVYJX","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2","./handleUserFunctions/signUp":"kmAUz","./handleUserFunctions/signIn":"9rXF3"}],"gVYJX":[function(require,module,exports) {
 const { needle } = require("335ffdcd8dc8da1a");
 function updateSpeedDoMeter(value) {
     const maxValue = 100;
@@ -653,6 +669,8 @@ parcelHelpers.export(exports, "flagIcon", ()=>flagIcon);
 parcelHelpers.export(exports, "buttonMobile", ()=>buttonMobile);
 parcelHelpers.export(exports, "menu", ()=>menu);
 parcelHelpers.export(exports, "mainTableOfCoins", ()=>mainTableOfCoins);
+parcelHelpers.export(exports, "signUpForm", ()=>signUpForm);
+parcelHelpers.export(exports, "signInForm", ()=>signInForm);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -690,6 +708,8 @@ const flagIcon = document.getElementById("flagIcon");
 const buttonMobile = document.querySelector("#menu-button");
 const menu = document.querySelector("#nav-menu");
 const mainTableOfCoins = document.querySelector(".table-container-main");
+const signUpForm = document.querySelector(".userSignUp");
+const signInForm = document.querySelector(".userSignIn");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -36636,6 +36656,94 @@ function sortTable(column, ascending) {
     rows.forEach((row)=>tbody.appendChild(row));
 }
 
-},{"./handleElements":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
+},{"./handleElements":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kmAUz":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "signUp", ()=>signUp);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _alert = require("../handleAlertPage/alert");
+const signUp = async (name, email, password, passwordConfirm)=>{
+    try {
+        const res = await (0, _axiosDefault.default)({
+            method: "POST",
+            url: "/api/v1/users/signUp",
+            data: {
+                name: name,
+                email: email,
+                password: password,
+                passwordConfirm: passwordConfirm
+            }
+        });
+        if (res.data.status === "success") {
+            (0, _alert.showAlert)("success", "created an account successfully! ");
+            window.setTimeout(()=>{
+                location.assign("/signIn");
+            }, 1500);
+        }
+    } catch (err) {
+        (0, _alert.showAlert)("error", err.response.data.message);
+    }
+};
+
+},{"axios":"jo6P5","../handleAlertPage/alert":"hgdTX","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hgdTX":[function(require,module,exports) {
+//Type is 'success' or 'error'
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "hideAlert", ()=>hideAlert);
+parcelHelpers.export(exports, "showAlert", ()=>showAlert);
+const hideAlert = ()=>{
+    const el = document.querySelector(".alert");
+    if (el) el.parentElement.removeChild(el);
+};
+const showAlert = (type, message)=>{
+    hideAlert();
+    const markup = `<div class="alert alert--${type}"> ${message}</div> `;
+    document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
+    window.setTimeout(hideAlert, 5000);
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9rXF3":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "signIn", ()=>signIn);
+parcelHelpers.export(exports, "logout", ()=>logout);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _alert = require("../handleAlertPage/alert");
+const signIn = async (email, password)=>{
+    try {
+        const res = await (0, _axiosDefault.default)({
+            method: "POST",
+            url: "/api/v1/users/signIn",
+            data: {
+                email: email,
+                password: password
+            }
+        });
+        if (res.data.status === "success") {
+            (0, _alert.showAlert)("success", "Logged in successfully! ");
+            window.setTimeout(()=>{
+                location.assign("/overview");
+            }, 1500);
+        }
+    } catch (err) {
+        (0, _alert.showAlert)("error", err.response.data.message);
+    }
+};
+const logout = async ()=>{
+    try {
+        const res = await (0, _axiosDefault.default)({
+            method: "GET",
+            url: "/api/v1/users/overview"
+        });
+        res.data.status = "success";
+        location.assign("/login");
+    } catch (err) {
+        (0, _alert.showAlert)("error", "Error logging out! Try again");
+    }
+};
+
+},{"axios":"jo6P5","../handleAlertPage/alert":"hgdTX","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
 
 //# sourceMappingURL=index.js.map

@@ -77,6 +77,20 @@ const fetchFearGreedIndex = async () => {
   }));
 };
 
+// signUp page
+exports.getSignUpPageUser = (req, res) => {
+  res.status(200).render('signUp', {
+    title: 'Your account',
+  });
+};
+
+// signIn page
+exports.getSignInPageUser = (req, res) => {
+  res.status(200).render('signIn', {
+    title: 'Your account',
+  });
+};
+
 exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = parseInt(req.query.per_page, 10) || 5;
   const currentPage = parseInt(req.query.page, 10) || 1;
