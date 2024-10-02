@@ -58,7 +58,6 @@ if (signInForm) {
 }
 
 // Handle the update user password
-
 if (updatePasswordForm)
   updatePasswordForm.addEventListener('submit', async (e) => {
     e.preventDefault();
