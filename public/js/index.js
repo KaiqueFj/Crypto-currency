@@ -15,6 +15,7 @@ const {
   signUpForm,
   signInForm,
   updatePasswordForm,
+  updateUserForm,
 } = require('./handleElements/handleElements');
 const {
   handleCoinValueInCurrency,
@@ -76,6 +77,17 @@ if (updatePasswordForm)
     document.getElementById('password-current').value = '';
     document.getElementById('password').value = '';
     document.getElementById('password-confirm').value = '';
+  });
+
+// Handle the update user data
+if (updateUserForm)
+  updateUserForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+    updateSettings(form, 'info');
   });
 
 // Handle the price change on coin page

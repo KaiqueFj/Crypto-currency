@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
+  photo: {
+    type: String,
+    default: 'default.jpg',
+  },
 });
 
 userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {

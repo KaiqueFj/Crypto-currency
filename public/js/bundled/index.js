@@ -590,7 +590,7 @@ var _updateSettings = require("./handleUserFunctions/updateSettings");
 const updateSpeedDoMeter = require("67cae37c61cb61ea");
 const { handleUserClicks } = require("5bdcf2804befa2fb");
 const { handleCoinsFunctions } = require("88fddf9f7ffe2d0");
-const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select, signUpForm, signInForm, updatePasswordForm } = require("5082ea269ed0b977");
+const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select, signUpForm, signInForm, updatePasswordForm, updateUserForm } = require("5082ea269ed0b977");
 const { handleCoinValueInCurrency, insertFlags, updateValueOfCoinByQuantity } = require("a7d37ed595fc46a5");
 const { handleSortData } = require("2c6e91297df9cd6d");
 const fearGreedNeedlePosition = fearGreedValue;
@@ -631,6 +631,15 @@ if (updatePasswordForm) updatePasswordForm.addEventListener("submit", async (e)=
     document.getElementById("password-current").value = "";
     document.getElementById("password").value = "";
     document.getElementById("password-confirm").value = "";
+});
+// Handle the update user data
+if (updateUserForm) updateUserForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const form = new FormData();
+    form.append("name", document.getElementById("name").value);
+    form.append("email", document.getElementById("email").value);
+    form.append("photo", document.getElementById("photo").files[0]);
+    (0, _updateSettings.updateSettings)(form, "info");
 });
 // Handle the price change on coin page
 if (select) insertFlags();
@@ -692,6 +701,7 @@ parcelHelpers.export(exports, "mainTableOfCoins", ()=>mainTableOfCoins);
 parcelHelpers.export(exports, "signUpForm", ()=>signUpForm);
 parcelHelpers.export(exports, "signInForm", ()=>signInForm);
 parcelHelpers.export(exports, "updatePasswordForm", ()=>updatePasswordForm);
+parcelHelpers.export(exports, "updateUserForm", ()=>updateUserForm);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -732,6 +742,7 @@ const mainTableOfCoins = document.querySelector(".table-container-main");
 const signUpForm = document.querySelector(".userSignUp");
 const signInForm = document.querySelector(".userSignIn");
 const updatePasswordForm = document.querySelector(".form-user-password");
+const updateUserForm = document.querySelector(".form-user-data");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
