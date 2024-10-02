@@ -1,3 +1,5 @@
+const { promisify } = require('util');
+
 const jwt = require('jsonwebtoken');
 const User = require('../Models/userModel');
 const AppError = require('../utils/AppError');
@@ -63,3 +65,74 @@ exports.signIn = catchAsync(async (req, res, next) => {
   //3 - if everything is ok, send token to client
   createSendToken(user, 200, res);
 });
+
+// Only for rendered pages, no errors !
+exports.isLoggedIn = async (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (token) {
+    try {
+      const decoded = await promisify(jwt.verify)(
+        token,
+        process.env.JWT_SECRET
+      ).catch(() => false);
+
+      if (!decoded) return next();
+
+      const currentUser = await User.findById(decoded.id).catch(() => false);
+      if (!currentUser) return next();
+
+      if (currentUser.changedPasswordAfter(decoded.iat)) return next();
+      res.locals.user = currentUser;
+
+      return next();
+    } catch (err) {
+      return next();
+    }
+  }
+  next();
+};
+
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  //1- Get user from collection
+  const user = await User.findById(req.user.id).select('+password');
+
+  // Ensure the user and the password fields are present
+  if (!user || !user.password) {
+    return next(new AppError('User not found or password not provided!', 401));
+  }
+
+  //2- Check if posted current password is correct
+  const { currentPassword, password, passwordConfirm } = req.body;
+
+  if (!currentPassword || !password || !passwordConfirm) {
+    return next(
+      new AppError('Please provide all required password fields!', 400)
+    );
+  }
+
+  const isCurrentPasswordCorrect = await user.correctPassword(
+    currentPassword,
+    user.password
+  );
+  if (!isCurrentPasswordCorrect) {
+    return next(new AppError('Incorrect current password!', 401));
+  }
+
+  //3- If so, update password
+  user.password = password;
+  user.passwordConfirm = passwordConfirm;
+
+  await user.save();
+
+  createSendToken(user, 201, res);
+});
+
+exports.logout = (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({
+    status: 'success',
+  });
+};

@@ -23,10 +23,10 @@ block content
         form(class="form form-user-data")
           .form__group(class="mb-4")
             label(class="form__label block text-gray-700 font-medium mb-2" for="name") Name
-            input#name(class="form__input w-full p-2 border border-gray-300 rounded" type="text" value="teste" required name="name")
+            input#name(class="form__input w-full p-2 border border-gray-300 rounded" type="text" value=`${user.name}` required name="name")
           .form__group(class="mb-4")
             label(class="form__label block text-gray-700 font-medium mb-2" for="email") Email address
-            input#email(class="form__input w-full p-2 border border-gray-300 rounded" type="email" value="teste@mail" required name="email")
+            input#email(class="form__input w-full p-2 border border-gray-300 rounded" type="email" value=`${user.email}` required name="email")
           .form__group(class="flex items-center space-x-4")
             img(class="form__user-photo w-16 h-16 object-cover rounded-full" src="/images/user/default.jpg" alt="User photo")
             .flex(class="flex-col")

@@ -1,5 +1,6 @@
 const express = require('express');
 const viewController = require('../controllers/viewController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
@@ -10,7 +11,11 @@ router.get('/signUp', viewController.getSignUpPageUser);
 router.get('/signIn', viewController.getSignInPageUser);
 
 // Profile page
-router.get('/profile', viewController.getProfilePageUser);
+router.get(
+  '/profile',
+  authController.isLoggedIn,
+  viewController.getProfilePageUser
+);
 
 // Redirect root path to /overview
 router.get('/', (req, res) => {

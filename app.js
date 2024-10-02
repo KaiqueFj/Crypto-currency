@@ -5,12 +5,17 @@ const viewRoutes = require('./routes/viewRoutes');
 const userRoutes = require('./routes/userRoutes');
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/errorController');
+const cookieParser = require('cookie-parser');
 const app = express();
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
+
+// Body parser from req.body
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(cookieParser());
+
 app.use(express.static(path.join(`${__dirname}/public`)));
 
 // Limit requests from the same api
