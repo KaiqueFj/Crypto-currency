@@ -55,3 +55,7 @@ export const signUpForm = document.querySelector('.userSignUp');
 
 // handle form for signIn
 export const signInForm = document.querySelector('.userSignIn');
+
+// Handle form for update password
+
+export const updatePasswordForm = document.querySelector('.form-user-password');

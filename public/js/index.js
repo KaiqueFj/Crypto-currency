@@ -1,6 +1,7 @@
 const updateSpeedDoMeter = require('./fearGreed/fearGreed');
 import { signUp } from './handleUserFunctions/signUp';
 import { signIn } from './handleUserFunctions/signIn';
+import { updateSettings } from './handleUserFunctions/updateSettings';
 const { handleUserClicks } = require('./handleElements/handleClicks');
 const {
   handleCoinsFunctions,
@@ -13,6 +14,7 @@ const {
   select,
   signUpForm,
   signInForm,
+  updatePasswordForm,
 } = require('./handleElements/handleElements');
 const {
   handleCoinValueInCurrency,
@@ -29,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   handleUserClicks();
 });
 
+// Handle the signUp
 if (signUpForm) {
   signUpForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -43,6 +46,7 @@ if (signUpForm) {
   });
 }
 
+// Handle the signIn form
 if (signInForm) {
   signInForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -52,6 +56,28 @@ if (signInForm) {
     signIn(email, password);
   });
 }
+
+// Handle the update user password
+
+if (updatePasswordForm)
+  updatePasswordForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    document.querySelector('.btn--save-password').textContent = 'Updating...';
+
+    const currentPassword = document.getElementById('password-current').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password-confirm').value;
+
+    await updateSettings(
+      { currentPassword, password, passwordConfirm },
+      'password'
+    );
+
+    document.querySelector('.btn--save-password').textContent = 'Save Password';
+    document.getElementById('password-current').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('password-confirm').value = '';
+  });
 
 // Handle the price change on coin page
 if (select) {

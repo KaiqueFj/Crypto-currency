@@ -586,10 +586,11 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"f2QDv":[function(require,module,exports) {
 var _signUp = require("./handleUserFunctions/signUp");
 var _signIn = require("./handleUserFunctions/signIn");
+var _updateSettings = require("./handleUserFunctions/updateSettings");
 const updateSpeedDoMeter = require("67cae37c61cb61ea");
 const { handleUserClicks } = require("5bdcf2804befa2fb");
 const { handleCoinsFunctions } = require("88fddf9f7ffe2d0");
-const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select, signUpForm, signInForm } = require("5082ea269ed0b977");
+const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select, signUpForm, signInForm, updatePasswordForm } = require("5082ea269ed0b977");
 const { handleCoinValueInCurrency, insertFlags, updateValueOfCoinByQuantity } = require("a7d37ed595fc46a5");
 const { handleSortData } = require("2c6e91297df9cd6d");
 const fearGreedNeedlePosition = fearGreedValue;
@@ -598,6 +599,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     handleSortData();
     handleUserClicks();
 });
+// Handle the signUp
 if (signUpForm) signUpForm.addEventListener("submit", (e)=>{
     e.preventDefault();
     const name = document.querySelector(".inputName").value;
@@ -606,11 +608,29 @@ if (signUpForm) signUpForm.addEventListener("submit", (e)=>{
     const passwordConfirm = document.querySelector(".inputPasswordConfirm").value;
     (0, _signUp.signUp)(name, email, password, passwordConfirm);
 });
+// Handle the signIn form
 if (signInForm) signInForm.addEventListener("submit", (e)=>{
     e.preventDefault();
     const email = document.querySelector(".inputEmail").value;
     const password = document.querySelector(".inputPassword").value;
     (0, _signIn.signIn)(email, password);
+});
+// Handle the update user password
+if (updatePasswordForm) updatePasswordForm.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    document.querySelector(".btn--save-password").textContent = "Updating...";
+    const currentPassword = document.getElementById("password-current").value;
+    const password = document.getElementById("password").value;
+    const passwordConfirm = document.getElementById("password-confirm").value;
+    await (0, _updateSettings.updateSettings)({
+        currentPassword,
+        password,
+        passwordConfirm
+    }, "password");
+    document.querySelector(".btn--save-password").textContent = "Save Password";
+    document.getElementById("password-current").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("password-confirm").value = "";
 });
 // Handle the price change on coin page
 if (select) insertFlags();
@@ -621,7 +641,7 @@ if (feedGreedCoinContainer) {
     if (fearGreedNeedlePosition && fearGreedValue !== null) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
 }
 
-},{"67cae37c61cb61ea":"gVYJX","./handleUserFunctions/signUp":"kmAUz","./handleUserFunctions/signIn":"9rXF3","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2"}],"gVYJX":[function(require,module,exports) {
+},{"67cae37c61cb61ea":"gVYJX","./handleUserFunctions/signUp":"kmAUz","./handleUserFunctions/signIn":"9rXF3","./handleUserFunctions/updateSettings":"iqdDI","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2"}],"gVYJX":[function(require,module,exports) {
 const { needle } = require("335ffdcd8dc8da1a");
 function updateSpeedDoMeter(value) {
     const maxValue = 100;
@@ -671,6 +691,7 @@ parcelHelpers.export(exports, "menu", ()=>menu);
 parcelHelpers.export(exports, "mainTableOfCoins", ()=>mainTableOfCoins);
 parcelHelpers.export(exports, "signUpForm", ()=>signUpForm);
 parcelHelpers.export(exports, "signInForm", ()=>signInForm);
+parcelHelpers.export(exports, "updatePasswordForm", ()=>updatePasswordForm);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -710,6 +731,7 @@ const menu = document.querySelector("#nav-menu");
 const mainTableOfCoins = document.querySelector(".table-container-main");
 const signUpForm = document.querySelector(".userSignUp");
 const signInForm = document.querySelector(".userSignIn");
+const updatePasswordForm = document.querySelector(".form-user-password");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -5527,6 +5549,27 @@ const logout = async ()=>{
         location.assign("/login");
     } catch (err) {
         (0, _alert.showAlert)("error", "Error logging out! Try again");
+    }
+};
+
+},{"axios":"jo6P5","../handleAlertPage/alert":"hgdTX","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iqdDI":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "updateSettings", ()=>updateSettings);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _alert = require("../handleAlertPage/alert");
+const updateSettings = async (data, type)=>{
+    try {
+        const url = type === "password" ? "/api/v1/users/updatePassword" : "/api/v1/users/updateMe";
+        const res = await (0, _axiosDefault.default)({
+            method: "PATCH",
+            url,
+            data
+        });
+        if (res.data.status === "success") (0, _alert.showAlert)("success", `${type.toUpperCase()} updated successfully`);
+    } catch (err) {
+        (0, _alert.showAlert)("error", err.response.data.message);
     }
 };
 

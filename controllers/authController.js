@@ -66,6 +66,46 @@ exports.signIn = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
+exports.protect = catchAsync(async (req, res, next) => {
+  // 1 - Getting token and check if it´s there
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
+  }
+  if (!token) {
+    return next(
+      new AppError('You are not logged in! Please log in to get access ', 401)
+    );
+  }
+  // 2 - Verification  token
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+  // 3 - Check if user still exists
+  const freshUser = await User.findById(decoded.id);
+  if (!freshUser) {
+    return next(
+      new AppError('The user belonging to this token does no longer exist', 401)
+    );
+  }
+
+  // 4 - Check if user changed password after the JWT was issued
+  if (freshUser.changedPasswordAfter(decoded.iat)) {
+    return next(
+      new AppError('User recently changed password! Please, log in again!', 401)
+    );
+  }
+
+  //Grant access to protected route
+  req.user = freshUser;
+  res.locals.user = freshUser;
+  next();
+});
+
 // Only for rendered pages, no errors !
 exports.isLoggedIn = async (req, res, next) => {
   const token = req.cookies.jwt;
@@ -95,32 +135,15 @@ exports.isLoggedIn = async (req, res, next) => {
 exports.updatePassword = catchAsync(async (req, res, next) => {
   //1- Get user from collection
   const user = await User.findById(req.user.id).select('+password');
-
-  // Ensure the user and the password fields are present
-  if (!user || !user.password) {
-    return next(new AppError('User not found or password not provided!', 401));
-  }
-
+  console.log(user);
   //2- Check if posted current password is correct
-  const { currentPassword, password, passwordConfirm } = req.body;
 
-  if (!currentPassword || !password || !passwordConfirm) {
-    return next(
-      new AppError('Please provide all required password fields!', 400)
-    );
+  if (!(await user.correctPassword(req.body.currentPassword, user.password))) {
+    return next(new AppError('Incorrect  password!', 401));
   }
-
-  const isCurrentPasswordCorrect = await user.correctPassword(
-    currentPassword,
-    user.password
-  );
-  if (!isCurrentPasswordCorrect) {
-    return next(new AppError('Incorrect current password!', 401));
-  }
-
-  //3- If so, update password
-  user.password = password;
-  user.passwordConfirm = passwordConfirm;
+  //3- if so, update password
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
 
   await user.save();
 
