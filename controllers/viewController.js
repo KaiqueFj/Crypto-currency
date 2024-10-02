@@ -91,6 +91,13 @@ exports.getSignInPageUser = (req, res) => {
   });
 };
 
+// Profile
+exports.getProfilePageUser = (req, res) => {
+  res.status(200).render('profile', {
+    title: 'Your account',
+  });
+};
+
 exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = parseInt(req.query.per_page, 10) || 5;
   const currentPage = parseInt(req.query.page, 10) || 1;

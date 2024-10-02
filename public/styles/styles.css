@@ -65,7 +65,8 @@ body {
 }
 
 .asideNavigation,
-.mainOverview {
+.mainOverview,
+.mainProfile {
   top: calc(3rem + 1rem);
 }
 

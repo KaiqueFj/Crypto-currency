@@ -9,6 +9,9 @@ router.get('/signUp', viewController.getSignUpPageUser);
 // signIn page
 router.get('/signIn', viewController.getSignInPageUser);
 
+// Profile page
+router.get('/profile', viewController.getProfilePageUser);
+
 // Redirect root path to /overview
 router.get('/', (req, res) => {
   res.redirect('/overview');
