@@ -28,7 +28,7 @@ block content
             label(class="form__label block text-gray-700 font-medium mb-2" for="email") Email address
             input#email(class="form__input w-full p-2 border border-gray-300 rounded" type="email" value=`${user.email}` required name="email")
           .form__group(class="flex items-center space-x-4")
-            img(class="form__user-photo w-16 h-16 object-cover rounded-full" src="/images/user/default.jpg" alt="User photo")
+            img(class="form__user-photo w-16 h-16 object-cover rounded-full" src=`/images/user/${user.photo}` alt="User photo")
             .flex(class="flex-col")
               input(class="form__upload" type="file" accept="image/*" id="photo" name="photo")
               label(for="photo" class="text-sm text-gray-500") Choose new photo

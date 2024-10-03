@@ -10,12 +10,11 @@ router.get('/signUp', viewController.getSignUpPageUser);
 // signIn page
 router.get('/signIn', viewController.getSignInPageUser);
 
+// middleware used to pass the logged in user through all the pages
+router.use(authController.isLoggedIn);
+
 // Profile page
-router.get(
-  '/profile',
-  authController.isLoggedIn,
-  viewController.getProfilePageUser
-);
+router.get('/profile', viewController.getProfilePageUser);
 
 // Redirect root path to /overview
 router.get('/', (req, res) => {
