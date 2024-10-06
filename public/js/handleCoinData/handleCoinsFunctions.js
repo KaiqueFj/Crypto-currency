@@ -37,7 +37,7 @@ export function handleCoinsFunctions() {
 
   // Create the chart for unique coin
   coinName.forEach((coin) => {
-    constCoinIdName = coin.getAttribute('data-coin');
+    const constCoinIdName = coin.getAttribute('data-coin');
     createUniqueChart(constCoinIdName);
   });
 

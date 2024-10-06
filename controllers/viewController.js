@@ -431,3 +431,9 @@ exports.getTrendingCoinsPage = catchAsync(async (req, res, next) => {
     });
   }
 });
+
+exports.getPortfolioPage = catchAsync(async (req, res, next) => {
+  res.status(200).render('portfolio', {
+    title: 'Your Portfolio',
+  });
+});

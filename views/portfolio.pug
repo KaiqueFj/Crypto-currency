@@ -15,68 +15,6 @@ block content
       p(class="mt-4 px-4 py-2 bg-white text-blue-500 font-bold rounded-lg shadow-md hover:bg-blue-500 hover:text-white transition-colors duration-300 ease-in-out cursor-pointer") Explore the market below
 
 
-    .overviewAdditionalContainer(class="flex flex-col sm:flex-row p-3 justify-center gap-5 flex-wrap")
-
-      // Trending Section
-      .trending(class="flex flex-col sm:flex-row p-3 shadow-lg rounded-xl border-2 h-auto sm:h-48 w-full sm:w-96")
-        div(class="coin flex flex-col gap-2 p-3 w-full justify-between")
-          div(class="header flex flex-row items-center justify-between")
-            h2(class="font-semibold text-xl font-medium text-black") Trending 🔥
-            a(href="/trending-crypto" class="font-semibold text-md font-medium text-black flex flex-row gap-1 items-baseline text-black hover:text-blue-500")
-              span View more
-              i(class="fa-solid fa-chevron-right text-sm")
-
-          each coin of fetchTrendingData
-            div(class="coinContainerData flex flex-col sm:flex-row justify-between")
-              div(class="mainInfo flex flex-col sm:flex-row items-center")
-                div(class="image")
-                  img(class="coin-image w-6 h-6 object-cover rounded-full" src=coin.thumb alt=coin.name)
-                div(class="name ml-1 flex flex-col sm:flex-row")
-                  p(class="text-gray-700 font-bold text-sm px-1")= coin.name
-                  p(class="text-gray-400 font-semibold text-sm px-1")= coin.symbol
-              div(class="values flex flex-col sm:flex-row items-center")
-                div(class="percent")
-                  p(class="changeValue text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `${coin.priceChangePercentage24h.toFixed(2)}%`
-
-
-      // Volume and Capitalization Section
-      .volumeCapitalization(class="flex flex-row sm:flex-row p-3 shadow-lg rounded-xl border-2 h-auto sm:h-48 w-full sm:w-96")
-        div(class="coin flex flex-col p-3 w-full justify-between")
-          div(class="header")
-            h2(class="font-semibold text-xl font-medium text-black mb-4") Market Cap & Vol 🔥
-          div(class="coinContainerData flex flex-row sm:flex-col justify-between")
-            div(class="mainInfo flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-14")
-              p(class="text-gray-700 font-bold text-md") Market cap
-              p(class="text-gray-700 font-bold text-md") Volume 24h
-            div(class="values flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-14")
-              p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `$ ${globalData.totalMarketCap}`
-              p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1")= `$ ${globalData.totalVolume}`
-
-
-      // Fear & Greed Section
-      .fearGreed(class="flex flex-col sm:flex-row p-3 shadow-lg rounded-xl border-2 h-auto sm:h-48 w-full sm:w-96")
-        div(class="coin flex flex-col p-3 w-full justify-between")
-          div(class="header")
-            h2(class="font-semibold text-xl font-medium text-black mb-1") Fear & Greed Index 🔥
-          div(class="coinContainerData flex flex-col sm:flex-row justify-between items-center")
-            div(class="fear-greed-index flex flex-col place-content-center w-full items-center")
-              svg(width="210" height="70" viewBox="0 0 300 135" xmlns="http://www.w3.org/2000/svg")
-                g(transform="translate(150, 135)") // This centers the speedometer around (150, 135)
-                  g.arc
-                    path(d="M-107.94971126755703,-3.2954267175996574A108,108,0,0,1,-78.66219144333746,-74.00175428550142L-55.736679624136755,-51.07624246630069A75.6,75.6,0,0,0,-75.5281415284987,-3.2954267175996588Z" fill="#f02934")
-                    path(d="M-74.00175428550139,-78.66219144333748A108,108,0,0,1,-3.2954267175996614,-107.94971126755703L-3.295426717599662,-75.5281415284987A75.6,75.6,0,0,0,-51.07624246630068,-55.73667962413676Z" fill="#f07d29")
-                    path(d="M3.295426717599675,-107.94971126755703A108,108,0,0,1,74.00175428550139,-78.66219144333749L51.07624246630068,-55.73667962413677A75.6,75.6,0,0,0,3.295426717599671,-75.5281415284987Z" fill="#9acd7a")
-                    path(d="M78.66219144333749,-74.00175428550138A108,108,0,0,1,107.94971126755703,-3.295426717599666L75.5281415284987,-3.2954267175996654A75.6,75.6,0,0,0,55.73667962413677,-51.07624246630066Z" fill="#34b349")
-                  g.speedometer-needle
-                    path#needle-path(d="M -3.5 0 L 0 -90 L 3.5 0 Z" fill="#000")
-                    circle(cx="0" cy="-4.05" r="8.1" fill="#464a4f")
-              span(class="fear-greed-value font-bold text-gray-700" data-value=`${fearGreedValue[0].value}`)= `${fearGreedValue[0].classification}`
-              span(class="fear-greed-classification text-md text-gray-700")= `Now: ${fearGreedValue[0].value}`
-
-
-
-      // Coin Container
-
 
     .coin-container(class="flex flex-col p-4")
       // Table Container with horizontal scroll
@@ -128,13 +66,10 @@ block content
 
           tbody(class="bg-white divide-y divide-gray-200")
             each coin, index in coins
-              tr(class=" hover:bg-gray-100 transition")
-                td(class="px-4 whitespace-nowrap")
-                  svg(class="w-5 h-5 fill-current text-gray-500 cursor-pointer")
-                    use(xlink:href=`images/icons/icons.svg#icon-star`)
+              tr(data-href=`/coin/${coin.id}`, class="cursor-pointer hover:bg-gray-100 transition")
                 td(class="px-4 whitespace-nowrap")
                   p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 leading-5")= `${index + 1}`
-                td(data-href=`/coin/${coin.id}`, class="px-1 py-1 cursor-pointer whitespace-nowrap")
+                td(class="px-1 py-1 whitespace-nowrap")
                   .flex.items-center
                     img(class="coin-image w-6 h-6 object-cover rounded-full" src=coin.image alt=coin.name)
                     .flex.ml-4
@@ -193,5 +128,5 @@ block content
           button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 10
           button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 20
 
-      // News Section
+
 

@@ -707,7 +707,7 @@ const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
 const rowValue = $(".rowValue");
 const coins = document.querySelectorAll("[data-href]");
-const rows = document.querySelectorAll("tr[data-href]");
+const rows = document.querySelectorAll("td[data-href]");
 const valuesPercentage = $(".changeValue");
 const tableHeaders = document.querySelectorAll("th[data-sort]");
 const iconsSpan = document.querySelectorAll(".icon");
@@ -5665,8 +5665,8 @@ function handleCoinsFunctions() {
     });
     // Create the chart for unique coin
     (0, _handleElementsJs.coinName).forEach((coin)=>{
-        constCoinIdName = coin.getAttribute("data-coin");
-        (0, _chartJs.createUniqueChart)(constCoinIdName);
+        const constCoinIdName1 = coin.getAttribute("data-coin");
+        (0, _chartJs.createUniqueChart)(constCoinIdName1);
     });
     //Handle the click for each coin to retrieve the info
     (0, _handleElementsJs.rows).forEach((row)=>{
