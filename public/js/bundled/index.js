@@ -702,6 +702,7 @@ parcelHelpers.export(exports, "signUpForm", ()=>signUpForm);
 parcelHelpers.export(exports, "signInForm", ()=>signInForm);
 parcelHelpers.export(exports, "updatePasswordForm", ()=>updatePasswordForm);
 parcelHelpers.export(exports, "updateUserForm", ()=>updateUserForm);
+parcelHelpers.export(exports, "starSvgIcon", ()=>starSvgIcon);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -743,6 +744,7 @@ const signUpForm = document.querySelector(".userSignUp");
 const signInForm = document.querySelector(".userSignIn");
 const updatePasswordForm = document.querySelector(".form-user-password");
 const updateUserForm = document.querySelector(".form-user-data");
+const starSvgIcon = document.querySelectorAll(".starIcon");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -5588,7 +5590,7 @@ const updateSettings = async (data, type)=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);
-const { iconsInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar, navItems, buttonMobile, menu } = require("b7db570592d68645");
+const { iconsInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar, navItems, buttonMobile, menu, starSvgIcon } = require("b7db570592d68645");
 function handleUserClicks() {
     //handle the infoContainer for each stats of the coin
     iconsInfo.each(function(e) {
@@ -5644,6 +5646,15 @@ function handleUserClicks() {
     buttonMobile.addEventListener("click", (e)=>{
         e.preventDefault();
         menu.classList.toggle("hidden");
+    });
+    // Handle the click on the star for portfolio
+    starSvgIcon.forEach((star)=>{
+        star.addEventListener("click", function(e) {
+            e.preventDefault();
+            star.classList.toggle("fa-solid");
+            star.classList.toggle("fa-regular");
+            star.classList.contains("fa-solid") ? star.classList.replace("text-gray-500", "text-yellow-500") : star.classList.replace("text-yellow-500", "text-gray-500");
+        });
     });
 }
 

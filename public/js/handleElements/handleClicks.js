@@ -9,6 +9,7 @@ const {
   navItems,
   buttonMobile,
   menu,
+  starSvgIcon,
 } = require('./handleElements');
 
 export function handleUserClicks() {
@@ -84,5 +85,19 @@ export function handleUserClicks() {
   buttonMobile.addEventListener('click', (e) => {
     e.preventDefault();
     menu.classList.toggle('hidden');
+  });
+
+  // Handle the click on the star for portfolio
+  starSvgIcon.forEach((star) => {
+    star.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      star.classList.toggle('fa-solid');
+      star.classList.toggle('fa-regular');
+
+      star.classList.contains('fa-solid')
+        ? star.classList.replace('text-gray-500', 'text-yellow-500')
+        : star.classList.replace('text-yellow-500', 'text-gray-500');
+    });
   });
 }

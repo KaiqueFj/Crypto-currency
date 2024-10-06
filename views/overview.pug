@@ -130,8 +130,8 @@ block content
             each coin, index in coins
               tr(class=" hover:bg-gray-100 transition")
                 td(class="px-4 whitespace-nowrap")
-                  svg(class="w-5 h-5 fill-current text-gray-500 cursor-pointer")
-                    use(xlink:href=`images/icons/icons.svg#icon-star`)
+                  i(class="fa-regular fa-star starIcon w-5 h-5  text-gray-500 cursor-pointer")
+
                 td(class="px-4 whitespace-nowrap")
                   p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 leading-5")= `${index + 1}`
                 td(data-href=`/coin/${coin.id}`, class="px-1 py-1 cursor-pointer whitespace-nowrap")

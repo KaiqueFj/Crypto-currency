@@ -61,3 +61,6 @@ export const updatePasswordForm = document.querySelector('.form-user-password');
 
 // Handle form for update user data
 export const updateUserForm = document.querySelector('.form-user-data');
+
+// Handle the class for the start on overview page
+export const starSvgIcon = document.querySelectorAll('.starIcon');
