@@ -587,10 +587,11 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 var _signUp = require("./handleUserFunctions/signUp");
 var _signIn = require("./handleUserFunctions/signIn");
 var _updateSettings = require("./handleUserFunctions/updateSettings");
+var _portfolio = require("./handleUserFunctions/Portfolio");
 const updateSpeedDoMeter = require("67cae37c61cb61ea");
 const { handleUserClicks } = require("5bdcf2804befa2fb");
 const { handleCoinsFunctions } = require("88fddf9f7ffe2d0");
-const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select, signUpForm, signInForm, updatePasswordForm, updateUserForm } = require("5082ea269ed0b977");
+const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select, signUpForm, signInForm, updatePasswordForm, updateUserForm, starSvgIcon, getCoinName } = require("5082ea269ed0b977");
 const { handleCoinValueInCurrency, insertFlags, updateValueOfCoinByQuantity } = require("a7d37ed595fc46a5");
 const { handleSortData } = require("2c6e91297df9cd6d");
 const fearGreedNeedlePosition = fearGreedValue;
@@ -615,6 +616,23 @@ if (signInForm) signInForm.addEventListener("submit", (e)=>{
     const password = document.querySelector(".inputPassword").value;
     (0, _signIn.signIn)(email, password);
 });
+if (starSvgIcon) {
+    // Handle the add to portfolio
+    const starSvgIcons = document.querySelectorAll(".starIcon");
+    starSvgIcons.forEach((star)=>{
+        star.addEventListener("click", async (e)=>{
+            e.preventDefault();
+            // Get the coin name from the data attribute
+            const coinName = star.getAttribute("data-coin-name");
+            try {
+                const data = await (0, _portfolio.addToPortfolio)(coinName);
+                console.log("Coin added to portfolio:", data);
+            } catch (error) {
+                console.error("Error adding to portfolio:", error);
+            }
+        });
+    });
+}
 // Handle the update user password
 if (updatePasswordForm) updatePasswordForm.addEventListener("submit", async (e)=>{
     e.preventDefault();
@@ -650,7 +668,7 @@ if (feedGreedCoinContainer) {
     if (fearGreedNeedlePosition && fearGreedValue !== null) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
 }
 
-},{"67cae37c61cb61ea":"gVYJX","./handleUserFunctions/signUp":"kmAUz","./handleUserFunctions/signIn":"9rXF3","./handleUserFunctions/updateSettings":"iqdDI","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2"}],"gVYJX":[function(require,module,exports) {
+},{"67cae37c61cb61ea":"gVYJX","./handleUserFunctions/signUp":"kmAUz","./handleUserFunctions/signIn":"9rXF3","./handleUserFunctions/updateSettings":"iqdDI","./handleUserFunctions/Portfolio":"3FBK1","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2"}],"gVYJX":[function(require,module,exports) {
 const { needle } = require("335ffdcd8dc8da1a");
 function updateSpeedDoMeter(value) {
     const maxValue = 100;
@@ -703,6 +721,7 @@ parcelHelpers.export(exports, "signInForm", ()=>signInForm);
 parcelHelpers.export(exports, "updatePasswordForm", ()=>updatePasswordForm);
 parcelHelpers.export(exports, "updateUserForm", ()=>updateUserForm);
 parcelHelpers.export(exports, "starSvgIcon", ()=>starSvgIcon);
+parcelHelpers.export(exports, "getCoinName", ()=>getCoinName);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -745,6 +764,7 @@ const signInForm = document.querySelector(".userSignIn");
 const updatePasswordForm = document.querySelector(".form-user-password");
 const updateUserForm = document.querySelector(".form-user-data");
 const starSvgIcon = document.querySelectorAll(".starIcon");
+const getCoinName = document.querySelectorAll("[data-coin-name]");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -5586,7 +5606,29 @@ const updateSettings = async (data, type)=>{
     }
 };
 
-},{"axios":"jo6P5","../handleAlertPage/alert":"hgdTX","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4Y7Xa":[function(require,module,exports) {
+},{"axios":"jo6P5","../handleAlertPage/alert":"hgdTX","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3FBK1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "addToPortfolio", ()=>addToPortfolio);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _alert = require("../handleAlertPage/alert");
+const addToPortfolio = async (coinName)=>{
+    try {
+        const res = await (0, _axiosDefault.default)({
+            method: "PATCH",
+            url: "/api/v1/users/addToPortfolio",
+            data: {
+                coinName
+            }
+        });
+        if (res.data.status === "success") (0, _alert.showAlert)("success", "Coin added to portfolio successfully!");
+    } catch (err) {
+        (0, _alert.showAlert)("error", err.response.data.message);
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","axios":"jo6P5","../handleAlertPage/alert":"hgdTX"}],"4Y7Xa":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);

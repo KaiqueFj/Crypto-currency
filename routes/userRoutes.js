@@ -17,4 +17,6 @@ router.patch(
   userController.updateMe
 );
 
+router.patch('/addToPortfolio', userController.addToPortfolio);
+
 module.exports = router;

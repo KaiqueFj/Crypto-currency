@@ -71,6 +71,25 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.addToPortfolio = catchAsync(async (req, res, next) => {
+  // Access coinName directly from req.body
+  const { coinName } = req.body;
+
+  // Update user data
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user.id,
+    { $addToSet: { portfolio: coinName } },
+    { new: true, runValidators: true }
+  );
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user: updatedUser,
+    },
+  });
+});
+
 exports.deleteMe = catchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user.id, { active: false });
 

@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'default.jpg',
   },
-  watchList: [String],
+  portfolio: [String],
 });
 
 userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {

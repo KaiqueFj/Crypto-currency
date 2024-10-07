@@ -64,3 +64,4 @@ export const updateUserForm = document.querySelector('.form-user-data');
 
 // Handle the class for the start on overview page
 export const starSvgIcon = document.querySelectorAll('.starIcon');
+export const getCoinName = document.querySelectorAll('[data-coin-name]');
