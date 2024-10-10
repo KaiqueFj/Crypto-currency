@@ -1,4 +1,4 @@
-const User = require('../Models/userModel');
+const User = require('../models/userModel');
 const sharp = require('sharp');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
@@ -62,25 +62,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user: updatedUser,
-    },
-  });
-});
-
-exports.addToPortfolio = catchAsync(async (req, res, next) => {
-  // Access coinName directly from req.body
-  const { coinName } = req.body;
-
-  // Update user data
-  const updatedUser = await User.findByIdAndUpdate(
-    req.user.id,
-    { $addToSet: { portfolio: coinName } },
-    { new: true, runValidators: true }
-  );
 
   res.status(200).json({
     status: 'success',

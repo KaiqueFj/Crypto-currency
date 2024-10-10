@@ -5616,8 +5616,8 @@ var _alert = require("../handleAlertPage/alert");
 const addToPortfolio = async (coinName)=>{
     try {
         const res = await (0, _axiosDefault.default)({
-            method: "PATCH",
-            url: "/api/v1/users/addToPortfolio",
+            method: "POST",
+            url: "/api/v1/portfolio/addToPortfolio",
             data: {
                 coinName
             }
@@ -5628,7 +5628,7 @@ const addToPortfolio = async (coinName)=>{
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","axios":"jo6P5","../handleAlertPage/alert":"hgdTX"}],"4Y7Xa":[function(require,module,exports) {
+},{"axios":"jo6P5","../handleAlertPage/alert":"hgdTX","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4Y7Xa":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);

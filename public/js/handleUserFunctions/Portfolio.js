@@ -4,9 +4,9 @@ import { showAlert } from '../handleAlertPage/alert';
 export const addToPortfolio = async (coinName) => {
   try {
     const res = await axios({
-      method: 'PATCH',
-      url: '/api/v1/users/addToPortfolio',
-      data: { coinName }, // Send the coinName directly
+      method: 'POST',
+      url: '/api/v1/portfolio/addToPortfolio',
+      data: { coinName },
     });
 
     if (res.data.status === 'success') {

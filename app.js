@@ -3,6 +3,7 @@ const path = require('path');
 const rateLimit = require('express-rate-limit');
 const viewRoutes = require('./routes/viewRoutes');
 const userRoutes = require('./routes/userRoutes');
+const portfolioRoutes = require('./routes/portfolioRoutes');
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/errorController');
 const cookieParser = require('cookie-parser');
@@ -28,6 +29,7 @@ const limiter = rateLimit({
 app.use('/', viewRoutes);
 app.use('/api', limiter);
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/portfolio', portfolioRoutes);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can´t find ${req.originalUrl} on this server !`, 404));
