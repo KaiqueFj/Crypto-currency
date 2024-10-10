@@ -6,7 +6,9 @@ export const addToPortfolio = async (coinName) => {
     const res = await axios({
       method: 'POST',
       url: '/api/v1/portfolio/addToPortfolio',
-      data: { coinName },
+      data: {
+        coins: [{ coinName }],
+      },
     });
 
     if (res.data.status === 'success') {

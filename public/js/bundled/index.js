@@ -5619,7 +5619,11 @@ const addToPortfolio = async (coinName)=>{
             method: "POST",
             url: "/api/v1/portfolio/addToPortfolio",
             data: {
-                coinName
+                coins: [
+                    {
+                        coinName
+                    }
+                ]
             }
         });
         if (res.data.status === "success") (0, _alert.showAlert)("success", "Coin added to portfolio successfully!");
