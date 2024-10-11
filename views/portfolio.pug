@@ -9,12 +9,10 @@ block content
 
   main.mainOverview(class="flex flex-col w-full self-center pt-16 mt-8")
     .introduction.flex.flex-col.items-center.bg-gradient-to-r.from-purple-400.to-blue-500.p-6.rounded-lg.shadow-md.mb-8.mx-4.gap-2
-      h2(class="font-semibold text-4xl md:text-3xl lg:text-4xl text-white mb-2") Crypto List
-      p(class=" font-semibold text-xl md:text-md lg:text-xl text-white mb-2") Leading the way with top trends, market insights, and up-to-date analytics.
-      p(class=" font-semibold text-xl md:text-md lg:text-xl text-white mb-2")=`The global cryptocurrency market cap stands at ${globalData.totalMarketCap}, with a ${globalData.marketCapChangePercent.toFixed(2)}% change in the last 24 hours. Total trading volume is ${globalData.totalVolume}, and Bitcoin holds ${globalData.marketDominanceBtc.toFixed(2)}% market dominance.`
-      p(class="mt-4 px-4 py-2 bg-white text-blue-500 font-bold rounded-lg shadow-md hover:bg-blue-500 hover:text-white transition-colors duration-300 ease-in-out cursor-pointer") Explore the market below
-
-
+      h2(class="font-semibold text-4xl md:text-3xl lg:text-4xl text-white mb-2") Welcome to Your Crypto Portfolio
+      p(class="font-semibold text-xl md:text-md lg:text-xl text-white mb-2") Stay ahead of the curve with your personalized cryptocurrency insights.
+      p(class="font-semibold text-xl md:text-md lg:text-xl text-white mb-2") Track the latest trends, explore detailed analytics, and manage your favorite coins.
+      p(class="mt-4 px-4 py-2 bg-white text-blue-500 font-bold rounded-lg shadow-md hover:bg-blue-500 hover:text-white transition-colors duration-300 ease-in-out cursor-pointer") Explore your portfolio below
 
     .coin-container(class="flex flex-col p-4")
       // Table Container with horizontal scroll
@@ -86,47 +84,3 @@ block content
                 td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium w-48 h-20 hidden md:table-cell")
                   canvas(class="chartContainer" id=`chart-${coin.id}`)
                 td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")
-          // Info Pagination and Dropdown Container
-
-
-    .infoPagination(class="flex flex-col md:flex-row justify-between items-center p-4")
-
-      // Showing text with responsive padding
-      span(class="px-4 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm text-gray-500")
-        = `Showing ${(currentPage - 1) * itemsPerPage} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
-
-      // Pagination navigation with responsive spacing
-      nav(class="inline-flex items-center space-x-2 md:space-x-1 rounded-lg")
-        ul(class="pagination flex flex-wrap gap-2 md:gap-1")
-
-          li
-            a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=1&per_page=${itemsPerPage}`)= 1
-
-          if currentPage > 1
-            li
-              a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage - 1}&per_page=${itemsPerPage}`)= `${currentPage}`
-
-          if currentPage < totalPages
-            li
-              a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100 " href=`/overview?page=${currentPage + 1}&per_page=${itemsPerPage}`)= `${currentPage + 1}`
-            li
-              a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage + 2}&per_page=${itemsPerPage}`)= `${currentPage + 2}`
-
-          li= `...`
-          li
-            a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${totalPages}&per_page=${itemsPerPage}`)= `${totalPages}`
-
-      // Dropdown for showing rows with responsive adjustments
-      div(class="dropdown flex relative items-center mt-4 md:mt-0")
-        button(class="dropdownButton block px-3 py-2 md:px-4 md:py-2 text-sm md:text-base")
-          | Show rows
-        div(class="coinsToShow flex items-center px-3 py-2 md:px-4 md:py-2 m-1 rounded-lg bg-gray-100 cursor-pointer")
-          span(class="rowValue text-sm md:text-base")= totalRows
-          i(class="fa-solid fa-chevron-down ml-2 text-sm md:text-base")
-        div(class="dropdownOptions hidden px-2 py-2 top-full flex-col absolute left-0 md:left-20 shadow-xl drop-shadow-xl rounded-lg bg-gray-200")
-          button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 5
-          button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 10
-          button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 20
-
-
-

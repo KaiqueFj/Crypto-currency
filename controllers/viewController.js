@@ -8,6 +8,8 @@ const {
   formatLargeNumber,
   formatTimesTamp,
 } = require('../utils/formatting');
+const Portfolio = require('../models/portfolioModel');
+const AppError = require('../utils/AppError');
 
 // Helper function to make API requests
 const fetchData = async (url, headers = {}, params = {}) => {
@@ -98,6 +100,44 @@ exports.getProfilePageUser = (req, res) => {
   });
 };
 
+// Portfolio
+exports.getPortfolioPageUser = async (req, res, next) => {
+  // 1 - get the portfolio data
+  const portfolio = await Portfolio.findOne({ user: req.params.id });
+
+  // 2 - check if there´s the portfolio
+  if (!portfolio) {
+    return next(new AppError('There is no portfolio with that name ', 404));
+  }
+
+  // 3 - read the coins from portfolio data
+  const coinNames = portfolio.coins
+    .map((coin) => coin.coinName.toLowerCase())
+    .join(',');
+
+  // 4 - fetch the coins from the API
+
+  const coinsToRetrieveFromApi = await axios.get(
+    `https://api.coingecko.com/api/v3/coins/markets?ids=${coinNames}&vs_currency=usd`,
+    {
+      headers: {
+        accept: 'application/json',
+        'x-cg-demo-api-key': process.env.API_KEY_Cry,
+      },
+      params: {
+        vs_currency: 'brl',
+        order: 'market_cap_desc',
+        sparkline: false,
+        price_change_percentage: '1h,24h,7d',
+      },
+    }
+  );
+
+  res.status(200).render('portfolio', {
+    coins: coinsToRetrieveFromApi.data,
+  });
+};
+
 exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = parseInt(req.query.per_page, 10) || 5;
   const currentPage = parseInt(req.query.page, 10) || 1;
@@ -164,16 +204,19 @@ exports.getOverview = catchAsync(async (req, res, next) => {
 // API calls related to the specific coin page
 
 const fetchCoinData = async (coin) => {
-  const response = await axios.get(
-    `https://api.coingecko.com/api/v3/coins/${coin}`,
-    {
-      headers: {
-        accept: 'application/json',
-        'x-cg-demo-api-key': process.env.API_KEY_Cry,
-      },
-    }
-  );
-  return response.data;
+  try {
+    const fearGreedData = await fetchFearGreedIndex();
+    res.status(200).render('fearGreed', {
+      title: `Overview of Fear Greed`,
+      fearGreedValue: fearGreedData,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).render('error', {
+      title: 'Error',
+      message: 'Failed to fetch data',
+    });
+  }
 };
 
 const fetchCoinTickers = async (coin) => {

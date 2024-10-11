@@ -16,6 +16,10 @@ router.use(authController.isLoggedIn);
 // Profile page
 router.get('/profile', viewController.getProfilePageUser);
 
+// Portfolio page
+
+router.get('/portfolio/:id', viewController.getPortfolioPageUser);
+
 // Redirect root path to /overview
 router.get('/', (req, res) => {
   res.redirect('/overview');

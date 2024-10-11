@@ -1,5 +1,6 @@
 const Portfolio = require('../models/portfolioModel');
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/AppError');
 
 exports.createPortfolio = catchAsync(async (req, res, next) => {
   const { coins } = req.body;
@@ -30,7 +31,9 @@ exports.createPortfolio = catchAsync(async (req, res, next) => {
 });
 
 exports.getOne = catchAsync(async (req, res, next) => {
-  let query = Portfolio.findById(req.params.id);
+  const userId = req.user.id;
+
+  let query = Portfolio.findOne({ user: userId });
   const document = await query;
 
   if (!document) {
