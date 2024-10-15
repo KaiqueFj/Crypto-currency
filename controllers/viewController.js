@@ -157,8 +157,6 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     .map((coin) => coin.coinName.split(','))
     .join(',');
 
-  console.log(coinNames);
-
   try {
     const [allCoins, coinsInPage, cryptoCoins] = await Promise.all([
       fetchData('https://api.coingecko.com/api/v3/coins/list', {
