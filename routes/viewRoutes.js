@@ -14,11 +14,18 @@ router.get('/signIn', viewController.getSignInPageUser);
 router.use(authController.isLoggedIn);
 
 // Profile page
-router.get('/profile', viewController.getProfilePageUser);
+router.get(
+  '/profile',
+  authController.protect,
+  viewController.getProfilePageUser
+);
 
 // Portfolio page
-
-router.get('/portfolio/:id', viewController.getPortfolioPageUser);
+router.get(
+  '/portfolio/:id',
+  authController.protect,
+  viewController.getPortfolioPageUser
+);
 
 // Redirect root path to /overview
 router.get('/', (req, res) => {

@@ -135,7 +135,6 @@ exports.isLoggedIn = async (req, res, next) => {
 exports.updatePassword = catchAsync(async (req, res, next) => {
   //1- Get user from collection
   const user = await User.findById(req.user.id).select('+password');
-  console.log(user);
   //2- Check if posted current password is correct
 
   if (!(await user.correctPassword(req.body.currentPassword, user.password))) {

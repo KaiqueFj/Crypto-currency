@@ -142,6 +142,23 @@ exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = parseInt(req.query.per_page, 10) || 5;
   const currentPage = parseInt(req.query.page, 10) || 1;
 
+  const userId = res.locals.user._id.toString();
+
+  // 1 - get the portfolio data
+  const portfolio = await Portfolio.findOne({ user: userId });
+
+  // 2 - check if there´s the portfolio
+  if (!portfolio) {
+    return next(new AppError('There is no portfolio with that name ', 404));
+  }
+
+  // 3 - read the coins from portfolio data
+  const coinNames = portfolio.coins
+    .map((coin) => coin.coinName.split(','))
+    .join(',');
+
+  console.log(coinNames);
+
   try {
     const [allCoins, coinsInPage, cryptoCoins] = await Promise.all([
       fetchData('https://api.coingecko.com/api/v3/coins/list', {
@@ -191,6 +208,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       fetchTrendingData: trendingData,
       globalData: globalDataVolCap,
       fearGreedValue: fearGreedData,
+      coinsFromPortFolio: coinNames,
     });
   } catch (err) {
     console.error(err);

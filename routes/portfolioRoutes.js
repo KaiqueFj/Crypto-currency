@@ -4,7 +4,8 @@ const PortfolioController = require('../controllers/portfolioController');
 
 const router = express.Router();
 
-router.use(AuthController.protect);
+// middleware used to pass the logged in user through all the pages
+router.use(AuthController.isLoggedIn);
 
 router.post('/addToPortfolio', PortfolioController.createPortfolio);
 router.get('/getPortfolio/:id', PortfolioController.getOne);
