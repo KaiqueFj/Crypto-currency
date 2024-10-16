@@ -64,10 +64,10 @@ block content
 
           tbody(class="bg-white divide-y divide-gray-200")
             each coin, index in coins
-              tr( class="cursor-pointer hover:bg-gray-100 transition")
+              tr(class=" hover:bg-gray-100 transition")
                 td(class="px-4 whitespace-nowrap")
                   p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 leading-5")= `${index + 1}`
-                td(data-href=`/coin/${coin.id}` class="px-1 py-1 whitespace-nowrap")
+                td(data-href=`/coin/${coin.id}` class="cursor-pointer px-1 py-1 whitespace-nowrap")
                   .flex.items-center
                     img(class="coin-image w-6 h-6 object-cover rounded-full" src=coin.image alt=coin.name)
                     .flex.ml-4
