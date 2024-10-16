@@ -218,21 +218,17 @@ exports.getOverview = catchAsync(async (req, res, next) => {
 });
 
 // API calls related to the specific coin page
-
 const fetchCoinData = async (coin) => {
-  try {
-    const fearGreedData = await fetchFearGreedIndex();
-    res.status(200).render('fearGreed', {
-      title: `Overview of Fear Greed`,
-      fearGreedValue: fearGreedData,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).render('error', {
-      title: 'Error',
-      message: 'Failed to fetch data',
-    });
-  }
+  const response = await axios.get(
+    `https://api.coingecko.com/api/v3/coins/${coin}`,
+    {
+      headers: {
+        accept: 'application/json',
+        'x-cg-demo-api-key': process.env.API_KEY_Cry,
+      },
+    }
+  );
+  return response.data;
 };
 
 const fetchCoinTickers = async (coin) => {
