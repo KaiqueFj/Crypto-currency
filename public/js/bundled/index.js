@@ -591,7 +591,7 @@ var _portfolio = require("./handleUserFunctions/Portfolio");
 const updateSpeedDoMeter = require("67cae37c61cb61ea");
 const { handleUserClicks } = require("5bdcf2804befa2fb");
 const { handleCoinsFunctions } = require("88fddf9f7ffe2d0");
-const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select, signUpForm, signInForm, updatePasswordForm, updateUserForm, starSvgIcon, getCoinName } = require("5082ea269ed0b977");
+const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select, signUpForm, signInForm, updatePasswordForm, updateUserForm, starSvgIcon, getCoinName, deleteIcon } = require("5082ea269ed0b977");
 const { handleCoinValueInCurrency, insertFlags, updateValueOfCoinByQuantity } = require("a7d37ed595fc46a5");
 const { handleSortData } = require("2c6e91297df9cd6d");
 const fearGreedNeedlePosition = fearGreedValue;
@@ -616,8 +616,8 @@ if (signInForm) signInForm.addEventListener("submit", (e)=>{
     const password = document.querySelector(".inputPassword").value;
     (0, _signIn.signIn)(email, password);
 });
+// Handle the add to portfolio
 if (starSvgIcon) {
-    // Handle the add to portfolio
     const starSvgIcons = document.querySelectorAll(".starIcon");
     starSvgIcons.forEach((star)=>{
         star.addEventListener("click", async (e)=>{
@@ -633,6 +633,20 @@ if (starSvgIcon) {
         });
     });
 }
+// Handle the delete from portfolio
+if (deleteIcon) deleteIcon.forEach((icon)=>{
+    icon.addEventListener("click", async (e)=>{
+        e.preventDefault();
+        // Get the coin name from the data attribute
+        const coinSlug = icon.getAttribute("data-coin-slug");
+        try {
+            const data = await (0, _portfolio.deleteFromPortfolio)(coinSlug);
+            console.log("Coin deleted from portfolio:", data);
+        } catch (error) {
+            console.error("Error deleting from portfolio:", error);
+        }
+    });
+});
 // Handle the update user password
 if (updatePasswordForm) updatePasswordForm.addEventListener("submit", async (e)=>{
     e.preventDefault();
@@ -722,6 +736,7 @@ parcelHelpers.export(exports, "updatePasswordForm", ()=>updatePasswordForm);
 parcelHelpers.export(exports, "updateUserForm", ()=>updateUserForm);
 parcelHelpers.export(exports, "starSvgIcon", ()=>starSvgIcon);
 parcelHelpers.export(exports, "getCoinName", ()=>getCoinName);
+parcelHelpers.export(exports, "deleteIcon", ()=>deleteIcon);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -765,6 +780,7 @@ const updatePasswordForm = document.querySelector(".form-user-password");
 const updateUserForm = document.querySelector(".form-user-data");
 const starSvgIcon = document.querySelectorAll(".starIcon");
 const getCoinName = document.querySelectorAll("[data-coin-name]");
+const deleteIcon = document.querySelectorAll(".deleteIcon");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -5610,6 +5626,7 @@ const updateSettings = async (data, type)=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "addToPortfolio", ()=>addToPortfolio);
+parcelHelpers.export(exports, "deleteFromPortfolio", ()=>deleteFromPortfolio);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _alert = require("../handleAlertPage/alert");
@@ -5627,6 +5644,18 @@ const addToPortfolio = async (coinName)=>{
             }
         });
         if (res.data.status === "success") (0, _alert.showAlert)("success", "Coin added to portfolio successfully!");
+    } catch (err) {
+        (0, _alert.showAlert)("error", err.response.data.message);
+    }
+};
+const deleteFromPortfolio = async (coinId)=>{
+    try {
+        const res = await (0, _axiosDefault.default)({
+            method: "PATCH",
+            url: `/api/v1/portfolio/deleteCoinFromPortfolio/${coinId}`,
+            data: {}
+        });
+        if (res.data.status === "success") (0, _alert.showAlert)("success", "Coin deleted successfully!");
     } catch (err) {
         (0, _alert.showAlert)("error", err.response.data.message);
     }

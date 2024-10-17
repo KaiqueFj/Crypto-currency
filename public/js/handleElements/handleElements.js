@@ -65,3 +65,6 @@ export const updateUserForm = document.querySelector('.form-user-data');
 // Handle the class for the start on overview page
 export const starSvgIcon = document.querySelectorAll('.starIcon');
 export const getCoinName = document.querySelectorAll('[data-coin-name]');
+
+// Handle the icon for the delete trash can on portfolio page
+export const deleteIcon = document.querySelectorAll('.deleteIcon');

@@ -110,10 +110,16 @@ exports.getPortfolioPageUser = async (req, res, next) => {
     return next(new AppError('There is no portfolio with that name ', 404));
   }
 
+  const portfolioData = portfolio.coins;
+
   // 3 - read the coins from portfolio data
   const coinNames = portfolio.coins
     .map((coin) => coin.coinName.toLowerCase())
     .join(',');
+
+  const coinsIds = portfolio.coins.map((coin) =>
+    coin._id.toString().split(',').join(',')
+  );
 
   // 4 - fetch the coins from the API
 
@@ -135,6 +141,8 @@ exports.getPortfolioPageUser = async (req, res, next) => {
 
   res.status(200).render('portfolio', {
     coins: coinsToRetrieveFromApi.data,
+    coinsIdFromPortFolio: coinsIds,
+    portfolioInfo: portfolioData,
   });
 };
 
@@ -152,10 +160,16 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     return next(new AppError('There is no portfolio with that name ', 404));
   }
 
-  // 3 - read the coins from portfolio data
+  // 3 - read the coins from portfolio data and also their id
   const coinNames = portfolio.coins
     .map((coin) => coin.coinName.split(','))
     .join(',');
+
+  const coinsIds = portfolio.coins.map((coin) =>
+    coin._id.toString().split(',').join(',')
+  );
+
+  console.log(coinsIds);
 
   try {
     const [allCoins, coinsInPage, cryptoCoins] = await Promise.all([
@@ -207,6 +221,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       globalData: globalDataVolCap,
       fearGreedValue: fearGreedData,
       coinsFromPortFolio: coinNames,
+      coinsIdFromPortFolio: coinsIds,
     });
   } catch (err) {
     console.error(err);

@@ -2,7 +2,10 @@ const updateSpeedDoMeter = require('./fearGreed/fearGreed');
 import { signUp } from './handleUserFunctions/signUp';
 import { signIn } from './handleUserFunctions/signIn';
 import { updateSettings } from './handleUserFunctions/updateSettings';
-import { addToPortfolio } from './handleUserFunctions/Portfolio';
+import {
+  addToPortfolio,
+  deleteFromPortfolio,
+} from './handleUserFunctions/Portfolio';
 const { handleUserClicks } = require('./handleElements/handleClicks');
 const {
   handleCoinsFunctions,
@@ -19,6 +22,7 @@ const {
   updateUserForm,
   starSvgIcon,
   getCoinName,
+  deleteIcon,
 } = require('./handleElements/handleElements');
 const {
   handleCoinValueInCurrency,
@@ -61,8 +65,8 @@ if (signInForm) {
   });
 }
 
+// Handle the add to portfolio
 if (starSvgIcon) {
-  // Handle the add to portfolio
   const starSvgIcons = document.querySelectorAll('.starIcon');
 
   starSvgIcons.forEach((star) => {
@@ -77,6 +81,25 @@ if (starSvgIcon) {
         console.log('Coin added to portfolio:', data);
       } catch (error) {
         console.error('Error adding to portfolio:', error);
+      }
+    });
+  });
+}
+
+// Handle the delete from portfolio
+if (deleteIcon) {
+  deleteIcon.forEach((icon) => {
+    icon.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      // Get the coin name from the data attribute
+      const coinSlug = icon.getAttribute('data-coin-slug');
+
+      try {
+        const data = await deleteFromPortfolio(coinSlug);
+        console.log('Coin deleted from portfolio:', data);
+      } catch (error) {
+        console.error('Error deleting from portfolio:', error);
       }
     });
   });

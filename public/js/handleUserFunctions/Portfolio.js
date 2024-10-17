@@ -18,3 +18,19 @@ export const addToPortfolio = async (coinName) => {
     showAlert('error', err.response.data.message);
   }
 };
+
+export const deleteFromPortfolio = async (coinId) => {
+  try {
+    const res = await axios({
+      method: 'PATCH',
+      url: `/api/v1/portfolio/deleteCoinFromPortfolio/${coinId}`,
+      data: {},
+    });
+
+    if (res.data.status === 'success') {
+      showAlert('success', 'Coin deleted successfully!');
+    }
+  } catch (err) {
+    showAlert('error', err.response.data.message);
+  }
+};
