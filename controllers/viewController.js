@@ -105,24 +105,19 @@ exports.getPortfolioPageUser = async (req, res, next) => {
   // 1 - get the portfolio data
   const portfolio = await Portfolio.findOne({ user: req.params.id });
 
-  // 2 - check if there´s the portfolio
+  // 2 - check if there's the portfolio
   if (!portfolio) {
-    return next(new AppError('There is no portfolio with that name ', 404));
+    return next(new AppError('There is no portfolio with that name', 404));
   }
 
   const portfolioData = portfolio.coins;
 
-  // 3 - read the coins from portfolio data
+  // 3 - read the coins from portfolio data (lowercased for comparison)
   const coinNames = portfolio.coins
     .map((coin) => coin.coinName.toLowerCase())
     .join(',');
 
-  const coinsIds = portfolio.coins.map((coin) =>
-    coin._id.toString().split(',').join(',')
-  );
-
   // 4 - fetch the coins from the API
-
   const coinsToRetrieveFromApi = await axios.get(
     `https://api.coingecko.com/api/v3/coins/markets?ids=${coinNames}&vs_currency=usd`,
     {
@@ -139,9 +134,23 @@ exports.getPortfolioPageUser = async (req, res, next) => {
     }
   );
 
+  const apiCoins = coinsToRetrieveFromApi.data;
+
+  // 5 - Map API coins to portfolio coins using coinName or another unique property
+  const coinsWithPortfolioIds = apiCoins.map((apiCoin) => {
+    const matchedCoin = portfolioData.find(
+      (portfolioCoin) =>
+        portfolioCoin.coinName.toLowerCase() === apiCoin.name.toLowerCase()
+    );
+    return {
+      ...apiCoin,
+      portfolioId: matchedCoin ? matchedCoin._id.toString() : null, // Attach portfolio ID if matched
+    };
+  });
+
+  // 6 - Render the page with the updated data
   res.status(200).render('portfolio', {
-    coins: coinsToRetrieveFromApi.data,
-    coinsIdFromPortFolio: coinsIds,
+    coins: coinsWithPortfolioIds,
     portfolioInfo: portfolioData,
   });
 };

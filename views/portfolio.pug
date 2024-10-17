@@ -84,6 +84,9 @@ block content
                 td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium w-48 h-20 hidden md:table-cell")
                   canvas(class="chartContainer" id=`chart-${coin.id}`)
                 td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")
-                  each slug in portfolioInfo
-                    i(data-coin-slug=`${slug._id.toString()}` class=`deleteIcon fa-solid fa-trash  w-5 h-5  text-gray-500 cursor-pointer`)
-
+                  if coin.portfolioId
+                    // Render the delete icon only if the coin has a matching portfolio ID
+                    i(data-coin-slug=`${coin.portfolioId}` class="deleteIcon fa-solid fa-trash w-5 h-5 text-gray-500 cursor-pointer")
+                  else
+                    // Optionally handle cases where no match was found (e.g., no delete icon)
+                    p No match in portfolio
