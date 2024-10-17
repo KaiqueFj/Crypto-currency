@@ -5,8 +5,6 @@ const AppError = require('../utils/AppError');
 exports.createPortfolio = catchAsync(async (req, res, next) => {
   const { coins } = req.body;
 
-  console.log(req.user.id);
-
   // Check if the user already has a portfolio
   let portfolio = await Portfolio.findOne({ user: req.user.id });
 
@@ -34,7 +32,6 @@ exports.createPortfolio = catchAsync(async (req, res, next) => {
 
 exports.getOne = catchAsync(async (req, res, next) => {
   const userId = req.params.id;
-  console.log(userId);
 
   let query = Portfolio.findOne({ user: userId });
   const document = await query;
@@ -67,7 +64,8 @@ exports.deleteOne = catchAsync(async (req, res, next) => {
     return next(new AppError('No Document found with that ID', 404));
   }
 
-  res.status(204).json({
+  res.status(200).json({
     status: `success`,
+    message: `Coin deleted successfully`,
   });
 });

@@ -30,6 +30,7 @@ const {
   updateValueOfCoinByQuantity,
 } = require('./handleCoinData/handlePriceChange');
 const { handleSortData } = require('./handleElements/handleSortValues');
+const { modalHandle } = require('./handleElements/modal');
 
 const fearGreedNeedlePosition = fearGreedValue;
 
@@ -91,18 +92,27 @@ if (deleteIcon) {
   deleteIcon.forEach((icon) => {
     icon.addEventListener('click', async (e) => {
       e.preventDefault();
-
       // Get the coin name from the data attribute
       const coinSlug = icon.getAttribute('data-coin-slug');
+      const confirmBtn = document.querySelector('.confirmBtn');
+      modalHandle();
 
-      try {
-        const data = await deleteFromPortfolio(coinSlug);
-        console.log('Coin deleted from portfolio:', data);
-      } catch (error) {
-        console.error('Error deleting from portfolio:', error);
-      }
+      confirmBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        try {
+          const data = await deleteFromPortfolio(coinSlug);
+          console.log('Coin deleted from portfolio:', data);
+        } catch (error) {
+          console.error('Error deleting from portfolio:', error);
+        }
+      });
     });
   });
+}
+
+// Handle click on the modal
+if (deleteIcon) {
+  modalHandle();
 }
 
 // Handle the update user password

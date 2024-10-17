@@ -29,6 +29,11 @@ export const deleteFromPortfolio = async (coinId) => {
 
     if (res.data.status === 'success') {
       showAlert('success', 'Coin deleted successfully!');
+
+      // Reload the page after a short delay to allow the message to be seen
+      setTimeout(() => {
+        window.location.reload();
+      }, 1);
     }
   } catch (err) {
     showAlert('error', err.response.data.message);

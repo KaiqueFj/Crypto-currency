@@ -68,3 +68,10 @@ export const getCoinName = document.querySelectorAll('[data-coin-name]');
 
 // Handle the icon for the delete trash can on portfolio page
 export const deleteIcon = document.querySelectorAll('.deleteIcon');
+
+// Handle the elements for the model
+export const modal = document.querySelector('.modal');
+export const overlay = document.querySelector('.overlay');
+export const btnCloseModal = document.querySelector('.close-modal');
+export const btnsOpenModal = document.querySelectorAll('.show-modal');
+export const btnConfirm = document.querySelector('.confirmBtn');

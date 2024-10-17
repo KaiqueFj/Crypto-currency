@@ -594,6 +594,7 @@ const { handleCoinsFunctions } = require("88fddf9f7ffe2d0");
 const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select, signUpForm, signInForm, updatePasswordForm, updateUserForm, starSvgIcon, getCoinName, deleteIcon } = require("5082ea269ed0b977");
 const { handleCoinValueInCurrency, insertFlags, updateValueOfCoinByQuantity } = require("a7d37ed595fc46a5");
 const { handleSortData } = require("2c6e91297df9cd6d");
+const { modalHandle } = require("b5e959d0c93c2dc0");
 const fearGreedNeedlePosition = fearGreedValue;
 document.addEventListener("DOMContentLoaded", ()=>{
     handleCoinsFunctions();
@@ -639,14 +640,21 @@ if (deleteIcon) deleteIcon.forEach((icon)=>{
         e.preventDefault();
         // Get the coin name from the data attribute
         const coinSlug = icon.getAttribute("data-coin-slug");
-        try {
-            const data = await (0, _portfolio.deleteFromPortfolio)(coinSlug);
-            console.log("Coin deleted from portfolio:", data);
-        } catch (error) {
-            console.error("Error deleting from portfolio:", error);
-        }
+        const confirmBtn = document.querySelector(".confirmBtn");
+        modalHandle();
+        confirmBtn.addEventListener("click", async (e)=>{
+            e.preventDefault();
+            try {
+                const data = await (0, _portfolio.deleteFromPortfolio)(coinSlug);
+                console.log("Coin deleted from portfolio:", data);
+            } catch (error) {
+                console.error("Error deleting from portfolio:", error);
+            }
+        });
     });
 });
+// Handle click on the modal
+if (deleteIcon) modalHandle();
 // Handle the update user password
 if (updatePasswordForm) updatePasswordForm.addEventListener("submit", async (e)=>{
     e.preventDefault();
@@ -682,7 +690,7 @@ if (feedGreedCoinContainer) {
     if (fearGreedNeedlePosition && fearGreedValue !== null) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
 }
 
-},{"67cae37c61cb61ea":"gVYJX","./handleUserFunctions/signUp":"kmAUz","./handleUserFunctions/signIn":"9rXF3","./handleUserFunctions/updateSettings":"iqdDI","./handleUserFunctions/Portfolio":"3FBK1","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2"}],"gVYJX":[function(require,module,exports) {
+},{"67cae37c61cb61ea":"gVYJX","./handleUserFunctions/signUp":"kmAUz","./handleUserFunctions/signIn":"9rXF3","./handleUserFunctions/updateSettings":"iqdDI","./handleUserFunctions/Portfolio":"3FBK1","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2","b5e959d0c93c2dc0":"jQWxY"}],"gVYJX":[function(require,module,exports) {
 const { needle } = require("335ffdcd8dc8da1a");
 function updateSpeedDoMeter(value) {
     const maxValue = 100;
@@ -737,6 +745,11 @@ parcelHelpers.export(exports, "updateUserForm", ()=>updateUserForm);
 parcelHelpers.export(exports, "starSvgIcon", ()=>starSvgIcon);
 parcelHelpers.export(exports, "getCoinName", ()=>getCoinName);
 parcelHelpers.export(exports, "deleteIcon", ()=>deleteIcon);
+parcelHelpers.export(exports, "modal", ()=>modal);
+parcelHelpers.export(exports, "overlay", ()=>overlay);
+parcelHelpers.export(exports, "btnCloseModal", ()=>btnCloseModal);
+parcelHelpers.export(exports, "btnsOpenModal", ()=>btnsOpenModal);
+parcelHelpers.export(exports, "btnConfirm", ()=>btnConfirm);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -781,6 +794,11 @@ const updateUserForm = document.querySelector(".form-user-data");
 const starSvgIcon = document.querySelectorAll(".starIcon");
 const getCoinName = document.querySelectorAll("[data-coin-name]");
 const deleteIcon = document.querySelectorAll(".deleteIcon");
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
+const btnCloseModal = document.querySelector(".close-modal");
+const btnsOpenModal = document.querySelectorAll(".show-modal");
+const btnConfirm = document.querySelector(".confirmBtn");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -5655,7 +5673,13 @@ const deleteFromPortfolio = async (coinId)=>{
             url: `/api/v1/portfolio/deleteCoinFromPortfolio/${coinId}`,
             data: {}
         });
-        if (res.data.status === "success") (0, _alert.showAlert)("success", "Coin deleted successfully!");
+        if (res.data.status === "success") {
+            (0, _alert.showAlert)("success", "Coin deleted successfully!");
+            // Reload the page after a short delay to allow the message to be seen
+            setTimeout(()=>{
+                window.location.reload();
+            }, 1);
+        }
     } catch (err) {
         (0, _alert.showAlert)("error", err.response.data.message);
     }
@@ -36884,6 +36908,31 @@ function sortTable(column, ascending) {
     rows.forEach((row)=>tbody.appendChild(row));
 }
 
-},{"./handleElements":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
+},{"./handleElements":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jQWxY":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "modalHandle", ()=>modalHandle);
+var _handleElements = require("./handleElements");
+function modalHandle() {
+    const openModal = function() {
+        (0, _handleElements.modal).classList.remove("hidden");
+        (0, _handleElements.overlay).classList.remove("hidden");
+    };
+    const closeModal = function() {
+        (0, _handleElements.modal).classList.add("hidden");
+        (0, _handleElements.overlay).classList.add("hidden");
+    };
+    for(let i = 0; i < (0, _handleElements.btnsOpenModal).length; i++)(0, _handleElements.btnsOpenModal)[i].addEventListener("click", openModal);
+    if (0, _handleElements.modal) {
+        (0, _handleElements.btnCloseModal).addEventListener("click", closeModal);
+        (0, _handleElements.overlay).addEventListener("click", closeModal);
+        (0, _handleElements.btnConfirm).addEventListener("click", closeModal);
+    }
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape" && !(0, _handleElements.modal).classList.contains("hidden")) closeModal();
+    });
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./handleElements":"aJLPg"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
 
 //# sourceMappingURL=index.js.map
