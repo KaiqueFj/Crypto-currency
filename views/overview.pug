@@ -131,7 +131,11 @@ block content
             each coin, index in coins
               tr(class=" hover:bg-gray-100 transition")
                 td(class="px-4 whitespace-nowrap")
-                  i(data-coin-name=`${coin.name}` class=`starIcon fa-${coinsFromPortFolio.includes(coin.name) ? 'solid text-yellow-500 active' : 'regular text-gray-500 false'} fa-star  w-5 h-5  text-gray-500 cursor-pointer`)
+                  if coinsFromPortFolio
+                    i(data-coin-name=`${coin.name}` class=`starIcon fa-${coinsFromPortFolio.includes(coin.name) ? 'solid text-yellow-500 active' : 'regular text-gray-500 false'} fa-star  w-5 h-5  text-gray-500 cursor-pointer`)
+                  else
+                    i(data-coin-name=`${coin.name}` class=` fa-solid fa-star  w-5 h-5  text-gray-500 cursor-pointer`)
+
 
 
                 td(class="px-4 whitespace-nowrap")

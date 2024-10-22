@@ -84,6 +84,7 @@ module.exports = (err, req, res, next) => {
   if (process.env.NODE_ENV.trim() === 'development') {
     sendErrorDev(err, req, res);
   }
+
   //
   else if (process.env.NODE_ENV.trim() === 'production') {
     let error = Object.create(err);

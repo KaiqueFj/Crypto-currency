@@ -154,32 +154,49 @@ exports.getPortfolioPageUser = async (req, res, next) => {
     portfolioInfo: portfolioData,
   });
 };
-
 exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = parseInt(req.query.per_page, 10) || 5;
   const currentPage = parseInt(req.query.page, 10) || 1;
 
-  const userId = res.locals.user._id.toString();
+  // Check if user is logged in
+  const userId = res.locals.user ? res.locals.user._id.toString() : null;
 
-  // 1 - get the portfolio data
-  const portfolio = await Portfolio.findOne({ user: userId });
+  let coinNames = null;
+  let coinsIds = null;
 
-  // 2 - check if there´s the portfolio
-  if (!portfolio) {
-    return next(new AppError('There is no portfolio with that name ', 404));
+  // Only fetch portfolio data if the user is logged in
+  if (userId) {
+    try {
+      const portfolio = await Portfolio.findOne({ user: userId });
+
+      // If no portfolio is found, return an error
+      if (!portfolio) {
+        return next(new AppError('There is no portfolio with that name ', 404));
+      }
+
+      // Extract coin names and coin IDs from the portfolio
+      coinNames = portfolio.coins
+        .map((coin) => coin.coinName.split(','))
+        .join(',');
+      coinsIds = portfolio.coins.map((coin) =>
+        coin._id.toString().split(',').join(',')
+      );
+    } catch (err) {
+      console.error(err);
+      return next(new AppError('Failed to fetch portfolio data', 500));
+    }
   }
 
-  // 3 - read the coins from portfolio data and also their id
-  const coinNames = portfolio.coins
-    .map((coin) => coin.coinName.split(','))
-    .join(',');
-
-  const coinsIds = portfolio.coins.map((coin) =>
-    coin._id.toString().split(',').join(',')
-  );
-
+  // Fetch market data and other API information
   try {
-    const [allCoins, coinsInPage, cryptoCoins] = await Promise.all([
+    const [
+      allCoins,
+      coinsInPage,
+      cryptoCoins,
+      trendingData,
+      globalDataVolCap,
+      fearGreedData,
+    ] = await Promise.all([
       fetchData('https://api.coingecko.com/api/v3/coins/list', {
         accept: 'application/json',
         'x-cg-demo-api-key': process.env.API_KEY_Cry,
@@ -207,14 +224,15 @@ exports.getOverview = catchAsync(async (req, res, next) => {
           price_change_percentage: '1h,24h,7d',
         }
       ),
+      fetchTrendingData(),
+      fetchGlobalCapVolume(),
+      fetchFearGreedIndex(),
     ]);
 
     const totalCoins = allCoins.length;
     const totalPages = Math.ceil(totalCoins / itemsPerPage);
-    const trendingData = await fetchTrendingData();
-    const globalDataVolCap = await fetchGlobalCapVolume();
-    const fearGreedData = await fetchFearGreedIndex();
 
+    // Render the overview page
     res.status(200).render('overview', {
       title: 'Coins Overview',
       allCoin: allCoins,
