@@ -164,14 +164,14 @@ exports.getOverview = catchAsync(async (req, res, next) => {
   let coinNames = null;
   let coinsIds = null;
 
-  // Only fetch portfolio data if the user is logged in
+  // Only fetch or create portfolio data if the user is logged in
   if (userId) {
     try {
-      const portfolio = await Portfolio.findOne({ user: userId });
+      let portfolio = await Portfolio.findOne({ user: userId });
 
-      // If no portfolio is found, return an error
+      // If no portfolio exists, create an empty one
       if (!portfolio) {
-        return next(new AppError('There is no portfolio with that name ', 404));
+        portfolio = await Portfolio.create({ user: userId, coins: [] });
       }
 
       // Extract coin names and coin IDs from the portfolio
@@ -183,7 +183,9 @@ exports.getOverview = catchAsync(async (req, res, next) => {
       );
     } catch (err) {
       console.error(err);
-      return next(new AppError('Failed to fetch portfolio data', 500));
+      return next(
+        new AppError('Failed to fetch or create portfolio data', 500)
+      );
     }
   }
 
