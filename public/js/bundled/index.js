@@ -36933,6 +36933,6 @@ function modalHandle() {
     });
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./handleElements":"aJLPg"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
+},{"./handleElements":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
 
 //# sourceMappingURL=index.js.map
