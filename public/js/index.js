@@ -74,11 +74,8 @@ if (starSvgIcon) {
     star.addEventListener('click', async (e) => {
       e.preventDefault();
 
-      console.log(star);
-
       // Get the coin name from the data attribute
       const coinName = star.getAttribute('data-coin-name');
-      console.log(coinName);
 
       try {
         const data = await addToPortfolio(coinName);
