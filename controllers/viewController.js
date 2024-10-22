@@ -107,53 +107,68 @@ exports.getPortfolioPageUser = async (req, res, next) => {
 
   // 2 - check if there's the portfolio
   if (!portfolio) {
-    return next(new AppError('There is no portfolio with that name', 404));
+    return next(new AppError('There is no portfolio with that user', 404));
   }
 
   const portfolioData = portfolio.coins;
 
-  // 3 - read the coins from portfolio data (lowercased for comparison)
+  // 3 - Check if the portfolio has any coins
+  if (!portfolioData || portfolioData.length === 0) {
+    // Render the page with no coins
+    return res.status(200).render('portfolio', {
+      coins: [],
+      portfolioInfo: portfolioData, // Empty in this case
+    });
+  }
+
+  // 4 - Get the coin names from the portfolio
   const coinNames = portfolio.coins
     .map((coin) => coin.coinName.toLowerCase())
     .join(',');
 
-  // 4 - fetch the coins from the API
-  const coinsToRetrieveFromApi = await axios.get(
-    `https://api.coingecko.com/api/v3/coins/markets?ids=${coinNames}&vs_currency=usd`,
-    {
-      headers: {
-        accept: 'application/json',
-        'x-cg-demo-api-key': process.env.API_KEY_Cry,
-      },
-      params: {
-        vs_currency: 'brl',
-        order: 'market_cap_desc',
-        sparkline: false,
-        price_change_percentage: '1h,24h,7d',
-      },
-    }
-  );
-
-  const apiCoins = coinsToRetrieveFromApi.data;
-
-  // 5 - Map API coins to portfolio coins using coinName or another unique property
-  const coinsWithPortfolioIds = apiCoins.map((apiCoin) => {
-    const matchedCoin = portfolioData.find(
-      (portfolioCoin) =>
-        portfolioCoin.coinName.toLowerCase() === apiCoin.name.toLowerCase()
+  // 5 - fetch the coins from the API only if there are coin names
+  try {
+    const coinsToRetrieveFromApi = await axios.get(
+      `https://api.coingecko.com/api/v3/coins/markets?ids=${coinNames}&vs_currency=usd`,
+      {
+        headers: {
+          accept: 'application/json',
+          'x-cg-demo-api-key': process.env.API_KEY_Cry,
+        },
+        params: {
+          vs_currency: 'brl',
+          order: 'market_cap_desc',
+          sparkline: false,
+          price_change_percentage: '1h,24h,7d',
+        },
+      }
     );
-    return {
-      ...apiCoin,
-      portfolioId: matchedCoin ? matchedCoin._id.toString() : null, // Attach portfolio ID if matched
-    };
-  });
 
-  // 6 - Render the page with the updated data
-  res.status(200).render('portfolio', {
-    coins: coinsWithPortfolioIds,
-    portfolioInfo: portfolioData,
-  });
+    const apiCoins = coinsToRetrieveFromApi.data;
+
+    // 6 - Map API coins to portfolio coins
+    const coinsWithPortfolioIds = apiCoins.map((apiCoin) => {
+      const matchedCoin = portfolioData.find(
+        (portfolioCoin) =>
+          portfolioCoin.coinName.toLowerCase() === apiCoin.name.toLowerCase()
+      );
+      return {
+        ...apiCoin,
+        portfolioId: matchedCoin ? matchedCoin._id.toString() : null, // Attach portfolio ID if matched
+      };
+    });
+
+    // 7 - Render the page with the updated data
+    res.status(200).render('portfolio', {
+      coins: coinsWithPortfolioIds,
+      portfolioInfo: portfolioData,
+    });
+  } catch (err) {
+    console.error('Error fetching coins from API:', err);
+    return next(new AppError('Failed to fetch coins from API', 500));
+  }
 };
+
 exports.getOverview = catchAsync(async (req, res, next) => {
   const itemsPerPage = parseInt(req.query.per_page, 10) || 5;
   const currentPage = parseInt(req.query.page, 10) || 1;
