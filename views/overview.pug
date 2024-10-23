@@ -76,123 +76,146 @@ block content
 
     .coin-container(class="flex flex-col p-4")
       // Table Container with horizontal scroll
-      div(class="table-container-main w-full p-4 border-2 rounded-xl overflow-x-auto")
-        table(class="min-w-full divide-y divide-gray-200")
+      div(class="table-container-main w-11/12 p-2 self-center  rounded-lg overflow-x-auto")
+        table(class="w-full divide-y divide-gray-200")
           thead
             tr
-              // Column for Index
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="index")
+              // Icon column
+              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer")
+
+              // Index column
+              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="index")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader #
-              // Column for Icon and Name
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="name")
+
+              // Name column
+              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="name")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Name
-              // Column for Symbol
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="symbol")
+
+              // price column
+              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="symbol")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Price
-              // Column for Price (Visible on larger screens)
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="1h")
+
+              // 1h Price Change column (Visible on larger screens)
+              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell" data-sort="1h")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 1h
-              // Hidden columns for smaller screens
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="24h")
+
+              // 24h Price Change (Hidden on smaller screens)
+              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell" data-sort="24h")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 24h
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="7d")
+
+              // 7d Price Change (Hidden on smaller screens)
+              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell" data-sort="7d")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 7d
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="volume")
-                .container.flex.flex-row.items-center.justify-center
-                  span.icon
-                  p.textHeader 24h volume
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="marketCap")
-                .container.flex.flex-row.items-center.justify-center
-                  span.icon
-                  p.textHeader Market cap
-              th(class="px-4 py-2 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="last7Days")
-                .container.flex.flex-row.items-center.justify-center
-                  span.icon
-                  p.textHeader Last 7 days
 
+
+              // Volume column (Hidden on smaller screens)
+              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell" data-sort="volume")
+                .container.flex.flex-row.items-center.justify-center
+                  span.icon
+                  p.textHeader Volume
+
+              // Market Cap column (Hidden on smaller screens)
+              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell" data-sort="marketCap")
+                .container.flex.flex-row.items-center.justify-center
+                  span.icon
+                  p.textHeader Market Cap
+
+              // 7d Price Change column
+              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell" data-sort="last7Days")
+                .container.flex.flex-row.items-center.justify-center
+                  span.icon
+                  p.textHeader Last 7 Days
 
           tbody(class="bg-white divide-y divide-gray-200")
             each coin, index in coins
-              tr(class=" hover:bg-gray-100 transition")
-                td(class="px-4 whitespace-nowrap")
-                  if coinsFromPortFolio
-                    i(data-coin-name=`${coin.name}` class=`starIcon fa-${coinsFromPortFolio.includes(coin.name) ? 'solid text-yellow-500 active' : 'regular text-gray-500 false'} fa-star  w-5 h-5  text-gray-500 cursor-pointer`)
-                  else
-                    i(data-coin-name=`${coin.name}` class=`starIcon  fa-regular fa-star  w-5 h-5  text-gray-500 cursor-pointer`)
+              tr(class="hover:bg-gray-100 transition ease-in-out duration-150")
+                // Star icon for portfolio
+                td(class="px-2 whitespace-nowrap")
+                  i(data-coin-name=`${coin.name}` class=`starIcon fa-${coinsFromPortFolio.includes(coin.name) ? 'solid text-yellow-500 active' : 'regular text-gray-500 false'} fa-star w-4 h-4 cursor-pointer`)
 
+                // Index column
+                td(class="px-2 text-sm font-bold text-gray-700")= `${index + 1}`
 
-
-                td(class="px-4 whitespace-nowrap")
-                  p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 leading-5")= `${index + 1}`
-                td(data-href=`/coin/${coin.id}`, class="px-1 py-1 cursor-pointer whitespace-nowrap")
+                // Coin Name and Symbol
+                td(data-href=`/coin/${coin.id}`, class="px-2 py-1 cursor-pointer whitespace-nowrap")
                   .flex.items-center
-                    img(class="coin-image w-6 h-6 object-cover rounded-full" src=coin.image alt=coin.name)
-                    .flex.ml-4
-                      p(class=`text-gray-700 dark:text-moon-100 font-bold text-sm px-1 leading-5`)= coin.name
-                      p(class="text-gray-400 font-semibold text-sm leading-5")= `${coin.symbol.toUpperCase()}`
-                td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium")= `$${coin.current_price.toLocaleString()}`
-                td(class="px-4 changeValue whitespace-nowrap text-sm text-gray-500 font-medium")= `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
-                // Hidden columns for smaller screens
-                td(class="changeValue px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
-                td(class="changeValue px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `${coin.price_change_percentage_24h_in_currency.toLocaleString()}`
-                td(class="changeValue px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `${coin.price_change_percentage_7d_in_currency.toFixed(2)}%`
-                td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `$${coin.circulating_supply.toLocaleString()}`
-                td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")= `$${coin.market_cap.toLocaleString()}`
-                td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium w-48 h-20 hidden md:table-cell")
-                  canvas(class="chartContainer" id=`chart-${coin.id}`)
-                td(class="px-4 whitespace-nowrap text-sm text-gray-500 font-medium hidden md:table-cell")
-          // Info Pagination and Dropdown Container
+                    img(class="coin-image w-5 h-5 object-cover rounded-full" src=coin.image alt=coin.name)
+                    .flex.ml-3.items-baseline
+                      p(class="text-gray-700 font-bold text-sm px-1")= coin.name
+                      p(class="text-gray-400 font-semibold text-xs")= `${coin.symbol.toUpperCase()}`
 
+                // Current Price
+                td(class="px-2 text-sm text-gray-500 text-center font-medium")= `$${coin.current_price.toLocaleString()}`
 
-    .infoPagination(class="flex flex-col md:flex-row justify-between items-center p-4")
+                // 1h price change (Hidden on smaller screens)
+                td(class="changeValue px-2 text-sm text-gray-500 text-center font-medium hidden md:table-cell")= `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
 
-      // Showing text with responsive padding
-      span(class="px-4 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm text-gray-500")
-        = `Showing ${(currentPage - 1) * itemsPerPage} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
+                // 24h price change (Hidden on smaller screens)
+                td(class="changeValue px-2 text-sm text-gray-500 text-center font-medium hidden md:table-cell")= `${coin.price_change_percentage_24h_in_currency.toLocaleString()}%`
 
-      // Pagination navigation with responsive spacing
-      nav(class="inline-flex items-center space-x-2 md:space-x-1 rounded-lg")
-        ul(class="pagination flex flex-wrap gap-2 md:gap-1")
+                // 7d price change (Hidden on smaller screens)
+                td(class="changeValue px-2 text-sm text-gray-500 text-center font-medium hidden md:table-cell")= `${coin.price_change_percentage_7d_in_currency.toFixed(2)}%`
 
-          li
-            a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=1&per_page=${itemsPerPage}`)= 1
+                // Circulating Supply
+                td(class="px-2 text-sm text-gray-500 text-center font-medium hidden md:table-cell")= `$${coin.circulating_supply.toLocaleString()}`
 
-          if currentPage > 1
-            li
-              a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage - 1}&per_page=${itemsPerPage}`)= `${currentPage}`
+                // Market Cap
+                td(class="px-2 text-sm text-gray-500 text-center font-medium hidden md:table-cell")= `$${coin.market_cap.toLocaleString()}`
 
-          if currentPage < totalPages
-            li
-              a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100 " href=`/overview?page=${currentPage + 1}&per_page=${itemsPerPage}`)= `${currentPage + 1}`
-            li
-              a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage + 2}&per_page=${itemsPerPage}`)= `${currentPage + 2}`
+                // Chart container (Hidden on smaller screens)
+                td(class="px-2 text-sm hidden w-48 h-20 md:table-cell")
+                  canvas(class="chartContainer " id=`chart-${coin.id}`)
 
-          li= `...`
-          li
-            a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${totalPages}&per_page=${itemsPerPage}`)= `${totalPages}`
+        // Info, Pagination, and Dropdown container
+        .infoPagination(class="flex flex-col md:flex-row justify-between items-center p-4")
 
-      // Dropdown for showing rows with responsive adjustments
-      div(class="dropdown flex relative items-center mt-4 md:mt-0")
-        button(class="dropdownButton block px-3 py-2 md:px-4 md:py-2 text-sm md:text-base")
-          | Show rows
-        div(class="coinsToShow flex items-center px-3 py-2 md:px-4 md:py-2 m-1 rounded-lg bg-gray-100 cursor-pointer")
-          span(class="rowValue text-sm md:text-base")= totalRows
-          i(class="fa-solid fa-chevron-down ml-2 text-sm md:text-base")
-        div(class="dropdownOptions hidden px-2 py-2 top-full flex-col absolute left-0 md:left-20 shadow-xl drop-shadow-xl rounded-lg bg-gray-200")
-          button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 5
-          button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 10
-          button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 20
+          // Showing text with responsive padding
+          span(class="px-4 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm text-gray-500")
+            = `Showing ${(currentPage - 1) * itemsPerPage} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
+
+          // Pagination navigation with responsive spacing
+          nav(class="inline-flex items-center space-x-2 md:space-x-1 rounded-lg")
+            ul(class="pagination flex flex-wrap gap-2 md:gap-1")
+
+              li
+                a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=1&per_page=${itemsPerPage}`)= 1
+
+              if currentPage > 1
+                li
+                  a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage - 1}&per_page=${itemsPerPage}`)= `${currentPage}`
+
+              if currentPage < totalPages
+                li
+                  a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100 " href=`/overview?page=${currentPage + 1}&per_page=${itemsPerPage}`)= `${currentPage + 1}`
+                li
+                  a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${currentPage + 2}&per_page=${itemsPerPage}`)= `${currentPage + 2}`
+
+              li= `...`
+              li
+                a(class="px-3 py-2 text-zinc-950 rounded-lg hover:bg-gray-100" href=`/overview?page=${totalPages}&per_page=${itemsPerPage}`)= `${totalPages}`
+
+          // Dropdown for showing rows with responsive adjustments
+          div(class="dropdown flex relative items-center mt-4 md:mt-0")
+            button(class="dropdownButton block px-3 py-2 md:px-4 md:py-2 text-sm md:text-base")
+              | Show rows
+            div(class="coinsToShow flex items-center px-3 py-2 md:px-4 md:py-2 m-1 rounded-lg bg-gray-100 cursor-pointer")
+              span(class="rowValue text-sm md:text-base")= totalRows
+              i(class="fa-solid fa-chevron-down ml-2 text-sm md:text-base")
+            div(class="dropdownOptions hidden px-2 py-2 top-full flex-col absolute left-0 md:left-20 shadow-xl drop-shadow-xl rounded-lg bg-gray-200")
+              button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 5
+              button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 10
+              button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-gray-100 rounded-lg text-sm md:text-base") 20
 
 
