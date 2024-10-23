@@ -1,7 +1,6 @@
 extends base
 
-block append head
-  script(defer src="/js/bundled/index.js")
+
 
 block content
   main.main.mt-16
@@ -81,7 +80,7 @@ block content
               .icon-container.flex.items-center
                 span#cryptoIcon.hidden
                 span#flagIcon.hidden
-              select#currencySelect(class=".p-2 border rounded w-full md:w-fit border-none")
+              select#currencySelect(class="p-2 border rounded w-full md:w-fit border-none")
                 each currency in currencies
                   option(value=`${currency}` selected=(currency === "brl"))= currency.toUpperCase()
                 #iconDisplay.flex.items-center.ml-2
