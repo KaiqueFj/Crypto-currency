@@ -1,3 +1,5 @@
+import { showAlert } from '../handleAlertPage/alert';
+
 const {
   iconsInfo,
   optionsContainerDownloads,
@@ -10,6 +12,7 @@ const {
   buttonMobile,
   menu,
   starSvgIcon,
+  linkCoinBtn,
 } = require('./handleElements');
 
 export function handleUserClicks() {
@@ -98,6 +101,15 @@ export function handleUserClicks() {
       star.classList.contains('fa-solid')
         ? star.classList.replace('text-gray-500', 'text-yellow-500')
         : star.classList.replace('text-yellow-500', 'text-gray-500');
+    });
+  });
+
+  // Handle copy current coin url
+  linkCoinBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      showAlert('success', 'link copied!');
     });
   });
 }

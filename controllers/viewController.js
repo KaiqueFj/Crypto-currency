@@ -347,6 +347,37 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
   const itemsPerPage = parseInt(req.query.per_page, 5) || 5;
   const currentPage = parseInt(req.query.page, 10) || 1;
 
+  // Check if user is logged in
+  const userId = res.locals.user ? res.locals.user._id.toString() : null;
+
+  let coinNames = null;
+  let coinsIds = null;
+
+  // Only fetch or create portfolio data if the user is logged in
+  if (userId) {
+    try {
+      let portfolio = await Portfolio.findOne({ user: userId });
+
+      // If no portfolio exists, create an empty one
+      if (!portfolio) {
+        portfolio = await Portfolio.create({ user: userId, coins: [] });
+      }
+
+      // Extract coin names and coin IDs from the portfolio
+      coinNames = portfolio.coins
+        .map((coin) => coin.coinName.split(','))
+        .join(',');
+      coinsIds = portfolio.coins.map((coin) =>
+        coin._id.toString().split(',').join(',')
+      );
+    } catch (err) {
+      console.error(err);
+      return next(
+        new AppError('Failed to fetch or create portfolio data', 500)
+      );
+    }
+  }
+
   try {
     const [coinData, coinTicker, currencies, exchangeRate] = await Promise.all([
       fetchCoinData(coin),
@@ -452,6 +483,8 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       totalItems: paginatedTickersData.totalItems,
       itemsPerPage: paginatedTickersData.itemsPerPage,
       currencies,
+      coinsFromPortFolio: coinNames,
+      coinsIdFromPortFolio: coinsIds,
     });
   } catch (err) {
     console.error(err);

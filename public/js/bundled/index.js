@@ -750,6 +750,7 @@ parcelHelpers.export(exports, "overlay", ()=>overlay);
 parcelHelpers.export(exports, "btnCloseModal", ()=>btnCloseModal);
 parcelHelpers.export(exports, "btnsOpenModal", ()=>btnsOpenModal);
 parcelHelpers.export(exports, "btnConfirm", ()=>btnConfirm);
+parcelHelpers.export(exports, "linkCoinBtn", ()=>linkCoinBtn);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -799,6 +800,7 @@ const overlay = document.querySelector(".overlay");
 const btnCloseModal = document.querySelector(".close-modal");
 const btnsOpenModal = document.querySelectorAll(".show-modal");
 const btnConfirm = document.querySelector(".confirmBtn");
+const linkCoinBtn = document.querySelector(".iconLink");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -5689,7 +5691,8 @@ const deleteFromPortfolio = async (coinId)=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);
-const { iconsInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar, navItems, buttonMobile, menu, starSvgIcon } = require("b7db570592d68645");
+var _alert = require("../handleAlertPage/alert");
+const { iconsInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar, navItems, buttonMobile, menu, starSvgIcon, linkCoinBtn } = require("b7db570592d68645");
 function handleUserClicks() {
     //handle the infoContainer for each stats of the coin
     iconsInfo.each(function(e) {
@@ -5755,9 +5758,16 @@ function handleUserClicks() {
             star.classList.contains("fa-solid") ? star.classList.replace("text-gray-500", "text-yellow-500") : star.classList.replace("text-yellow-500", "text-gray-500");
         });
     });
+    // Handle copy current coin url
+    linkCoinBtn.addEventListener("click", (e)=>{
+        e.preventDefault();
+        navigator.clipboard.writeText(window.location.href).then(()=>{
+            (0, _alert.showAlert)("success", "link copied!");
+        });
+    });
 }
 
-},{"b7db570592d68645":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jFoI4":[function(require,module,exports) {
+},{"../handleAlertPage/alert":"hgdTX","b7db570592d68645":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jFoI4":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleCoinsFunctions", ()=>handleCoinsFunctions);

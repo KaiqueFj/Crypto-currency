@@ -75,3 +75,6 @@ export const overlay = document.querySelector('.overlay');
 export const btnCloseModal = document.querySelector('.close-modal');
 export const btnsOpenModal = document.querySelectorAll('.show-modal');
 export const btnConfirm = document.querySelector('.confirmBtn');
+
+// Handle button to copy current page url
+export const linkCoinBtn = document.querySelector('.iconLink');
