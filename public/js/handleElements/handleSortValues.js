@@ -1,31 +1,31 @@
-import { tableHeaders } from "./handleElements";
+import { tableHeaders } from './handleElements';
 
 export function handleSortData() {
   tableHeaders.forEach((header) => {
-    header.addEventListener("click", () => {
+    header.addEventListener('click', () => {
       const column = header.dataset.sort;
-      const isAscending = header.classList.contains("asc");
+      const isAscending = header.classList.contains('asc');
 
       sortTable(column, !isAscending);
       // Toggle sorting direction class
-      header.classList.toggle("asc", !isAscending);
-      header.classList.toggle("desc", isAscending);
+      header.classList.toggle('asc', !isAscending);
+      header.classList.toggle('desc', isAscending);
 
       // Remove existing icons from all headers
       tableHeaders.forEach((hdr) => {
-        const icon = hdr.querySelector(".sort-icon");
+        const icon = hdr.querySelector('.sort-icon');
         if (icon) {
           icon.remove();
         }
       });
 
       // Append new icon to the clicked header
-      const icon = document.createElement("i");
+      const icon = document.createElement('i');
       icon.className = `sort-icon fa-solid  align-middle mr-1 fa-${
-        isAscending ? "caret-down" : "caret-up"
+        isAscending ? 'caret-down' : 'caret-up'
       }`;
 
-      const iconContainer = header.querySelector("span.icon");
+      const iconContainer = header.querySelector('span.icon');
       if (iconContainer) {
         iconContainer.appendChild(icon);
       }
@@ -34,9 +34,9 @@ export function handleSortData() {
 }
 
 function sortTable(column, ascending) {
-  const rows = Array.from(document.querySelectorAll("tbody tr"));
+  const rows = Array.from(document.querySelectorAll('tbody tr'));
   const columnIndex = Array.from(
-    document.querySelectorAll("th[data-sort]")
+    document.querySelectorAll('th[data-sort]')
   ).findIndex((th) => th.dataset.sort === column);
 
   rows.sort((a, b) => {
@@ -45,13 +45,13 @@ function sortTable(column, ascending) {
 
     let aValue, bValue;
 
-    if (column === "name") {
+    if (column === 'Name') {
       //  handling for name column
-      aValue = aCell.querySelector(".text-gray-700").textContent.trim();
-      bValue = bCell.querySelector(".text-gray-700").textContent.trim();
+      aValue = aCell.querySelector('.text-gray-700').textContent.trim();
+      bValue = bCell.querySelector('.text-gray-700').textContent.trim();
     } else {
-      aValue = aCell.textContent.trim().replace(/[^0-9.-]/g, "");
-      bValue = bCell.textContent.trim().replace(/[^0-9.-]/g, "");
+      aValue = aCell.textContent.trim().replace(/[^0-9.-]/g, '');
+      bValue = bCell.textContent.trim().replace(/[^0-9.-]/g, '');
     }
 
     // Check if the column is for names (string comparison) or numbers
@@ -70,6 +70,6 @@ function sortTable(column, ascending) {
     }
   });
 
-  const tbody = document.querySelector("tbody");
+  const tbody = document.querySelector('tbody');
   rows.forEach((row) => tbody.appendChild(row));
 }

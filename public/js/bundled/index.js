@@ -5758,7 +5758,7 @@ function handleUserClicks() {
             star.classList.contains("fa-solid") ? star.classList.replace("text-gray-500", "text-yellow-500") : star.classList.replace("text-yellow-500", "text-gray-500");
         });
     });
-    // Handle copy current coin url
+    if (linkCoinBtn) // Handle copy current coin url
     linkCoinBtn.addEventListener("click", (e)=>{
         e.preventDefault();
         navigator.clipboard.writeText(window.location.href).then(()=>{
@@ -36899,7 +36899,7 @@ function sortTable(column, ascending) {
         const aCell = a.children[columnIndex];
         const bCell = b.children[columnIndex];
         let aValue, bValue;
-        if (column === "name") {
+        if (column === "Name") {
             //  handling for name column
             aValue = aCell.querySelector(".text-gray-700").textContent.trim();
             bValue = bCell.querySelector(".text-gray-700").textContent.trim();

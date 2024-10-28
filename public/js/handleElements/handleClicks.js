@@ -104,12 +104,14 @@ export function handleUserClicks() {
     });
   });
 
-  // Handle copy current coin url
-  linkCoinBtn.addEventListener('click', (e) => {
-    e.preventDefault();
+  if (linkCoinBtn) {
+    // Handle copy current coin url
+    linkCoinBtn.addEventListener('click', (e) => {
+      e.preventDefault();
 
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      showAlert('success', 'link copied!');
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        showAlert('success', 'link copied!');
+      });
     });
-  });
+  }
 }
