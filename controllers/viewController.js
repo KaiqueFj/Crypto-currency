@@ -158,8 +158,6 @@ exports.getPortfolioPageUser = async (req, res, next) => {
       };
     });
 
-    console.log(coinsWithPortfolioIds);
-
     // 7 - Render the page with the updated data
     res.status(200).render('portfolio', {
       coins: coinsWithPortfolioIds,
