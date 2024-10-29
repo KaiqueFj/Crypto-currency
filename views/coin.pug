@@ -42,7 +42,10 @@ block content
 
           div(class="flex gap-2 self-stretch items-center mt-4 md:mt-0")
             button.bg-gray-200.rounded-md.py-1.px-2
-              i(data-coin-name=`${coin.name}` class=`starIcon fa-${coinsFromPortFolio.includes(coin.name) ? 'solid text-yellow-500 active' : 'regular text-gray-500 false'} fa-star w-4 h-4 cursor-pointer`)
+              if coinsFromPortFolio
+                i(data-coin-name=`${coin.name}` class=`starIcon fa-${coinsFromPortFolio.includes(coin.name) ? 'solid text-yellow-500 active' : 'regular text-gray-500 false'} fa-star  w-5 h-5  text-gray-500 cursor-pointer`)
+              else
+                i(data-coin-name=`${coin.name}` class=`starIcon  fa-regular fa-star  w-5 h-5  text-gray-500 cursor-pointer`)
 
             button.bg-gray-200.rounded-md.py-1.px-2
               i.iconLink.fa-solid.fa-link.text-sm
