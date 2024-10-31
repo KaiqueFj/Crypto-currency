@@ -13,7 +13,9 @@ header(class="bg-white text-black fixed top-0 left-0 w-full z-50 border-b-2")
       i(class="fa-solid fa-bars")
 
     //- The nav items that are shown/hidden on mobile
-    ul(id="nav-menu"  class="absolute top-20 right-0 bg-white w-96 items-center transition-all duration-300 ease-in-out z-50 flex flex-col  md:flex-row md:static md:w-fit md:space-x-4 hidden md:flex p-4 md:p-0 rounded-lg  md:rounded-none shadow-md md:shadow-none")
+    ul(id="nav-menu"    class="absolute top-20 right-0 bg-white w-96 items-center transform translate-x-full opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto  transition-all duration-300 ease-in-out z-50 flex flex-col md:flex-row md:static md:w-fit md:space-x-4 md:translate-x-0 p-4 md:p-0 rounded-lg md:rounded-none shadow-md md:shadow-none")
+
+
       li
         a(href="/overview" class="hover:text-gray-300") Home
       li

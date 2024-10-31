@@ -5747,7 +5747,9 @@ function handleUserClicks() {
     }
     buttonMobile.addEventListener("click", (e)=>{
         e.preventDefault();
-        menu.classList.toggle("hidden");
+        menu.classList.toggle("translate-x-full"); // Slide-in transition
+        menu.classList.toggle("opacity-0"); // Fade-in effect
+        menu.classList.toggle("pointer-events-none"); // Enable interactions
     });
     // Handle the click on the star for portfolio
     starSvgIcon.forEach((star)=>{
