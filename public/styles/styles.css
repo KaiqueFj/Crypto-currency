@@ -43,6 +43,7 @@
   --background: 255, 255, 255; /* white */
   --background-secondary: 75, 85, 99; /* dark-gray*/
   --background-third: 229, 231, 235; /* light-gray*/
+  --background-fourth: 243, 244, 246; /* soft-gray*/
 
   background: rgba(var(--background));
 }

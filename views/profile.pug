@@ -1,14 +1,14 @@
 extends base
 
 mixin navItem(link, text, icon, active)
-  li(class=`${active ? 'bg-gray-200' : ''} p-2 rounded hover:bg-gray-100`)
-    a(href=`${link}` class="flex items-center space-x-2 text-gray-700 hover:text-blue-500")
-      svg(class="w-5 h-5 fill-current text-gray-500")
+  li(class=`${active ? 'bg-background-third' : ''} p-2 rounded hover:bg-background-fourth`)
+    a(href=`${link}` class="flex items-center space-x-2 text-primary-text-color hover:text-fourth-text-color")
+      svg(class="w-5 h-5 fill-current text-primary-text-color")
         use(xlink:href=`images/icons/icons.svg#icon-${icon}`)
       span #{text}
 
 block content
-  main(class="mainProfile flex flex-col md:flex-row bg-gray-100 min-h-screen pt-24 pb-24 overflow-y-auto")
+  main(class="mainProfile flex flex-col md:flex-row bg-background-third min-h-screen pt-24 pb-24 overflow-y-auto")
     .user-view(class="flex flex-col w-full md:w-1/4 bg-white shadow-md rounded-lg p-4 m-4 flex-shrink-0")
       nav.user-view__menu
         ul(class="side-nav space-y-2")
@@ -17,35 +17,35 @@ block content
 
     .user-view__content(class="flex-grow bg-white shadow-md rounded-lg p-6 m-4 overflow-y-auto")
       .user-view__form-container
-        h2(class="heading-secondary text-xl font-bold text-gray-800 mb-6") Your account settings
+        h2(class="heading-secondary text-xl font-bold text-secondary mb-6") Your account settings
         form(class="form form-user-data")
           .form__group(class="mb-4")
-            label(class="form__label block text-gray-700 font-medium mb-2" for="name") Name
-            input#name(class="form__input w-full p-2 border border-gray-300 rounded" type="text" value=`${user.name}` required name="name")
+            label(class="form__label block text-secondary font-medium mb-2" for="name") Name
+            input#name(class="form__input w-full p-2 border border-background-third rounded" type="text" value=`${user.name}` required name="name")
           .form__group(class="mb-4")
-            label(class="form__label block text-gray-700 font-medium mb-2" for="email") Email address
-            input#email(class="form__input w-full p-2 border border-gray-300 rounded" type="email" value=`${user.email}` required name="email")
+            label(class="form__label block text-secondary font-medium mb-2" for="email") Email address
+            input#email(class="form__input w-full p-2 border border-background-third rounded" type="email" value=`${user.email}` required name="email")
           .form__group(class="flex items-center space-x-4")
             img(class="form__user-photo w-16 h-16 object-cover rounded-full" src=`/images/user/${user.photo}` alt="User photo")
             .flex(class="flex-col")
               input(class="form__upload" type="file" accept="image/*" id="photo" name="photo")
-              label(for="photo" class="text-sm text-gray-500") Choose new photo
+              label(for="photo" class="text-sm text-secondary-text-color") Choose new photo
           .form__group(class="mt-4 text-right")
-            button(class="btn bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600") Save settings
+            button(class="btn bg-green-500 text-primary px-4 py-2 rounded shadow hover:bg-green-600") Save settings
 
       .line(class="bg-gray-200 h-px my-6")
 
       .user-view__form-container
-        h2(class="heading-secondary text-xl font-bold text-gray-800 mb-6") Password change
+        h2(class="heading-secondary text-xl font-bold text-secondary mb-6") Password change
         form(class="form form-user-password")
           .form__group(class="mb-4")
-            label(class="form__label block text-gray-700 font-medium mb-2" for="password-current") Current password
-            input#password-current(class="form__input w-full p-2 border border-gray-300 rounded" type="password" placeholder="••••••••" required minlength="8")
+            label(class="form__label block text-secondary font-medium mb-2" for="password-current") Current password
+            input#password-current(class="form__input w-full p-2 border border-background-third rounded" type="password" placeholder="••••••••" required minlength="8")
           .form__group(class="mb-4")
-            label(class="form__label block text-gray-700 font-medium mb-2" for="password") New password
-            input#password(class="form__input w-full p-2 border border-gray-300 rounded" type="password" placeholder="••••••••" required minlength="8")
+            label(class="form__label block text-secondary font-medium mb-2" for="password") New password
+            input#password(class="form__input w-full p-2 border border-background-third rounded" type="password" placeholder="••••••••" required minlength="8")
           .form__group(class="mb-4")
-            label(class="form__label block text-gray-700 font-medium mb-2" for="password-confirm") Confirm password
-            input#password-confirm(class="form__input w-full p-2 border border-gray-300 rounded" type="password" placeholder="••••••••" required minlength="8")
+            label(class="form__label block text-secondary font-medium mb-2" for="password-confirm") Confirm password
+            input#password-confirm(class="form__input w-full p-2 border border-background-third rounded" type="password" placeholder="••••••••" required minlength="8")
           .form__group(class="text-right")
-            button(class="btn--save-password bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600") Save password
+            button(class="btn--save-password bg-green-500 text-primary px-4 py-2 rounded shadow hover:bg-green-600") Save password
