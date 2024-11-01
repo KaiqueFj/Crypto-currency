@@ -54,12 +54,12 @@ export function handleCoinsFunctions() {
     const percentage = parseFloat(text);
 
     if (percentage < 0) {
-      $(this).addClass('text-red-500');
-      $(this).removeClass('text-green-500');
+      $(this).addClass('text-red-important');
+      $(this).removeClass('text-green-important');
       $(this).prepend('<i class="fa-solid fa-caret-down mr-1"></i>');
     } else {
-      $(this).addClass('text-green-500');
-      $(this).removeClass('text-red-500');
+      $(this).addClass('text-green-important');
+      $(this).removeClass('text-red-important');
       $(this).prepend('<i class="fa-solid fa-caret-up mr-1"></i>');
     }
   });

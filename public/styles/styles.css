@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --section-rotate: 9vw;
 }
@@ -9,6 +13,43 @@
   padding: 0;
   -webkit-box-sizing: inherit;
   box-sizing: border-box;
+}
+
+.light {
+  --primary: 255, 255, 255; /* white */
+  --secondary: 0, 0, 0; /* black */
+  --primary-text-color: 55, 65, 81; /* dark-gray */
+  --secondary-text-color: 156, 163, 175; /* soft-gray */
+  --third-text-color-gray: 229 231 235; /* light-gray */
+  --star-color: 234, 179, 8; /* yellow */
+  --tw-divide-opacity: 1; /* opacity */
+
+  --hover-soft-bg-text-color: 243, 244, 246; /* soft-gray */
+  --hover-btn-color: 59, 130, 246; /* Blue */
+
+  --background: 255, 255, 255; /* white */
+
+  background: rgba(var(--background));
+}
+
+.gradient-bg {
+  --color-gradient-first: 59, 130, 246, 1; /* Tailwind Blue 500 */
+  --color-gradient-second: 168, 85, 247, 1; /* Tailwind purple-400 */
+  background-image: linear-gradient(
+    to right,
+    rgba(var(--color-gradient-first)),
+    rgba(var(--color-gradient-second))
+  );
+}
+
+/* Handle change value ( green or red) */
+
+.text-red-important {
+  color: rgb(239, 68, 68) !important; /* Red */
+}
+
+.text-green-important {
+  color: rgb(34, 197, 94) !important; /* Green */
 }
 
 html {
