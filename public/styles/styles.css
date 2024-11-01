@@ -41,10 +41,7 @@
 
   /* Background Color */
   --background: 255, 255, 255; /* white */
-
-  /* Optional Additional Colors */
-  --error-color: 220, 38, 38; /* red */
-  --disabled-text-color: 209, 213, 219; /* light gray */
+  --background-secondary: 75, 85, 99; /* dark-gray*/
 
   background: rgba(var(--background));
 }
