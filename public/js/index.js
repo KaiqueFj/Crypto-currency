@@ -79,7 +79,6 @@ if (starSvgIcon) {
 
       try {
         const data = await addToPortfolio(coinName);
-        console.log('Coin added to portfolio:', data);
       } catch (error) {
         console.error('Error adding to portfolio:', error);
       }
@@ -101,7 +100,6 @@ if (deleteIcon) {
         e.preventDefault();
         try {
           const data = await deleteFromPortfolio(coinSlug);
-          console.log('Coin deleted from portfolio:', data);
         } catch (error) {
           console.error('Error deleting from portfolio:', error);
         }

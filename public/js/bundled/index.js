@@ -627,7 +627,6 @@ if (starSvgIcon) {
             const coinName = star.getAttribute("data-coin-name");
             try {
                 const data = await (0, _portfolio.addToPortfolio)(coinName);
-                console.log("Coin added to portfolio:", data);
             } catch (error) {
                 console.error("Error adding to portfolio:", error);
             }
@@ -646,7 +645,6 @@ if (deleteIcon) deleteIcon.forEach((icon)=>{
             e.preventDefault();
             try {
                 const data = await (0, _portfolio.deleteFromPortfolio)(coinSlug);
-                console.log("Coin deleted from portfolio:", data);
             } catch (error) {
                 console.error("Error deleting from portfolio:", error);
             }
@@ -5757,7 +5755,7 @@ function handleUserClicks() {
             e.preventDefault();
             star.classList.toggle("fa-solid");
             star.classList.toggle("fa-regular");
-            star.classList.contains("fa-solid") ? star.classList.replace("text-gray-500", "text-yellow-500") : star.classList.replace("text-yellow-500", "text-gray-500");
+            star.classList.contains("fa-solid") ? star.classList.replace("text-primary-text-color", "text-star-color") : star.classList.replace("text-star-color", "text-primary-text-color");
         });
     });
     if (linkCoinBtn) // Handle copy current coin url
