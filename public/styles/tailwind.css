@@ -1270,6 +1270,10 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-background-third {
+  background-color: rgba(var(--background-third));
+}
+
 .bg-opacity-60 {
   --tw-bg-opacity: 0.6;
 }
@@ -1522,11 +1526,6 @@ video {
   color: rgba(var(--fourth-text-color));
 }
 
-.text-gray-300 {
-  --tw-text-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-text-opacity));
-}
-
 .text-gray-400 {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
@@ -1605,6 +1604,10 @@ video {
 .text-zinc-950 {
   --tw-text-opacity: 1;
   color: rgb(9 9 11 / var(--tw-text-opacity));
+}
+
+.text-third-text-color {
+  color: rgba(var(--third-text-color));
 }
 
 .underline {
@@ -1740,6 +1743,8 @@ video {
   /* white */
   --background-secondary: 75, 85, 99;
   /* dark-gray*/
+  --background-third: 229, 231, 235;
+  /* light-gray*/
   background: rgba(var(--background));
 }
 
@@ -1966,11 +1971,6 @@ body {
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-gray-600:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-green-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(22 163 74 / var(--tw-bg-opacity));
@@ -1994,18 +1994,25 @@ body {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-background:hover {
+  background-color: rgba(var(--background));
+}
+
+.hover\:bg-background-third:hover {
+  background-color: rgba(var(--background-third));
+}
+
 .hover\:text-blue-500:hover {
   --tw-text-opacity: 1;
   color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
-.hover\:text-gray-300:hover {
-  --tw-text-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-text-opacity));
-}
-
 .hover\:text-primary:hover {
   color: rgba(var(--primary));
+}
+
+.hover\:text-secondary-text-color:hover {
+  color: rgba(var(--secondary-text-color)) ;
 }
 
 .hover\:text-third-text-color:hover {
@@ -2015,14 +2022,6 @@ body {
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.hover\:text-primary-text-color:hover {
-  color: rgba(var(--primary-text-color)  /  var(--tw-divide-opacity));
-}
-
-.hover\:text-secondary-text-color:hover {
-  color: rgba(var(--secondary-text-color)) ;
 }
 
 .hover\:underline:hover {
