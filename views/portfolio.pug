@@ -4,112 +4,112 @@ extends base
 block content
 
   main.mainOverview(class="flex flex-col w-full self-center pt-16 mt-8")
-    .introduction.flex.flex-col.items-center.bg-gradient-to-r.from-purple-400.to-blue-500.p-6.rounded-lg.shadow-md.mb-8.mx-4.gap-2
-      h2(class="font-semibold text-4xl md:text-3xl lg:text-4xl text-white mb-2") Welcome to Your Crypto Portfolio
-      p(class="font-semibold text-xl md:text-md lg:text-xl text-white mb-2") Stay ahead of the curve with your personalized cryptocurrency insights.
-      p(class="font-semibold text-xl md:text-md lg:text-xl text-white mb-2") Track the latest trends, explore detailed analytics, and manage your favorite coins.
-      p(class="mt-4 px-4 py-2 bg-white text-blue-500 font-bold rounded-lg shadow-md hover:bg-blue-500 hover:text-white transition-colors duration-300 ease-in-out cursor-pointer") Explore your portfolio below
+    .introduction.flex.flex-col.items-center.gradient-bg.p-6.rounded-lg.shadow-md.mb-8.mx-4.gap-2
+      h2(class="font-semibold text-4xl md:text-3xl lg:text-4xl text-primary mb-2") Welcome to Your Crypto Portfolio
+      p(class="font-semibold text-xl md:text-md lg:text-xl text-primary mb-2") Stay ahead of the curve with your personalized cryptocurrency insights.
+      p(class="font-semibold text-xl md:text-md lg:text-xl text-primary mb-2") Track the latest trends, explore detailed analytics, and manage your favorite coins.
+      p(class="mt-4 px-4 py-2 bg-background text-blue-500 font-bold rounded-lg shadow-md hover:bg-fourth-text-color hover:text-primary transition-colors duration-300 ease-in-out cursor-pointer") Explore your portfolio below
 
     .coin-container(class="flex flex-col p-4")
       // Table Container with horizontal scroll
       div(class="table-container-main w-full p-2   rounded-xl overflow-x-auto")
-        table(class="min-w-full divide-y divide-gray-200")
-          thead
+        table(class="min-w-full divide-y divide-divider-color")
+          thead(class="bg-background-third")
             tr
 
               // Column for Index
-              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="index")
+              th(class="px-2 py-1 text-center text-xs font-bold text-primary-text-color tracking-wider cursor-pointer" data-sort="index")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader #
               // Column for Icon and Name
-              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="name")
+              th(class="px-2 py-1 text-center text-xs font-bold text-primary-text-color tracking-wider cursor-pointer" data-sort="name")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Name
               // Column for Symbol
-              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="price")
+              th(class="px-2 py-1 text-center text-xs font-bold text-primary-text-color tracking-wider cursor-pointer" data-sort="price")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Price
               // Column for Price (Visible on larger screens)
-              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer" data-sort="1h")
+              th(class="px-2 py-1 text-center text-xs font-bold text-primary-text-color tracking-wider cursor-pointer" data-sort="1h")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 1h
               // Hidden columns for smaller screens
-              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="24h")
+              th(class="px-2 py-1 text-center text-xs font-bold text-primary-text-color tracking-wider cursor-pointer hidden md:table-cell " data-sort="24h")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 24h
-              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="7d")
+              th(class="px-2 py-1 text-center text-xs font-bold text-primary-text-color tracking-wider cursor-pointer hidden md:table-cell " data-sort="7d")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 7d
-              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="volume")
+              th(class="px-2 py-1 text-center text-xs font-bold text-primary-text-color tracking-wider cursor-pointer hidden md:table-cell " data-sort="volume")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader 24h volume
-              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="marketCap")
+              th(class="px-2 py-1 text-center text-xs font-bold text-primary-text-color tracking-wider cursor-pointer hidden md:table-cell " data-sort="marketCap")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Market cap
-              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="last7Days")
+              th(class="px-2 py-1 text-center text-xs font-bold text-primary-text-color tracking-wider cursor-pointer hidden md:table-cell " data-sort="last7Days")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Last 7 days
-              th(class="px-2 py-1 text-center text-xs font-bold text-gray-700 tracking-wider cursor-pointer hidden md:table-cell " data-sort="action")
+              th(class="px-2 py-1 text-center text-xs font-bold text-primary-text-color tracking-wider cursor-pointer hidden md:table-cell " data-sort="action")
                 .container.flex.flex-row.items-center.justify-center
                   span.icon
                   p.textHeader Action
 
 
-          tbody(class="bg-white divide-y divide-gray-200")
+          tbody(class="bg-white divide-y divide-divider-color")
             if coins.length > 0
               each coin, index in coins
-                tr(class="hover:bg-gray-100 transition")
+                tr(class="hover:bg-background-fourth transition")
                   // Index column
                   td(class="px-2 whitespace-nowrap")
-                    p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 leading-5")= `${index + 1}`
+                    p(class="text-primary-text-color  font-bold text-sm px-1 leading-5")= `${index + 1}`
 
                   // coin name and symbol colum
                   td(data-href=`/coin/${coin.id}` class="cursor-pointer px-2 py-1 whitespace-nowrap")
                     .flex.items-center
                       img(class="coin-image w-6 h-6 object-cover rounded-full" src=coin.image alt=coin.name)
                       .flex.ml-4
-                        p(class="text-gray-700 dark:text-moon-100 font-bold text-sm px-1 leading-5")= coin.name
-                        p(class="text-gray-400 font-semibold text-sm leading-5")= `${coin.symbol.toUpperCase()}`
+                        p(class="text-primary-text-color  font-bold text-sm px-1 leading-5")= coin.name
+                        p(class="text-secondary-text-color font-semibold text-sm leading-5")= `${coin.symbol.toUpperCase()}`
 
                   // Current price
-                  td(class="px-2 whitespace-nowrap text-sm text-gray-500 text-center font-medium")= `$${coin.current_price.toLocaleString()}`
+                  td(class="px-2 whitespace-nowrap text-sm text-primary-text-color text-center font-medium")= `$${coin.current_price.toLocaleString()}`
 
                   // 1h price change (Hidden on smaller screens)
-                  td(class="px-2 changeValue whitespace-nowrap text-sm text-gray-500 text-center font-medium md:table-cell")= `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
+                  td(class="px-2 changeValue whitespace-nowrap text-sm text-primary-text-color text-center font-medium md:table-cell")= `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
 
                   // 24h price change (Hidden on smaller screens)
-                  td(class="changeValue px-2 whitespace-nowrap text-sm text-gray-500 text-center font-medium hidden md:table-cell")= `${coin.price_change_percentage_24h_in_currency.toLocaleString()}`
+                  td(class="changeValue px-2 whitespace-nowrap text-sm text-primary-text-color text-center font-medium hidden md:table-cell")= `${coin.price_change_percentage_24h_in_currency.toLocaleString()}`
 
                   // 7d price change (Hidden on smaller screens)
-                  td(class="changeValue px-2 whitespace-nowrap text-sm text-gray-500 text-center font-medium hidden md:table-cell")= `${coin.price_change_percentage_7d_in_currency.toFixed(2)}%`
+                  td(class="changeValue px-2 whitespace-nowrap text-sm text-primary-text-color text-center font-medium hidden md:table-cell")= `${coin.price_change_percentage_7d_in_currency.toFixed(2)}%`
 
                   // circulating supply (Hidden on smaller screens)
-                  td(class="px-2 whitespace-nowrap text-sm text-gray-500 text-center font-medium hidden md:table-cell")= `$${coin.circulating_supply.toLocaleString()}`
+                  td(class="px-2 whitespace-nowrap text-sm text-primary-text-color text-center font-medium hidden md:table-cell")= `$${coin.circulating_supply.toLocaleString()}`
 
                   // Market cap (Hidden on smaller screens)
-                  td(class="px-2 whitespace-nowrap text-sm text-gray-500 text-center font-medium hidden md:table-cell")= `$${coin.market_cap.toLocaleString()}`
+                  td(class="px-2 whitespace-nowrap text-sm text-primary-text-color text-center font-medium hidden md:table-cell")= `$${coin.market_cap.toLocaleString()}`
 
                   // canvas
-                  td(class="px-2 whitespace-nowrap text-sm text-gray-500 font-medium w-48 h-20 hidden md:table-cell")
+                  td(class="px-2 whitespace-nowrap text-sm text-primary-text-color font-medium w-48 h-20 hidden md:table-cell")
                     canvas(class="chartContainer" id=`chart-${coin.id}`)
 
                   // trash can icon
-                  td(class="px-2 whitespace-nowrap text-sm text-gray-500 text-center font-medium hidden md:table-cell")
+                  td(class="px-2 whitespace-nowrap text-sm text-primary-text-color text-center font-medium hidden md:table-cell")
                     if coin.portfolioId
-                      i(data-coin-slug=`${coin.portfolioId}` class="show-modal deleteIcon fa-solid fa-trash w-5 h-5 text-gray-500 cursor-pointer")
+                      i(data-coin-slug=`${coin.portfolioId}` class="show-modal deleteIcon fa-solid fa-trash w-5 h-5 text-primary-text-color cursor-pointer")
 
             else
               tr
-                td(colspan="10" class="text-center text-gray-500 py-12")
+                td(colspan="10" class="text-center text-primary-text-color py-12")
                   p(class="font-bold text-xl") No coins found in your portfolio. Start adding coins to track them here.
 
       //- Modal Structure
@@ -118,7 +118,7 @@ block content
         p(class="text-md") Do you really want to remove this coin? This cannot be undone
 
         .options.flex.justify-between.mt-8.gap-2
-          button(class="close-modal bg-gray-300 hover:bg-gray-400 text-gray-800 w-1/2 font-bold py-2 px-4 rounded") Cancel
-          button(class="confirmBtn bg-red-500 hover:bg-red-600 text-white font-bold w-1/2 py-2 px-4 rounded") Confirm
+          button(class="close-modal bg-background-third hover:bg-background-fourth text-primary-text-color w-1/2 font-bold py-2 px-4 rounded") Cancel
+          button(class="confirmBtn bg-background-fifth hover:bg-red-600 text-primary font-bold w-1/2 py-2 px-4 rounded") Confirm
 
-      div(class="overlay hidden fixed inset-0 w-full h-full bg-black bg-opacity-60 backdrop-blur-md")
+      div(class="overlay hidden fixed inset-0 w-full h-full bg-background-sixth  backdrop-blur-md")
