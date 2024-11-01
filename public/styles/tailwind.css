@@ -1131,13 +1131,13 @@ video {
   border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
 }
 
+.divide-divider-color > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(var(--divider-color));
+}
+
 .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-divide-opacity));
-}
-
-.divide-third-text-color-gray > :not([hidden]) ~ :not([hidden]) {
-  border-color: rgba(var(--third-text-color-gray) /  var(--tw-divide-opacity));
 }
 
 .self-end {
@@ -1253,10 +1253,6 @@ video {
   background-color: rgb(34 197 94 / var(--tw-bg-opacity));
 }
 
-.bg-hover-soft-bg-text-color {
-  background-color: rgba(var(--hover-soft-bg-text-color));
-}
-
 .bg-red-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(239 68 68 / var(--tw-bg-opacity));
@@ -1269,6 +1265,10 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-hover-background-color {
+  background-color: rgba(var(--hover-background-color));
 }
 
 .bg-opacity-60 {
@@ -1519,6 +1519,10 @@ video {
   color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
+.text-fourth-text-color {
+  color: rgba(var(--fourth-text-color));
+}
+
 .text-gray-300 {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
@@ -1557,10 +1561,6 @@ video {
 .text-green-500 {
   --tw-text-opacity: 1;
   color: rgb(34 197 94 / var(--tw-text-opacity));
-}
-
-.text-main-blue-text-color {
-  color: rgba(var(--main-blue-text-color));
 }
 
 .text-primary {
@@ -1709,28 +1709,67 @@ video {
 }
 
 .light {
+  /* Primary Colors */
   --primary: 255, 255, 255;
   /* white */
   --secondary: 0, 0, 0;
   /* black */
+  /* Text Colors */
   --primary-text-color: 55, 65, 81;
   /* dark-gray */
   --secondary-text-color: 156, 163, 175;
   /* soft-gray */
-  --third-text-color-gray: 229 231 235;
+  --third-text-color: 229, 231, 235;
   /* light-gray */
-  --main-blue-text-color: 59, 130, 246;
+  --fourth-text-color: 59, 130, 246;
   /* blue */
+  /* Accent Colors */
   --star-color: 234, 179, 8;
   /* yellow */
+  /* Hover Colors */
+  --hover-background-color: 243, 244, 246;
+  /* soft-gray for backgrounds */
+  --hover-text-color: 59, 130, 246;
+  /* Blue for buttons or text */
+  /* Borders and Dividers */
+  --divider-color: 229, 231, 235;
+  /* light-gray border color */
+  /* Opacity */
   --tw-divide-opacity: 1;
-  /* opacity */
-  --hover-soft-bg-text-color: 243, 244, 246;
-  /* soft-gray */
-  --hover-btn-color: 59, 130, 246;
-  /* Blue */
+  /* Background Color */
   --background: 255, 255, 255;
   /* white */
+  /* Optional Additional Colors */
+  --error-color: 220, 38, 38;
+  /* red */
+  --disabled-text-color: 209, 213, 219;
+  /* light gray */
+  background: rgba(var(--background));
+}
+
+.dark {
+  --primary: 0, 0, 0;
+  /* black */
+  --secondary: 255, 255, 255;
+  /* white */
+  --primary-text-color: 229, 231, 235;
+  /* light-gray for text on dark background */
+  --secondary-text-color: 243, 244, 246;
+  /* softer-gray */
+  --third-text-color-gray: 156, 163, 175;
+  /* soft-gray */
+  --main-blue-text-color: 147, 197, 253;
+  /* lighter blue for readability */
+  --star-color: 252, 211, 77;
+  /* bright yellow */
+  --tw-divide-opacity: 1;
+  /* opacity */
+  --hover-soft-bg-text-color: 55, 65, 81;
+  /* dark-gray hover background */
+  --hover-btn-color: 147, 197, 253;
+  /* lighter blue */
+  --background: 24, 24, 27;
+  /* very dark gray background */
   background: rgba(var(--background));
 }
 
@@ -1941,12 +1980,8 @@ body {
   background-color: rgb(22 163 74 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-hover-btn-color:hover {
-  background-color: rgba(var(--hover-btn-color));
-}
-
-.hover\:bg-hover-soft-bg-text-color:hover {
-  background-color: rgba(var(--hover-soft-bg-text-color));
+.hover\:bg-hover-text-color:hover {
+  background-color: rgba(var(--hover-text-color));
 }
 
 .hover\:bg-red-600:hover {
@@ -1957,6 +1992,10 @@ body {
 .hover\:bg-white:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-hover-background-color:hover {
+  background-color: rgba(var(--hover-background-color));
 }
 
 .hover\:text-blue-500:hover {

@@ -8,7 +8,7 @@ block content
       h2(class="font-semibold text-4xl md:text-3xl lg:text-4xl text-primary mb-2") Crypto List
       p(class=" font-semibold text-xl md:text-md lg:text-xl text-primary mb-2") Leading the way with top trends, market insights, and up-to-date analytics.
       p(class=" font-semibold text-xl md:text-md lg:text-xl text-primary mb-2")=`The global cryptocurrency market cap stands at ${globalData.totalMarketCap}, with a ${globalData.marketCapChangePercent.toFixed(2)}% change in the last 24 hours. Total trading volume is ${globalData.totalVolume}, and Bitcoin holds ${globalData.marketDominanceBtc.toFixed(2)}% market dominance.`
-      p(class="mt-4 px-4 py-2 bg-background text-main-blue-text-color font-bold rounded-lg shadow-md hover:bg-hover-btn-color hover:text-primary transition-colors duration-300 ease-in-out cursor-pointer") Explore the market below
+      p(class="mt-4 px-4 py-2 bg-background text-fourth-text-color font-bold rounded-lg shadow-md hover:bg-hover-text-color hover:text-primary transition-colors duration-300 ease-in-out cursor-pointer") Explore the market below
 
 
     .overviewAdditionalContainer(class="flex flex-col sm:flex-row p-3 justify-center gap-5 flex-wrap")
@@ -77,7 +77,7 @@ block content
     .coin-container(class="flex flex-col p-4")
       // Table Container with horizontal scroll
       div(class="table-container-main w-11/12 p-2 self-center  rounded-lg overflow-x-auto")
-        table(class="w-full divide-y divide-third-text-color-gray")
+        table(class="w-full divide-y divide-divider-color")
           thead
             tr
               // Icon column
@@ -138,7 +138,7 @@ block content
                   span.icon
                   p.textHeader Last 7 Days
 
-          tbody(class="bg-white divide-y divide-third-text-color-gray")
+          tbody(class="bg-white divide-y divide-divider-color")
             each coin, index in coins
               tr(class="hover:bg-gray-100 transition ease-in-out duration-150")
                 // Star icon for portfolio
@@ -193,27 +193,27 @@ block content
             ul(class="pagination flex flex-wrap gap-2 md:gap-1")
 
               li
-                a(class="px-3 py-2 text-primary-text-color rounded-lg hover:bg-hover-soft-bg-text-color" href=`/overview?page=1&per_page=${itemsPerPage}`)= 1
+                a(class="px-3 py-2 text-primary-text-color rounded-lg hover:bg-hover-background-color" href=`/overview?page=1&per_page=${itemsPerPage}`)= 1
 
               if currentPage > 1
                 li
-                  a(class="px-3 py-2 text-primary-text-color rounded-lg hover:bg-hover-soft-bg-text-color" href=`/overview?page=${currentPage - 1}&per_page=${itemsPerPage}`)= `${currentPage}`
+                  a(class="px-3 py-2 text-primary-text-color rounded-lg hover:bg-hover-background-color" href=`/overview?page=${currentPage - 1}&per_page=${itemsPerPage}`)= `${currentPage}`
 
               if currentPage < totalPages
                 li
-                  a(class="px-3 py-2 text-primary-text-color rounded-lg hover:bg-hover-soft-bg-text-color " href=`/overview?page=${currentPage + 1}&per_page=${itemsPerPage}`)= `${currentPage + 1}`
+                  a(class="px-3 py-2 text-primary-text-color rounded-lg hover:bg-hover-background-color " href=`/overview?page=${currentPage + 1}&per_page=${itemsPerPage}`)= `${currentPage + 1}`
                 li
-                  a(class="px-3 py-2 text-primary-text-color rounded-lg hover:bg-hover-soft-bg-text-color" href=`/overview?page=${currentPage + 2}&per_page=${itemsPerPage}`)= `${currentPage + 2}`
+                  a(class="px-3 py-2 text-primary-text-color rounded-lg hover:bg-hover-background-color" href=`/overview?page=${currentPage + 2}&per_page=${itemsPerPage}`)= `${currentPage + 2}`
 
               li= `...`
               li
-                a(class="px-3 py-2 text-primary-text-color rounded-lg hover:bg-hover-soft-bg-text-color" href=`/overview?page=${totalPages}&per_page=${itemsPerPage}`)= `${totalPages}`
+                a(class="px-3 py-2 text-primary-text-color rounded-lg hover:bg-hover-background-color" href=`/overview?page=${totalPages}&per_page=${itemsPerPage}`)= `${totalPages}`
 
           // Dropdown for showing rows with responsive adjustments
           div(class="dropdown flex relative items-center mt-4 md:mt-0")
             button(class="dropdownButton block px-3 py-2 md:px-4 md:py-2 text-sm md:text-base")
               | Show rows
-            div(class="coinsToShow flex items-center px-3 py-2 md:px-4 md:py-2 m-1 rounded-lg bg-hover-soft-bg-text-color cursor-pointer")
+            div(class="coinsToShow flex items-center px-3 py-2 md:px-4 md:py-2 m-1 rounded-lg bg-hover-background-color cursor-pointer")
               span(class="rowValue text-sm md:text-base")= totalRows
               i(class="fa-solid fa-chevron-down ml-2 text-sm md:text-base")
             div(class="dropdownOptions hidden px-2 py-2 top-full flex-col absolute left-0 md:left-20 shadow-xl drop-shadow-xl rounded-lg bg-gray-200")
