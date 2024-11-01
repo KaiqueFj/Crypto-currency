@@ -13,6 +13,7 @@ module.exports = {
         'third-text-color': 'rgba(var(--third-text-color))',
         'hover-btn-color': 'rgba(var(--hover-btn-color))',
         'star-color': 'rgba(var(--star-color) /  var(--tw-divide-opacity))',
+        'main-blue-text-color': 'rgba(var(--main-blue-text-color))',
       },
       backgroundColor: {
         background: 'rgba(var(--background))',

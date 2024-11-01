@@ -1559,6 +1559,10 @@ video {
   color: rgb(34 197 94 / var(--tw-text-opacity));
 }
 
+.text-main-blue-text-color {
+  color: rgba(var(--main-blue-text-color));
+}
+
 .text-primary {
   color: rgba(var(--primary));
 }
@@ -1587,10 +1591,6 @@ video {
 
 .text-star-color {
   color: rgba(var(--star-color) /  var(--tw-divide-opacity));
-}
-
-.text-third-text-color {
-  color: rgba(var(--third-text-color));
 }
 
 .text-white {
@@ -1719,6 +1719,8 @@ video {
   /* soft-gray */
   --third-text-color-gray: 229 231 235;
   /* light-gray */
+  --main-blue-text-color: 59, 130, 246;
+  /* blue */
   --star-color: 234, 179, 8;
   /* yellow */
   --tw-divide-opacity: 1;
