@@ -1279,6 +1279,10 @@ video {
   background-color: rgba(var(--background-seventh));
 }
 
+.bg-secondary {
+  background-color: rgba(var(--secondary)) ;
+}
+
 .bg-gradient-to-r {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
