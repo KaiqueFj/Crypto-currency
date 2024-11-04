@@ -1101,12 +1101,6 @@ video {
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
-.space-x-3 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(0.75rem * var(--tw-space-x-reverse));
-  margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
 .space-x-4 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(1rem * var(--tw-space-x-reverse));
@@ -1204,11 +1198,6 @@ video {
   border-style: none;
 }
 
-.border-gray-300 {
-  --tw-border-opacity: 1;
-  border-color: rgb(209 213 219 / var(--tw-border-opacity));
-}
-
 .border-third-text-color {
   border-color: rgba(var(--third-text-color));
 }
@@ -1225,22 +1214,16 @@ video {
   background-color: rgba(var(--background-secondary));
 }
 
+.bg-background-seventh {
+  background-color: rgba(var(--background-seventh));
+}
+
 .bg-background-sixth {
   background-color: rgba(var(--background-sixth));
 }
 
 .bg-background-third {
   background-color: rgba(var(--background-third));
-}
-
-.bg-black {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-}
-
-.bg-blue-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
 .bg-gray-200 {
@@ -1266,6 +1249,10 @@ video {
   background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
+.bg-secondary {
+  background-color: rgba(var(--secondary)) ;
+}
+
 .bg-transparent {
   background-color: transparent;
 }
@@ -1273,28 +1260,6 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-background-seventh {
-  background-color: rgba(var(--background-seventh));
-}
-
-.bg-secondary {
-  background-color: rgba(var(--secondary)) ;
-}
-
-.bg-gradient-to-r {
-  background-image: linear-gradient(to right, var(--tw-gradient-stops));
-}
-
-.from-purple-400 {
-  --tw-gradient-from: #c084fc var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(192 132 252 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
-.to-blue-500 {
-  --tw-gradient-to: #3b82f6 var(--tw-gradient-to-position);
 }
 
 .fill-current {
@@ -1390,11 +1355,6 @@ video {
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
 }
 
 .py-8 {
@@ -1526,24 +1486,9 @@ video {
   color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
-.text-gray-500 {
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity));
-}
-
-.text-gray-600 {
-  --tw-text-opacity: 1;
-  color: rgb(75 85 99 / var(--tw-text-opacity));
-}
-
 .text-gray-700 {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
-}
-
-.text-gray-900 {
-  --tw-text-opacity: 1;
-  color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
 .text-green-500 {
@@ -1556,7 +1501,11 @@ video {
 }
 
 .text-primary-text-color {
-  color: rgba(var(--primary-text-color)  /  var(--tw-divide-opacity));
+  color: rgba(var(--primary-text-color));
+}
+
+.text-primary-text-colorS {
+  color: rgba(var(--primary-text-colorS));
 }
 
 .text-red-500 {
@@ -1574,11 +1523,6 @@ video {
 
 .text-star-color {
   color: rgba(var(--star-color));
-}
-
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1688,8 +1632,10 @@ video {
   --secondary: 0, 0, 0;
   /* black */
   /* Text Colors */
-  --primary-text-color: 55, 65, 81;
-  /* dark-gray */
+  --primary-text-color: 0, 0, 0;
+  /* black */
+  --primary-text-colorS: 255, 255, 255;
+  /* white */
   --secondary-text-color: 156, 163, 175;
   /* soft-gray */
   --third-text-color: 229, 231, 235;
@@ -1728,28 +1674,48 @@ video {
 }
 
 .dark {
+  /* Primary Colors */
   --primary: 0, 0, 0;
   /* black */
   --secondary: 255, 255, 255;
   /* white */
-  --primary-text-color: 229, 231, 235;
-  /* light-gray for text on dark background */
-  --secondary-text-color: 243, 244, 246;
-  /* softer-gray */
-  --third-text-color-gray: 156, 163, 175;
+  /* Text Colors */
+  --primary-text-color: 255, 255, 255;
+  /* light-gray */
+  --secondary-text-color: 156, 163, 175;
   /* soft-gray */
-  --main-blue-text-color: 147, 197, 253;
-  /* lighter blue for readability */
-  --star-color: 252, 211, 77;
-  /* bright yellow */
+  --third-text-color: 75, 85, 99;
+  /* dark-gray */
+  --fourth-text-color: 59, 130, 246;
+  /* blue */
+  /* Accent Colors */
+  --star-color: 234, 179, 8;
+  /* yellow */
+  /* Hover Colors */
+  --hover-background-color: 55, 65, 81;
+  /* darker-gray for backgrounds */
+  --hover-text-color: 147, 197, 253;
+  /* lighter blue for buttons or text */
+  /* Borders and Dividers */
+  --divider-color: 55, 65, 81;
+  /* darker-gray border color */
+  /* Opacity */
   --tw-divide-opacity: 1;
-  /* opacity */
-  --hover-soft-bg-text-color: 55, 65, 81;
-  /* dark-gray hover background */
-  --hover-btn-color: 147, 197, 253;
-  /* lighter blue */
+  /* Background Color */
   --background: 24, 24, 27;
-  /* very dark gray background */
+  /* dark-gray */
+  --background-secondary: 39, 39, 42;
+  /* slightly lighter gray */
+  --background-third: 75, 85, 99;
+  /* dark-gray */
+  --background-fourth: 55, 65, 81;
+  /* darker-gray */
+  --background-fifth: 220, 38, 38;
+  /* red */
+  --background-sixth: 255, 255, 255, 0.6;
+  /* white with opacity */
+  --background-seventh: 37, 99, 235;
+  /* blue */
   background: rgba(var(--background));
 }
 
@@ -1932,11 +1898,6 @@ body {
   background-color: rgba(var(--background-third));
 }
 
-.hover\:bg-blue-600:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-fourth-text-color:hover {
   background-color: rgba(var(--fourth-text-color));
 }
@@ -1944,11 +1905,6 @@ body {
 .hover\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-gray-50:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-green-600:hover {
@@ -1975,6 +1931,10 @@ body {
 
 .hover\:text-primary:hover {
   color: rgba(var(--primary));
+}
+
+.hover\:text-primary-text-colorS:hover {
+  color: rgba(var(--primary-text-colorS));
 }
 
 .hover\:text-secondary-text-color:hover {

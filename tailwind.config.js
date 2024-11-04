@@ -6,9 +6,9 @@ module.exports = {
     extend: {
       colors: {
         primary: 'rgba(var(--primary))',
+        'primary-text-colorS': 'rgba(var(--primary-text-colorS))',
         secondary: 'rgba(var(--secondary)) ',
-        'primary-text-color':
-          'rgba(var(--primary-text-color)  /  var(--tw-divide-opacity))',
+        'primary-text-color': 'rgba(var(--primary-text-color))',
         'secondary-text-color': 'rgba(var(--secondary-text-color)) ',
         'third-text-color': 'rgba(var(--third-text-color))',
         'hover-background-color': 'rgba(var(--hover-background-color))',

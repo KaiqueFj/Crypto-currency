@@ -21,7 +21,8 @@
   --secondary: 0, 0, 0; /* black */
 
   /* Text Colors */
-  --primary-text-color: 55, 65, 81; /* dark-gray */
+  --primary-text-color: 0, 0, 0; /* black */
+  --primary-text-colorS: 255, 255, 255; /* white */
   --secondary-text-color: 156, 163, 175; /* soft-gray */
   --third-text-color: 229, 231, 235; /* light-gray */
   --fourth-text-color: 59, 130, 246; /* blue */
@@ -52,19 +53,37 @@
 }
 
 .dark {
+  /* Primary Colors */
   --primary: 0, 0, 0; /* black */
   --secondary: 255, 255, 255; /* white */
-  --primary-text-color: 229, 231, 235; /* light-gray for text on dark background */
-  --secondary-text-color: 243, 244, 246; /* softer-gray */
-  --third-text-color-gray: 156, 163, 175; /* soft-gray */
-  --main-blue-text-color: 147, 197, 253; /* lighter blue for readability */
-  --star-color: 252, 211, 77; /* bright yellow */
-  --tw-divide-opacity: 1; /* opacity */
 
-  --hover-soft-bg-text-color: 55, 65, 81; /* dark-gray hover background */
-  --hover-btn-color: 147, 197, 253; /* lighter blue */
+  /* Text Colors */
+  --primary-text-color: 255, 255, 255; /* light-gray */
+  --secondary-text-color: 156, 163, 175; /* soft-gray */
+  --third-text-color: 75, 85, 99; /* dark-gray */
+  --fourth-text-color: 59, 130, 246; /* blue */
 
-  --background: 24, 24, 27; /* very dark gray background */
+  /* Accent Colors */
+  --star-color: 234, 179, 8; /* yellow */
+
+  /* Hover Colors */
+  --hover-background-color: 55, 65, 81; /* darker-gray for backgrounds */
+  --hover-text-color: 147, 197, 253; /* lighter blue for buttons or text */
+
+  /* Borders and Dividers */
+  --divider-color: 55, 65, 81; /* darker-gray border color */
+
+  /* Opacity */
+  --tw-divide-opacity: 1;
+
+  /* Background Color */
+  --background: 24, 24, 27; /* dark-gray */
+  --background-secondary: 39, 39, 42; /* slightly lighter gray */
+  --background-third: 75, 85, 99; /* dark-gray */
+  --background-fourth: 55, 65, 81; /* darker-gray */
+  --background-fifth: 220, 38, 38; /* red */
+  --background-sixth: 255, 255, 255, 0.6; /* white with opacity */
+  --background-seventh: 37, 99, 235; /* blue */
 
   background: rgba(var(--background));
 }

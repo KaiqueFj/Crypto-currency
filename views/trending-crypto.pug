@@ -5,9 +5,9 @@ block content
 
   main.mainOverview(class="flex flex-col w-full self-center pt-16 mt-8")
     .introduction.flex.flex-col.items-center.gradient-bg.p-6.rounded-lg.shadow-md.mb-8.mx-4.gap-2
-      h2(class="font-semibold text-4xl md:text-3xl lg:text-4xl text-primary mb-2") Explore the latest trending cryptocurrencies
-      p(class=" font-semibold text-xl md:text-md lg:text-xl text-primary mb-2")=`updated with the most searched coins from the last 3 hours. Leading the trends right now are ${topCoins[0].name}, ${topCoins[1].name}, and ${topCoins[2].name}. Over the past 24 hours, ${topCoins[0].name} has seen a price increase of ${topCoins[0].price_change_percentage_24h_brl.toFixed(2)}%, ${topCoins[1].name} has risen by ${topCoins[1].price_change_percentage_24h_brl.toFixed(2)}%, and ${topCoins[2].name} by ${topCoins[2].price_change_percentage_24h_brl.toFixed(2)}%. `
-      p(class=" font-semibold text-xl md:text-md lg:text-xl text-primary mb-2")=`Keep track of these top performers and stay ahead in the dynamic world of crypto!`
+      h2(class="font-semibold text-4xl md:text-3xl lg:text-4xl text-primary-text-colorS mb-2") Explore the latest trending cryptocurrencies
+      p(class=" font-semibold text-xl md:text-md lg:text-xl text-primary-text-colorS mb-2")=`updated with the most searched coins from the last 3 hours. Leading the trends right now are ${topCoins[0].name}, ${topCoins[1].name}, and ${topCoins[2].name}. Over the past 24 hours, ${topCoins[0].name} has seen a price increase of ${topCoins[0].price_change_percentage_24h_brl.toFixed(2)}%, ${topCoins[1].name} has risen by ${topCoins[1].price_change_percentage_24h_brl.toFixed(2)}%, and ${topCoins[2].name} by ${topCoins[2].price_change_percentage_24h_brl.toFixed(2)}%. `
+      p(class=" font-semibold text-xl md:text-md lg:text-xl text-primary-text-colorS mb-2")=`Keep track of these top performers and stay ahead in the dynamic world of crypto!`
 
 
     .coin-container(class="flex flex-col p-4")
