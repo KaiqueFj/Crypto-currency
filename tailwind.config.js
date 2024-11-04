@@ -24,6 +24,7 @@ module.exports = {
         'background-fourth': 'rgba(var(--background-fourth))',
         'background-fifth': 'rgba(var(--background-fifth))',
         'background-sixth': 'rgba(var(--background-sixth))',
+        'background-seventh': 'rgba(var(--background-seventh))',
       },
       divideColor: {
         'divider-color': 'rgba(var(--divider-color))', // Ensures opacity is applied
