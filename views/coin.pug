@@ -6,22 +6,22 @@ block content
   main.main.mt-16
   .coin-container(class="w-full max-w-full p-6 flex flex-col md:flex-row")
     .asideNavigation(class="sticky top-[4rem] h-auto md:h-screen  w-full md:w-auto hidden md:flex md:flex-col gap-3 p-3  md:bg-transparent")
-      .overviewContainer(class="flex flex-row gap-4 p-2 items-center font-medium text-lg text-black cursor-pointer rounded-md hover:bg-background-third w-full md:w-auto"  data-target="#overview")
+      .overviewContainer(class="flex flex-row gap-4 p-2 items-center font-medium text-lg text-primary-text-color cursor-pointer rounded-md hover:bg-background-third w-full md:w-auto"  data-target="#overview")
         .icon.bg-background-third.rounded-lg.flex.items-center.w-9.h-8.justify-center
           i.fa-solid.fa-coins
         .info Overview
 
-      .MarketsContainer(class="flex flex-row gap-4 p-2 items-center font-medium text-lg text-black cursor-pointer rounded-md hover:bg-background-third w-full md:w-auto" data-target="#Exchanges")
+      .MarketsContainer(class="flex flex-row gap-4 p-2 items-center font-medium text-lg text-primary-text-color cursor-pointer rounded-md hover:bg-background-third w-full md:w-auto" data-target="#Exchanges")
         .icon.bg-background-third.rounded-lg.flex.items-center.w-9.h-8.justify-center
           i.fa-solid.fa-chart-simple
         .info Markets
 
-      .StatsContainer(class="flex flex-row gap-4 p-2 items-center font-medium text-lg text-black cursor-pointer rounded-md hover:bg-background-third w-full md:w-auto"  data-target="#marketStats")
+      .StatsContainer(class="flex flex-row gap-4 p-2 items-center font-medium text-lg text-primary-text-color cursor-pointer rounded-md hover:bg-background-third w-full md:w-auto"  data-target="#marketStats")
         .icon.bg-background-third.rounded-lg.flex.items-center.w-9.h-8.justify-center
           i.fa-solid.fa-money-check
         .info Stats
 
-      .communitySentimentContainer(class="flex flex-row gap-4 p-2 items-center font-medium text-lg text-black cursor-pointer rounded-md hover:bg-background-third w-full md:w-auto" data-target="#coinSentiment")
+      .communitySentimentContainer(class="flex flex-row gap-4 p-2 items-center font-medium text-lg text-primary-text-color cursor-pointer rounded-md hover:bg-background-third w-full md:w-auto" data-target="#coinSentiment")
         .icon.bg-background-third.rounded-lg.flex.items-center.w-9.h-8.justify-center
           i.fa-regular.fa-face-smile
         .info Sentiment
@@ -48,7 +48,7 @@ block content
                 i(data-coin-name=`${coin.name}` class=`starIcon  fa-regular fa-star  w-5 h-5  text-primary-text-color cursor-pointer`)
 
             button.bg-background-third.rounded-md.py-1.px-2
-              i.iconLink.fa-solid.fa-link.text-sm
+              i.iconLink.fa-solid.fa-link.text-sm.text-primary-text-color
 
       .chartAndConvertContainer#chartContainer(class="flex flex-col md:flex-row justify-center gap-4 max-h-1/3 w-full")
 
@@ -266,7 +266,7 @@ block content
 
           .coinMaxSupply(class="w-full lg:w-96 h-16 flex flex-col")
             .coinInfo(class="flex flex-row justify-between md:justify-start items-center")
-              span(class="font-medium text-lg text-text-secondary-text-color") Max supply
+              span(class="font-medium text-lg text-secondary-text-color") Max supply
               i(class="information fa-solid fa-circle-info text-sm ml-1", data-info="max-supply")
             span(class="font-medium text-lg text-secondary ml-1")= `${coin.max_supply.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,2)}M ${coin.symbol.toUpperCase()}`
 
@@ -302,7 +302,7 @@ block content
 
       .sentimentAboutTheCoin#coinSentiment
         .header(class="flex justify-center lg:justify-start")
-          h2(class="font-semibold text-2xl md:text-3xl font-medium text-black") Community Sentiment
+          h2(class="font-semibold text-2xl md:text-3xl font-medium text-primary-text-color") Community Sentiment
 
         .coinSentiments(class="flex flex-col lg:flex-row justify-center lg:justify-between items-center mt-4 p-4 md:p-6 lg:p-9 border-2 rounded-lg gap-4")
           .sentimentUp(class="flex items-center gap-2")

@@ -58,20 +58,21 @@
   --secondary: 255, 255, 255; /* white */
 
   /* Text Colors */
-  --primary-text-color: 255, 255, 255; /* light-gray */
+  --primary-text-color: 255, 255, 255; /* white */
+  --primary-text-colorS: 255, 255, 255; /* black */
   --secondary-text-color: 156, 163, 175; /* soft-gray */
   --third-text-color: 75, 85, 99; /* dark-gray */
-  --fourth-text-color: 59, 130, 246; /* blue */
+  --fourth-text-color: 147, 197, 253; /* lighter blue */
 
   /* Accent Colors */
   --star-color: 234, 179, 8; /* yellow */
 
   /* Hover Colors */
-  --hover-background-color: 55, 65, 81; /* darker-gray for backgrounds */
+  --hover-background-color: 55, 65, 81; /* darker gray for backgrounds */
   --hover-text-color: 147, 197, 253; /* lighter blue for buttons or text */
 
   /* Borders and Dividers */
-  --divider-color: 55, 65, 81; /* darker-gray border color */
+  --divider-color: 55, 65, 81; /* dark-gray border color */
 
   /* Opacity */
   --tw-divide-opacity: 1;
@@ -80,7 +81,7 @@
   --background: 24, 24, 27; /* dark-gray */
   --background-secondary: 39, 39, 42; /* slightly lighter gray */
   --background-third: 75, 85, 99; /* dark-gray */
-  --background-fourth: 55, 65, 81; /* darker-gray */
+  --background-fourth: 0, 0, 0; /* darker gray */
   --background-fifth: 220, 38, 38; /* red */
   --background-sixth: 255, 255, 255, 0.6; /* white with opacity */
   --background-seventh: 37, 99, 235; /* blue */

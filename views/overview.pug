@@ -138,7 +138,7 @@ block content
                   span.icon
                   p.textHeader Last 7 Days
 
-          tbody(class="bg-white divide-y divide-divider-color")
+          tbody(class="bg-primary divide-y divide-divider-color")
             each coin, index in coins
               tr(class="hover:bg-background-fourth transition ease-in-out duration-150")
                 // Star icon for portfolio
@@ -185,7 +185,7 @@ block content
         .infoPagination(class="flex flex-col md:flex-row justify-between items-center p-4")
 
           // Showing text with responsive padding
-          span(class="px-4 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm text-secondary-text-color")
+          span(class="px-4 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm text-primary-text-color")
             = `Showing ${(currentPage - 1) * itemsPerPage} to ${Math.min(currentPage * itemsPerPage, allCoin.length)} of ${allCoin.length} coins`
 
           // Pagination navigation with responsive spacing
@@ -211,14 +211,14 @@ block content
 
           // Dropdown for showing rows with responsive adjustments
           div(class="dropdown flex relative items-center mt-4 md:mt-0")
-            button(class="dropdownButton block px-3 py-2 md:px-4 md:py-2 text-sm md:text-base")
+            button(class="dropdownButton block text-primary-text-color px-3 py-2 md:px-4 md:py-2 text-sm md:text-base")
               | Show rows
             div(class="coinsToShow flex items-center px-3 py-2 md:px-4 md:py-2 m-1 rounded-lg bg-hover-background-color cursor-pointer")
-              span(class="rowValue text-sm md:text-base")= totalRows
+              span(class="rowValue text-primary-text-color text-sm md:text-base")= totalRows
               i(class="fa-solid fa-chevron-down ml-2 text-sm md:text-base")
-            div(class="dropdownOptions hidden px-2 py-2 top-full flex-col absolute left-0 md:left-20 shadow-xl drop-shadow-xl rounded-lg bg-gray-200")
-              button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-hover-soft-bg-text-color rounded-lg text-sm md:text-base") 5
-              button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-hover-soft-bg-text-color rounded-lg text-sm md:text-base") 10
-              button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-hover-soft-bg-text-color rounded-lg text-sm md:text-base") 20
+            div(class="dropdownOptions hidden px-2 py-2 top-full flex-col absolute left-0 md:left-20 shadow-xl drop-shadow-xl rounded-lg bg-hover-background-color")
+              button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-hover-soft-bg-text-color text-primary-text-color rounded-lg text-sm md:text-base") 5
+              button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-hover-soft-bg-text-color text-primary-text-color rounded-lg text-sm md:text-base") 10
+              button(class="option px-3 py-2 md:px-4 md:py-2 hover:bg-hover-soft-bg-text-color text-primary-text-color rounded-lg text-sm md:text-base") 20
 
 

@@ -1202,12 +1202,20 @@ video {
   border-color: rgba(var(--third-text-color));
 }
 
+.border-primary-text-color {
+  border-color: rgba(var(--primary-text-color));
+}
+
 .bg-background {
   background-color: rgba(var(--background));
 }
 
 .bg-background-fifth {
   background-color: rgba(var(--background-fifth));
+}
+
+.bg-background-fourth {
+  background-color: rgba(var(--background-fourth));
 }
 
 .bg-background-secondary {
@@ -1247,10 +1255,6 @@ video {
 .bg-red-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(239 68 68 / var(--tw-bg-opacity));
-}
-
-.bg-secondary {
-  background-color: rgba(var(--secondary)) ;
 }
 
 .bg-transparent {
@@ -1681,24 +1685,26 @@ video {
   /* white */
   /* Text Colors */
   --primary-text-color: 255, 255, 255;
-  /* light-gray */
+  /* white */
+  --primary-text-colorS: 255, 255, 255;
+  /* black */
   --secondary-text-color: 156, 163, 175;
   /* soft-gray */
   --third-text-color: 75, 85, 99;
   /* dark-gray */
-  --fourth-text-color: 59, 130, 246;
-  /* blue */
+  --fourth-text-color: 147, 197, 253;
+  /* lighter blue */
   /* Accent Colors */
   --star-color: 234, 179, 8;
   /* yellow */
   /* Hover Colors */
   --hover-background-color: 55, 65, 81;
-  /* darker-gray for backgrounds */
+  /* darker gray for backgrounds */
   --hover-text-color: 147, 197, 253;
   /* lighter blue for buttons or text */
   /* Borders and Dividers */
   --divider-color: 55, 65, 81;
-  /* darker-gray border color */
+  /* dark-gray border color */
   /* Opacity */
   --tw-divide-opacity: 1;
   /* Background Color */
@@ -1708,8 +1714,8 @@ video {
   /* slightly lighter gray */
   --background-third: 75, 85, 99;
   /* dark-gray */
-  --background-fourth: 55, 65, 81;
-  /* darker-gray */
+  --background-fourth: 0, 0, 0;
+  /* darker gray */
   --background-fifth: 220, 38, 38;
   /* red */
   --background-sixth: 255, 255, 255, 0.6;
@@ -1927,10 +1933,6 @@ body {
 
 .hover\:text-fourth-text-color:hover {
   color: rgba(var(--fourth-text-color));
-}
-
-.hover\:text-primary:hover {
-  color: rgba(var(--primary));
 }
 
 .hover\:text-primary-text-colorS:hover {
