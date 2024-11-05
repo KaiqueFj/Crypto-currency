@@ -78,3 +78,8 @@ export const btnConfirm = document.querySelector('.confirmBtn');
 
 // Handle button to copy current page url
 export const linkCoinBtn = document.querySelector('.iconLink');
+
+// Handle elements for theme toggle
+export const iconSun = document.getElementById('icon-sun');
+export const iconMoon = document.getElementById('icon-moon');
+export const themeToggleButton = document.getElementById('theme-toggle');

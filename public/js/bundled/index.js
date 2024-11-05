@@ -749,6 +749,9 @@ parcelHelpers.export(exports, "btnCloseModal", ()=>btnCloseModal);
 parcelHelpers.export(exports, "btnsOpenModal", ()=>btnsOpenModal);
 parcelHelpers.export(exports, "btnConfirm", ()=>btnConfirm);
 parcelHelpers.export(exports, "linkCoinBtn", ()=>linkCoinBtn);
+parcelHelpers.export(exports, "iconSun", ()=>iconSun);
+parcelHelpers.export(exports, "iconMoon", ()=>iconMoon);
+parcelHelpers.export(exports, "themeToggleButton", ()=>themeToggleButton);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -799,6 +802,9 @@ const btnCloseModal = document.querySelector(".close-modal");
 const btnsOpenModal = document.querySelectorAll(".show-modal");
 const btnConfirm = document.querySelector(".confirmBtn");
 const linkCoinBtn = document.querySelector(".iconLink");
+const iconSun = document.getElementById("icon-sun");
+const iconMoon = document.getElementById("icon-moon");
+const themeToggleButton = document.getElementById("theme-toggle");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -5690,7 +5696,8 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleUserClicks", ()=>handleUserClicks);
 var _alert = require("../handleAlertPage/alert");
-const { iconsInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar, navItems, buttonMobile, menu, starSvgIcon, linkCoinBtn } = require("b7db570592d68645");
+var _themeToggle = require("./themeToggle");
+const { iconsInfo, optionsContainerDownloads, saveAsButtonDropdown, sentimentProfitBarUp, profitBar, sentimentProfitBarDown, lostBar, navItems, buttonMobile, menu, starSvgIcon, linkCoinBtn, themeToggleButton } = require("b7db570592d68645");
 function handleUserClicks() {
     //handle the infoContainer for each stats of the coin
     iconsInfo.each(function(e) {
@@ -5765,9 +5772,32 @@ function handleUserClicks() {
             (0, _alert.showAlert)("success", "link copied!");
         });
     });
+    // Handle theme toggle
+    themeToggleButton.addEventListener("click", (e)=>{
+        e.preventDefault();
+        const newTheme = document.body.classList.contains("light") ? "dark" : "light";
+        (0, _themeToggle.setTheme)(newTheme);
+    });
 }
 
-},{"../handleAlertPage/alert":"hgdTX","b7db570592d68645":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jFoI4":[function(require,module,exports) {
+},{"../handleAlertPage/alert":"hgdTX","./themeToggle":"9Y0Ms","b7db570592d68645":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9Y0Ms":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "setTheme", ()=>setTheme);
+var _handleElements = require("./handleElements");
+function setTheme(theme) {
+    document.body.classList.toggle("light", theme === "light");
+    document.body.classList.toggle("dark", theme === "dark");
+    // Toggle icon visibility based on theme
+    (0, _handleElements.iconSun).classList.toggle("hidden", theme === "dark");
+    (0, _handleElements.iconMoon).classList.toggle("hidden", theme === "light");
+    localStorage.setItem("theme", theme);
+}
+// Initial theme setting from localStorage or default
+const storedTheme = localStorage.getItem("theme") || "light";
+setTheme(storedTheme);
+
+},{"./handleElements":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jFoI4":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "handleCoinsFunctions", ()=>handleCoinsFunctions);

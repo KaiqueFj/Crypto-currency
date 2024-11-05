@@ -1,4 +1,5 @@
 import { showAlert } from '../handleAlertPage/alert';
+import { setTheme } from './themeToggle';
 
 const {
   iconsInfo,
@@ -13,6 +14,7 @@ const {
   menu,
   starSvgIcon,
   linkCoinBtn,
+  themeToggleButton,
 } = require('./handleElements');
 
 export function handleUserClicks() {
@@ -116,4 +118,13 @@ export function handleUserClicks() {
       });
     });
   }
+
+  // Handle theme toggle
+  themeToggleButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    const newTheme = document.body.classList.contains('light')
+      ? 'dark'
+      : 'light';
+    setTheme(newTheme);
+  });
 }
