@@ -70,7 +70,7 @@ export function handleCoinsFunctions() {
       const days = button.getAttribute('data-days');
 
       coinName.forEach((coin) => {
-        constCoinIdName = coin.getAttribute('data-coin');
+        const constCoinIdName = coin.getAttribute('data-coin');
         createUniqueChart(constCoinIdName, days);
       });
     });

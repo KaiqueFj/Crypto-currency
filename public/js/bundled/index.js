@@ -5815,8 +5815,8 @@ function handleCoinsFunctions() {
     });
     // Create the chart for unique coin
     (0, _handleElementsJs.coinName).forEach((coin)=>{
-        const constCoinIdName1 = coin.getAttribute("data-coin");
-        (0, _chartJs.createUniqueChart)(constCoinIdName1);
+        const constCoinIdName = coin.getAttribute("data-coin");
+        (0, _chartJs.createUniqueChart)(constCoinIdName);
     });
     //Handle the click for each coin to retrieve the info
     (0, _handleElementsJs.rows).forEach((row)=>{
@@ -5843,7 +5843,7 @@ function handleCoinsFunctions() {
         button.addEventListener("click", ()=>{
             const days = button.getAttribute("data-days");
             (0, _handleElementsJs.coinName).forEach((coin)=>{
-                constCoinIdName = coin.getAttribute("data-coin");
+                const constCoinIdName = coin.getAttribute("data-coin");
                 (0, _chartJs.createUniqueChart)(constCoinIdName, days);
             });
         });
