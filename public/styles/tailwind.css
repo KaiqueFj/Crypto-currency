@@ -829,11 +829,6 @@ video {
   display: none;
 }
 
-.size-6 {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
 .h-10 {
   height: 2.5rem;
 }
@@ -1203,12 +1198,12 @@ video {
   border-style: none;
 }
 
-.border-third-text-color {
-  border-color: rgba(var(--third-text-color));
-}
-
 .border-primary-text-color {
   border-color: rgba(var(--primary-text-color));
+}
+
+.border-third-text-color {
+  border-color: rgba(var(--third-text-color));
 }
 
 .bg-background {
@@ -1476,11 +1471,6 @@ video {
   letter-spacing: 0.05em;
 }
 
-.text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
-}
-
 .text-blue-500 {
   --tw-text-opacity: 1;
   color: rgb(59 130 246 / var(--tw-text-opacity));
@@ -1532,11 +1522,6 @@ video {
 
 .text-star-color {
   color: rgba(var(--star-color));
-}
-
-.text-yellow-500 {
-  --tw-text-opacity: 1;
-  color: rgb(234 179 8 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1733,6 +1718,16 @@ video {
   --background-seventh: 37, 99, 235;
   /* blue */
   background: rgba(var(--background));
+}
+
+/* Adds a smoother transition when changing the theme */
+
+.light,
+.dark {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .gradient-bg {
