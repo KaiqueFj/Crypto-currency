@@ -83,3 +83,7 @@ export const linkCoinBtn = document.querySelector('.iconLink');
 export const iconSun = document.getElementById('icon-sun');
 export const iconMoon = document.getElementById('icon-moon');
 export const themeToggleButton = document.getElementById('theme-toggle');
+
+// Handle logout btn
+
+export const logoutBtn = document.querySelector('#logoutBtn');

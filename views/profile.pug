@@ -1,8 +1,8 @@
 extends base
 
-mixin navItem(link, text, icon, active)
+mixin navItem(link, text, icon, active,id)
   li(class=`${active ? 'bg-background' : ''} p-2 rounded hover:bg-background-fourth`)
-    a(href=`${link}` class="flex items-center space-x-2 text-primary-text-color hover:text-fourth-text-color")
+    a(href=`${link}` id=`${id}` class="flex items-center space-x-2 text-primary-text-color hover:text-fourth-text-color")
       svg(class="w-5 h-5 fill-current text-primary-text-color")
         use(xlink:href=`images/icons/icons.svg#icon-${icon}`)
       span #{text}
@@ -12,8 +12,8 @@ block content
     .user-view(class="flex flex-col w-full md:w-1/4 bg-primary shadow-md rounded-lg p-4 m-4 flex-shrink-0")
       nav.user-view__menu
         ul(class="side-nav space-y-2")
-          +navItem('#', 'Settings', 'settings', true)
-          +navItem('#', 'Logout', 'arrow-left-circle', false)
+          +navItem('#', 'Settings', 'settings', true,'settingsBtn')
+          +navItem('#', 'Logout', 'arrow-left-circle', false,'logoutBtn')
 
 
     .user-view__content(class="flex-grow bg-primary shadow-md rounded-lg p-6 m-4 overflow-y-auto")

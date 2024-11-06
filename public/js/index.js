@@ -1,6 +1,7 @@
 const updateSpeedDoMeter = require('./fearGreed/fearGreed');
 import { signUp } from './handleUserFunctions/signUp';
 import { signIn } from './handleUserFunctions/signIn';
+import { logout } from './handleUserFunctions/logout';
 import { updateSettings } from './handleUserFunctions/updateSettings';
 import {
   addToPortfolio,
@@ -23,6 +24,7 @@ const {
   starSvgIcon,
   getCoinName,
   deleteIcon,
+  logoutBtn,
 } = require('./handleElements/handleElements');
 const {
   handleCoinValueInCurrency,
@@ -65,6 +67,9 @@ if (signInForm) {
     signIn(email, password);
   });
 }
+
+// Handle the logOut
+if (logoutBtn) logoutBtn.addEventListener('click', logout);
 
 // Handle the add to portfolio
 if (starSvgIcon) {

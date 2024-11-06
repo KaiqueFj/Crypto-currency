@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { showAlert } from '../handleAlertPage/alert';
+
 export const logout = async () => {
   try {
     const res = await axios({

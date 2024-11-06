@@ -586,12 +586,13 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"f2QDv":[function(require,module,exports) {
 var _signUp = require("./handleUserFunctions/signUp");
 var _signIn = require("./handleUserFunctions/signIn");
+var _logout = require("./handleUserFunctions/logout");
 var _updateSettings = require("./handleUserFunctions/updateSettings");
 var _portfolio = require("./handleUserFunctions/Portfolio");
 const updateSpeedDoMeter = require("67cae37c61cb61ea");
 const { handleUserClicks } = require("5bdcf2804befa2fb");
 const { handleCoinsFunctions } = require("88fddf9f7ffe2d0");
-const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select, signUpForm, signInForm, updatePasswordForm, updateUserForm, starSvgIcon, getCoinName, deleteIcon } = require("5082ea269ed0b977");
+const { fearGreedValue, feedGreedCoinContainer, currencySelect, coinQuantity, select, signUpForm, signInForm, updatePasswordForm, updateUserForm, starSvgIcon, getCoinName, deleteIcon, logoutBtn } = require("5082ea269ed0b977");
 const { handleCoinValueInCurrency, insertFlags, updateValueOfCoinByQuantity } = require("a7d37ed595fc46a5");
 const { handleSortData } = require("2c6e91297df9cd6d");
 const { modalHandle } = require("b5e959d0c93c2dc0");
@@ -617,6 +618,8 @@ if (signInForm) signInForm.addEventListener("submit", (e)=>{
     const password = document.querySelector(".inputPassword").value;
     (0, _signIn.signIn)(email, password);
 });
+// Handle the logOut
+if (logoutBtn) logoutBtn.addEventListener("click", (0, _logout.logout));
 // Handle the add to portfolio
 if (starSvgIcon) {
     const starSvgIcons = document.querySelectorAll(".starIcon");
@@ -688,7 +691,7 @@ if (feedGreedCoinContainer) {
     if (fearGreedNeedlePosition && fearGreedValue !== null) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
 }
 
-},{"67cae37c61cb61ea":"gVYJX","./handleUserFunctions/signUp":"kmAUz","./handleUserFunctions/signIn":"9rXF3","./handleUserFunctions/updateSettings":"iqdDI","./handleUserFunctions/Portfolio":"3FBK1","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2","b5e959d0c93c2dc0":"jQWxY"}],"gVYJX":[function(require,module,exports) {
+},{"67cae37c61cb61ea":"gVYJX","./handleUserFunctions/signUp":"kmAUz","./handleUserFunctions/signIn":"9rXF3","./handleUserFunctions/updateSettings":"iqdDI","./handleUserFunctions/Portfolio":"3FBK1","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2","b5e959d0c93c2dc0":"jQWxY","./handleUserFunctions/logout":"3TsAr"}],"gVYJX":[function(require,module,exports) {
 const { needle } = require("335ffdcd8dc8da1a");
 function updateSpeedDoMeter(value) {
     const maxValue = 100;
@@ -752,6 +755,7 @@ parcelHelpers.export(exports, "linkCoinBtn", ()=>linkCoinBtn);
 parcelHelpers.export(exports, "iconSun", ()=>iconSun);
 parcelHelpers.export(exports, "iconMoon", ()=>iconMoon);
 parcelHelpers.export(exports, "themeToggleButton", ()=>themeToggleButton);
+parcelHelpers.export(exports, "logoutBtn", ()=>logoutBtn);
 const dropDownQtdOptions = $(".dropdownOptions");
 const optionsValue = $(".option");
 const coinsToShow = $(".coinsToShow");
@@ -805,6 +809,7 @@ const linkCoinBtn = document.querySelector(".iconLink");
 const iconSun = document.getElementById("icon-sun");
 const iconMoon = document.getElementById("icon-moon");
 const themeToggleButton = document.getElementById("theme-toggle");
+const logoutBtn = document.querySelector("#logoutBtn");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -5588,7 +5593,6 @@ const showAlert = (type, message)=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "signIn", ()=>signIn);
-parcelHelpers.export(exports, "logout", ()=>logout);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _alert = require("../handleAlertPage/alert");
@@ -5610,18 +5614,6 @@ const signIn = async (email, password)=>{
         }
     } catch (err) {
         (0, _alert.showAlert)("error", err.response.data.message);
-    }
-};
-const logout = async ()=>{
-    try {
-        const res = await (0, _axiosDefault.default)({
-            method: "GET",
-            url: "/api/v1/users/overview"
-        });
-        res.data.status = "success";
-        location.assign("/login");
-    } catch (err) {
-        (0, _alert.showAlert)("error", "Error logging out! Try again");
     }
 };
 
@@ -36973,6 +36965,26 @@ function modalHandle() {
     });
 }
 
-},{"./handleElements":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
+},{"./handleElements":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3TsAr":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "logout", ()=>logout);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _alert = require("../handleAlertPage/alert");
+const logout = async ()=>{
+    try {
+        const res = await (0, _axiosDefault.default)({
+            method: "GET",
+            url: "/api/v1/users/logout"
+        });
+        res.data.status = "success";
+        location.assign("/");
+    } catch (err) {
+        (0, _alert.showAlert)("error", "Error logging out! Try again");
+    }
+};
+
+},{"axios":"jo6P5","../handleAlertPage/alert":"hgdTX","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
 
 //# sourceMappingURL=index.js.map
