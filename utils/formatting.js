@@ -5,35 +5,47 @@ function convertUsdToCurrency(amountInUsd, valueToConvert) {
 
 // Format the currency
 function formatCurrency(value) {
-  return parseFloat(value)
+  // Parse value as float
+  let parsedValue = parseFloat(value);
+
+  // If value is less than 1, keep up to 8 decimal places
+  if (Math.abs(parsedValue) < 1) {
+    return parsedValue
+      .toFixed(6)
+      .replace('.', ',')
+      .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  }
+
+  // Otherwise, round and format with two decimal places
+  return parsedValue
     .toFixed(2)
-    .replace(".", ",")
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    .replace('.', ',')
+    .replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
 // Format relative time
 function formatDateWithRelativeTime(dateString) {
   const date = new Date(dateString);
   const now = new Date();
-  const options = { year: "numeric", month: "short", day: "numeric" };
-  const formattedDate = new Intl.DateTimeFormat("en-US", options).format(date);
+  const options = { year: 'numeric', month: 'short', day: 'numeric' };
+  const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
 
   const diffInMs = now - date;
   const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
 
-  let relativeTime = "";
+  let relativeTime = '';
 
   if (diffInDays < 1) {
-    relativeTime = "today";
+    relativeTime = 'today';
   } else if (diffInDays < 30) {
     const days = Math.floor(diffInDays);
-    relativeTime = `${days} day${days > 1 ? "s" : ""} ago`;
+    relativeTime = `${days} day${days > 1 ? 's' : ''} ago`;
   } else if (diffInDays < 365) {
     const months = Math.floor(diffInDays / 30);
-    relativeTime = `${months} month${months > 1 ? "s" : ""} ago`;
+    relativeTime = `${months} month${months > 1 ? 's' : ''} ago`;
   } else {
     const years = Math.floor(diffInDays / 365);
-    relativeTime = `${years} year${years > 1 ? "s" : ""} ago`;
+    relativeTime = `${years} year${years > 1 ? 's' : ''} ago`;
   }
 
   return `${formattedDate} (${relativeTime})`;
@@ -43,18 +55,18 @@ function formatDateWithRelativeTime(dateString) {
 function formatDescription(description) {
   return description
     .split(/\r?\n\n/) // Split text by double new lines for paragraphs
-    .filter((paragraph) => paragraph.trim() !== "") // Remove empty paragraphs
-    .map((paragraph) => `<p>${paragraph.replace(/\n/g, "<br>")}</p>`) // each  paragraph be wrapped in <p> tags and replace single new lines with <br> tags
-    .join(""); // Join all the <p> tags into a single string
+    .filter((paragraph) => paragraph.trim() !== '') // Remove empty paragraphs
+    .map((paragraph) => `<p>${paragraph.replace(/\n/g, '<br>')}</p>`) // each  paragraph be wrapped in <p> tags and replace single new lines with <br> tags
+    .join(''); // Join all the <p> tags into a single string
 }
 
 function formatLargeNumber(num) {
   if (num >= 1e12) {
-    return (num / 1e12).toFixed(1) + "T"; // Trillions
+    return (num / 1e12).toFixed(1) + 'T'; // Trillions
   } else if (num >= 1e9) {
-    return (num / 1e9).toFixed(1) + "B"; // Billions
+    return (num / 1e9).toFixed(1) + 'B'; // Billions
   } else if (num >= 1e6) {
-    return (num / 1e6).toFixed(1) + "M"; // Millions
+    return (num / 1e6).toFixed(1) + 'M'; // Millions
   } else {
     return num.toLocaleString();
   }
@@ -63,10 +75,10 @@ function formatLargeNumber(num) {
 function formatTimesTamp(timestamp) {
   const date = new Date(timestamp * 1000);
 
-  const formattedDate = date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  const formattedDate = date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   });
 
   return formattedDate;
