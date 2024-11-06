@@ -41,6 +41,7 @@ const sendErrorDev = (err, req, res) => {
 };
 
 const sendErrorProd = (err, req, res) => {
+  console.log(req.originalUrl);
   if (req.originalUrl.startsWith('/api')) {
     // A) Operational, trusted error
     if (err.isOperational) {

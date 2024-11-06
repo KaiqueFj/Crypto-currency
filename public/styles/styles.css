@@ -48,6 +48,8 @@
   --background-fifth: 220, 38, 38; /* red*/
   --background-sixth: 0, 0, 0, 0.6; /* black*/
   --background-seventh: 37, 99, 235; /* blue */
+  --background-eighth: 78, 0, 155;
+  --background-ninety: 52, 0, 103;
 
   background: rgba(var(--background));
 }
@@ -85,6 +87,8 @@
   --background-fifth: 220, 38, 38; /* red */
   --background-sixth: 255, 255, 255, 0.6; /* white with opacity */
   --background-seventh: 37, 99, 235; /* blue */
+  --background-eighth: 78, 0, 155;
+  --background-ninety: 52, 0, 103;
 
   background: rgba(var(--background));
 }
