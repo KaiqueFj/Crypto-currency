@@ -32,8 +32,8 @@ const fetchGlobalCapVolume = async () => {
   const globalData = data.data;
 
   return {
-    totalMarketCap: formatLargeNumber(globalData.total_market_cap.brl),
-    totalVolume: formatLargeNumber(globalData.total_volume.brl),
+    totalMarketCap: formatLargeNumber(globalData.total_market_cap.usd),
+    totalVolume: formatLargeNumber(globalData.total_volume.usd),
     marketDominanceBtc: globalData.market_cap_percentage.btc,
     marketCapChangePercent: globalData.market_cap_change_percentage_24h_usd,
   };
@@ -49,7 +49,7 @@ const fetchTrendingData = async () => {
   return data.coins.slice(0, 3).map((coin) => {
     const { id, name, symbol, thumb, data } = coin.item;
     const priceChangePercentage24h = data.price_change_percentage_24h
-      ? data.price_change_percentage_24h.brl
+      ? data.price_change_percentage_24h.usd
       : 'N/A';
 
     return {
@@ -136,7 +136,7 @@ exports.getPortfolioPageUser = async (req, res, next) => {
           'x-cg-demo-api-key': process.env.API_KEY_Cry,
         },
         params: {
-          vs_currency: 'brl',
+          vs_currency: 'usd',
           order: 'market_cap_desc',
           sparkline: false,
           price_change_percentage: '1h,24h,7d',
@@ -224,7 +224,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
           accept: 'application/json',
           'x-cg-demo-api-key': process.env.API_KEY_Cry,
         },
-        { vs_currency: 'brl', order: 'market_cap_desc', sparkline: false }
+        { vs_currency: 'usd', order: 'market_cap_desc', sparkline: false }
       ),
       fetchData(
         'https://api.coingecko.com/api/v3/coins/markets',
@@ -233,7 +233,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
           'x-cg-demo-api-key': process.env.API_KEY_Cry,
         },
         {
-          vs_currency: 'brl',
+          vs_currency: 'usd',
           order: 'market_cap_desc',
           page: currentPage,
           per_page: itemsPerPage,
@@ -418,30 +418,30 @@ exports.getSpecificCoin = catchAsync(async (req, res, next) => {
       small: coinData.image.small,
       large: coinData.image.large,
       current_price_usd: coinData.market_data.current_price.usd,
-      current_price: formatCurrency(coinData.market_data.current_price.brl),
-      market_cap: formatCurrency(coinData.market_data.market_cap.brl),
+      current_price: formatCurrency(coinData.market_data.current_price.usd),
+      market_cap: formatCurrency(coinData.market_data.market_cap.usd),
       market_cap_rank: coinData.market_data.market_cap_rank,
-      total_volume: formatCurrency(coinData.market_data.total_volume.brl),
-      high_24h: formatCurrency(coinData.market_data.high_24h.brl),
-      low_24h: formatCurrency(coinData.market_data.low_24h.brl),
-      price_change_24h: coinData.market_data.price_change_24h.brl,
+      total_volume: formatCurrency(coinData.market_data.total_volume.usd),
+      high_24h: formatCurrency(coinData.market_data.high_24h.usd),
+      low_24h: formatCurrency(coinData.market_data.low_24h.usd),
+      price_change_24h: coinData.market_data.price_change_24h.usd,
       price_change_percentage_24:
         coinData.market_data.price_change_percentage_24h,
       price_change_percentage_24h_in_currency:
-        coinData.market_data.price_change_percentage_24h_in_currency.brl,
+        coinData.market_data.price_change_percentage_24h_in_currency.usd,
       market_cap_change_percentage_24h_in_currency:
-        coinData.market_data.market_cap_change_percentage_24h_in_currency.brl,
+        coinData.market_data.market_cap_change_percentage_24h_in_currency.usd,
       total_supply: formatCurrency(coinData.market_data.total_supply),
       max_supply: formatCurrency(coinData.market_data.max_supply),
       circulating_supply: formatCurrency(
         coinData.market_data.circulating_supply
       ),
-      ath: formatCurrency(coinData.market_data.ath.brl),
-      ath_date: formatDateWithRelativeTime(coinData.market_data.ath_date.brl),
-      ath_change_percentage: coinData.market_data.ath_change_percentage.brl,
-      atl: formatCurrency(coinData.market_data.atl.brl),
-      atl_date: formatDateWithRelativeTime(coinData.market_data.atl_date.brl),
-      atl_change_percentage: coinData.market_data.atl_change_percentage.brl,
+      ath: formatCurrency(coinData.market_data.ath.usd),
+      ath_date: formatDateWithRelativeTime(coinData.market_data.ath_date.usd),
+      ath_change_percentage: coinData.market_data.ath_change_percentage.usd,
+      atl: formatCurrency(coinData.market_data.atl.usd),
+      atl_date: formatDateWithRelativeTime(coinData.market_data.atl_date.usd),
+      atl_change_percentage: coinData.market_data.atl_change_percentage.usd,
       total: formatCurrency(totalPercentageOfCirculatingSupply),
     };
 
@@ -550,8 +550,8 @@ exports.getTrendingCoinsPage = catchAsync(async (req, res, next) => {
         price: price || 'N/A',
         market_cap: market_cap || 'N/A',
         total_volume: total_volume || 'N/A',
-        price_change_percentage_24h_brl:
-          price_change_percentage_24h?.brl || 'N/A',
+        price_change_percentage_24h_usd:
+          price_change_percentage_24h?.usd || 'N/A',
         price_change_percentage_24h_usd:
           price_change_percentage_24h?.usd || 'N/A',
         sparkline,

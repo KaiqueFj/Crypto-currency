@@ -37,7 +37,7 @@ block content
               span.font-semibold.text-xl.text-text-secondary-text-color.ml-1=`${coin.symbol.toUpperCase()}`
 
             .coinMarketValue.flex.flex-row.gap-2.items-center
-              span.font-semibold.text-3xl.text-secondary=`R$${coin.current_price}`
+              span.font-semibold.text-3xl.text-secondary=`$${coin.current_price}`
               span.changeValue.font-semibold.text-lg.text-text-secondary-text-color=`${coin.price_change_percentage_24h_in_currency.toFixed(2)}%`
 
           div(class="flex gap-2 self-stretch items-center mt-4 md:mt-0")
@@ -163,9 +163,9 @@ block content
                           p(class="text-primary-text-color  font-bold text-xs md:text-sm px-1 leading-5")= coinMarket.marketName
                     td(class="px-2 md:px-4 whitespace-nowrap text-center text-xs md:text-sm text-fourth-text-color font-medium")
                       a.text-text-fourth-color(href=`${coinMarket.tradeUrl}`, target="_blank")= `${coinMarket.base}/${coinMarket.target}`
-                    td(class="px-2 md:px-4 whitespace-nowrap text-center text-xs md:text-sm text-primary-text-color font-medium")= `R$ ${coinMarket.lastPrice}`
-                    td(class="px-2 md:px-4 whitespace-nowrap text-center text-xs md:text-sm text-primary-text-color font-medium hidden md:table-cell")= `R$ ${coinMarket.cost_to_move_up_usd}`
-                    td(class="px-2 md:px-4 whitespace-nowrap text-center text-xs md:text-sm text-primary-text-color font-medium hidden md:table-cell")= `R$ ${coinMarket.cost_to_move_down_usd}`
+                    td(class="px-2 md:px-4 whitespace-nowrap text-center text-xs md:text-sm text-primary-text-color font-medium")= `$ ${coinMarket.lastPrice}`
+                    td(class="px-2 md:px-4 whitespace-nowrap text-center text-xs md:text-sm text-primary-text-color font-medium hidden md:table-cell")= `$ ${coinMarket.cost_to_move_up_usd}`
+                    td(class="px-2 md:px-4 whitespace-nowrap text-center text-xs md:text-sm text-primary-text-color font-medium hidden md:table-cell")= `$ ${coinMarket.cost_to_move_down_usd}`
                     td(class="px-2 md:px-4 whitespace-nowrap text-center text-xs md:text-sm text-primary-text-color font-medium hidden md:table-cell")= `${coinMarket.volume}`
                     td(class="px-2 md:px-4 whitespace-nowrap text-center text-xs md:text-sm text-primary-text-color font-medium hidden md:table-cell")= `${coinMarket.bidAskSpreadPercentage}`
                     td(class="px-2 md:px-4 whitespace-nowrap text-center text-xs md:text-sm text-primary-text-color font-medium")
@@ -223,13 +223,13 @@ block content
             h2(class="font-semibold text-2xl md:text-3xl font-medium text-secondary")= `${coin.name} Resources`
           .bodyContent(class="flex flex-col md:flex-row mx-auto  gap-4 md:gap-4 mt-4 md:mt-2")
             .coinLinks(class="bg-background-third rounded-md px-2 py-1 flex flex-row gap-2 cursor-pointer items-center justify-center")
-              i(class="icon fa-solid fa-globe text-base")
+              i(class="icon fa-solid fa-globe text-secondary text-base")
               a(class="font-medium text-secondary text-xs md:text-sm flex items-center", href=`${coin.homepage[0]}`) website
             .coinLinks(class="bg-background-third rounded-md px-2 py-1 flex flex-row gap-2 cursor-pointer items-center justify-center")
-              i(class="icon fa-solid fa-file text-base")
+              i(class="icon fa-solid fa-file text-secondary text-base")
               a(class="font-medium text-secondary text-xs md:text-sm flex items-center", href=`${coin.whitepaper}`) whitepaper
             .coinLinks(class="bg-background-third rounded-md px-2 py-1 flex flex-row gap-2 cursor-pointer items-center justify-center")
-              i(class="icon fa-brands fa-github text-base")
+              i(class="icon fa-brands fa-github text-secondary text-base")
               a(class="font-medium text-secondary text-xs md:text-sm flex items-center", href=`${coin.github[0]}`) github
 
       .coinInfo#marketStats(class="flex flex-col gap-4")
@@ -256,7 +256,7 @@ block content
             .coinInfo(class="flex flex-row justify-between md:justify-start items-center")
               span(class="font-medium text-lg text-secondary-text-color") Volume (24h)
               i(class="information fa-solid fa-circle-info text-sm ml-1", data-info="volume24h")
-            span(class="font-medium text-lg text-secondary ml-1")= `R$ ${coin.total_volume.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,4)}B`
+            span(class="font-medium text-lg text-secondary ml-1")= `$ ${coin.total_volume.replace(/^(\d)(\d{2})/, '$1,$2').slice(0,4)}B`
 
           .coinTotalSupply(class="w-full lg:w-96 h-16 flex flex-col")
             .coinInfo(class="flex flex-row justify-between md:justify-start items-center")
@@ -274,13 +274,13 @@ block content
             .coinInfo(class="flex flex-row justify-between md:justify-start items-center")
               span(class="font-medium text-lg text-secondary-text-color") Low (24h)
               i(class="information fa-solid fa-circle-info text-sm ml-1", data-info="low24h")
-            span(class="font-medium text-lg text-secondary")= `R$ ${coin.low_24h}`
+            span(class="font-medium text-lg text-secondary")= `$ ${coin.low_24h}`
 
           .coinHighValue(class="w-full lg:w-96 h-16 flex flex-col")
             .coinInfo(class="flex flex-row justify-between md:justify-start items-center")
               span(class="font-medium text-lg text-secondary-text-color") High (24h)
               i(class="information fa-solid fa-circle-info text-sm ml-1", data-info="high24h")
-            span(class="font-medium text-lg text-secondary")= `R$ ${coin.high_24h}`
+            span(class="font-medium text-lg text-secondary")= `$ ${coin.high_24h}`
 
           .coinAllTime(class="flex flex-col justify-between   w-full lg:w-96 h-16")
             .coin-header-info
@@ -288,7 +288,7 @@ block content
               i(class="information fa-solid fa-circle-info text-sm ml-1", data-info="ath-high")
               span(class="font-medium text-base text-secondary ml-1")= `${coin.ath_date}`
             .coinInfo(class="flex flex-row items-center")
-              span(class="font-medium text-lg text-secondary ml-1")= `R$ ${coin.ath}`
+              span(class="font-medium text-lg text-secondary ml-1")= `$ ${coin.ath}`
               span(class="changeValue px-1 font-medium text-base text-secondary ml-1")= `${coin.ath_change_percentage.toFixed(2)}%`
 
           .coinAllTime(class="flex flex-col justify-between   w-full lg:w-96 h-16")
@@ -297,7 +297,7 @@ block content
               i(class="information fa-solid fa-circle-info text-sm ml-1", data-info="ath-low")
               span(class="font-medium text-base text-secondary ml-1")= `${coin.atl_date}`
             .coinInfo(class="flex flex-row items-center")
-              span(class="font-semibold text-lg text-secondary ml-1")= `R$ ${coin.atl}`
+              span(class="font-semibold text-lg text-secondary ml-1")= `$ ${coin.atl}`
               span(class="changeValue px-1 font-semibold text-base text-secondary ml-1")= `${coin.atl_change_percentage.toFixed(2)}%`
 
       .sentimentAboutTheCoin#coinSentiment
