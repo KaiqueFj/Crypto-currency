@@ -67,10 +67,10 @@ block content
                       p(class="text-primary-text-color font-semibold text-sm px-1")= coin.name
                       p(class="text-secondary-text-color text-sm ")= `${coin.symbol.toUpperCase()}`
 
-                td(class="px-2  whitespace-nowrap text-center text-sm text-secondary-text-color font-medium")= `$${coin.price.toLocaleString()}`
+                td(class="px-2  whitespace-nowrap text-center text-sm text-primary-text-color font-medium")= `$${coin.price.toLocaleString()}`
                 // Hidden columns for smaller screens
-                td(class="changeValue px-2  whitespace-nowrap text-center text-sm text-secondary-text-color font-medium hidden md:table-cell")= `${coin.price_change_percentage_24h_brl.toFixed(2)}%`
-                td(class="px-2  whitespace-nowrap text-center text-sm text-secondary-text-color font-medium hidden md:table-cell")= `${coin.total_volume.toLocaleString()}`
-                td(class="px-2  whitespace-nowrap text-center text-sm text-secondary-text-color font-medium hidden md:table-cell")= `${coin.market_cap.toLocaleString()}`
-                td(class="px-2  whitespace-nowrap text-center text-sm text-secondary-text-color font-medium w-48 h-20 hidden md:table-cell")
+                td(class="changeValue px-2  whitespace-nowrap text-center text-sm text-primary-text-color font-medium hidden md:table-cell")= `${coin.price_change_percentage_24h_brl.toFixed(2)}%`
+                td(class="px-2  whitespace-nowrap text-center text-sm text-primary-text-color font-medium hidden md:table-cell")= `${coin.total_volume.toLocaleString()}`
+                td(class="px-2  whitespace-nowrap text-center text-sm text-primary-text-color font-medium hidden md:table-cell")= `${coin.market_cap.toLocaleString()}`
+                td(class="px-2  whitespace-nowrap text-center text-sm text-primary-text-color font-medium w-48 h-20 hidden md:table-cell")
                   img(class="coin-image w-40 h-16 object-cover rounded-full" src=coin.sparkline alt=coin.name)
