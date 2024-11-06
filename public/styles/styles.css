@@ -95,7 +95,9 @@
 
 /* Adds a smoother transition when changing the theme */
 .light,
-.dark {
+.dark,
+header,
+footer {
   transition:
     background-color 0.3s ease,
     color 0.3s ease,

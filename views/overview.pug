@@ -140,7 +140,7 @@ block content
 
           tbody(class="bg-primary divide-y divide-divider-color")
             each coin, index in coins
-              tr(class="hover:bg-background-fourth transition ease-in-out duration-150")
+              tr(class="hover:bg-background-third transition ease-in-out duration-150")
                 // Star icon for portfolio
                 td(class="px-2 whitespace-nowrap")
                   if coinsFromPortFolio
@@ -160,22 +160,22 @@ block content
                       p(class="text-secondary-text-color font-semibold text-xs")= `${coin.symbol.toUpperCase()}`
 
                 // Current Price
-                td(class="px-2 text-sm text-secondary-text-color text-center font-medium")= `$${coin.current_price.toLocaleString()}`
+                td(class="px-2 text-sm text-primary-text-color text-center font-medium")= `$${coin.current_price.toLocaleString()}`
 
                 // 1h price change (Hidden on smaller screens)
-                td(class="changeValue px-2 text-sm text-secondary-text-color text-center font-medium hidden md:table-cell")= `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
+                td(class="changeValue px-2 text-sm text-primary-text-color text-center font-medium hidden md:table-cell")= `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
 
                 // 24h price change (Hidden on smaller screens)
-                td(class="changeValue px-2 text-sm text-secondary-text-color text-center font-medium hidden md:table-cell")= `${coin.price_change_percentage_24h_in_currency.toLocaleString()}%`
+                td(class="changeValue px-2 text-sm text-primary-text-color text-center font-medium hidden md:table-cell")= `${coin.price_change_percentage_24h_in_currency.toLocaleString()}%`
 
                 // 7d price change (Hidden on smaller screens)
-                td(class="changeValue px-2 text-sm text-secondary-text-color text-center font-medium hidden md:table-cell")= `${coin.price_change_percentage_7d_in_currency.toFixed(2)}%`
+                td(class="changeValue px-2 text-sm text-primary-text-color text-center font-medium hidden md:table-cell")= `${coin.price_change_percentage_7d_in_currency.toFixed(2)}%`
 
                 // Circulating Supply
-                td(class="px-2 text-sm text-secondary-text-color text-center font-medium hidden md:table-cell")= `$${coin.circulating_supply.toLocaleString()}`
+                td(class="px-2 text-sm text-primary-text-color text-center font-medium hidden md:table-cell")= `$${coin.circulating_supply.toLocaleString()}`
 
                 // Market Cap
-                td(class="px-2 text-sm text-secondary-text-color text-center font-medium hidden md:table-cell")= `$${coin.market_cap.toLocaleString()}`
+                td(class="px-2 text-sm text-primary-text-color text-center font-medium hidden md:table-cell")= `$${coin.market_cap.toLocaleString()}`
 
                 // Chart container (Hidden on smaller screens)
                 td(class="px-2 text-sm hidden w-48 h-20 md:table-cell")

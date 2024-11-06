@@ -12,8 +12,8 @@
     "start": " SET NODE_ENV=production & node server.js",
     "watch:js": "parcel watch --dist-dir public/js/bundled --no-cache",
     "build:js": "parcel build --dist-dir public/js/bundled --no-cache",
-    "build:css": "tailwindcss build ./public/styles/styles.css -o public/styles/tailwind.css",
-    "watch:css": "tailwindcss build ./public/styles/styles.css -o public/styles/tailwind.css --watch"
+    "build:css": "tailwindcss build -i ./public/styles/styles.css -o public/styles/tailwind.css",
+    "watch:css": "tailwindcss build -i ./public/styles/styles.css -o public/styles/tailwind.css --watch"
   },
   "author": "Kaique Ferraz de Jesus",
   "license": "ISC",

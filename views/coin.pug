@@ -91,13 +91,13 @@ block content
                   span#cryptoIcon
                   span#flagIcon
               .body-info.flex.flex-col.items-end
-                span#coinPriceValue= coin.current_price
-              input(type="hidden", id="coinPriceUsd", value=coin.current_price_usd)
+                span#coinPriceValue.text-primary-text-color= coin.current_price
+              input(type="hidden", id="coinPriceUsd",  value=coin.current_price_usd)
 
             .valueInCurrency(class="flex flex-col md:flex-row items-center rounded-lg p-4 border-2 gap-4")
               img.w-6.h-6.m-1(src=coin.thumb alt=coin.name)
               .body-info.flex.flex-col.items-end
-                input(type="text" value="1" id="coinQuantity")
+                input(type="text" value="1" class="bg-transparent text-primary-text-color" id="coinQuantity")
 
 
       .Exchanges#Exchanges(class="flex flex-col")
