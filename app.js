@@ -7,7 +7,11 @@ const portfolioRoutes = require('./routes/portfolioRoutes');
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/errorController');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 const app = express();
+
+// App compression to improve performance
+app.use(compression());
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
