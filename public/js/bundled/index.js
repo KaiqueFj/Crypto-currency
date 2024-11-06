@@ -691,7 +691,7 @@ if (feedGreedCoinContainer) {
     if (fearGreedNeedlePosition && fearGreedValue !== null) updateSpeedDoMeter(parseInt(fearGreedValue, 10));
 }
 
-},{"67cae37c61cb61ea":"gVYJX","./handleUserFunctions/signUp":"kmAUz","./handleUserFunctions/signIn":"9rXF3","./handleUserFunctions/updateSettings":"iqdDI","./handleUserFunctions/Portfolio":"3FBK1","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2","b5e959d0c93c2dc0":"jQWxY","./handleUserFunctions/logout":"3TsAr"}],"gVYJX":[function(require,module,exports) {
+},{"67cae37c61cb61ea":"gVYJX","./handleUserFunctions/signUp":"kmAUz","./handleUserFunctions/signIn":"9rXF3","./handleUserFunctions/logout":"3TsAr","./handleUserFunctions/updateSettings":"iqdDI","./handleUserFunctions/Portfolio":"3FBK1","5bdcf2804befa2fb":"4Y7Xa","88fddf9f7ffe2d0":"jFoI4","5082ea269ed0b977":"aJLPg","a7d37ed595fc46a5":"6BRsH","2c6e91297df9cd6d":"kTzD2","b5e959d0c93c2dc0":"jQWxY"}],"gVYJX":[function(require,module,exports) {
 const { needle } = require("335ffdcd8dc8da1a");
 function updateSpeedDoMeter(value) {
     const maxValue = 100;
@@ -5613,6 +5613,26 @@ const signIn = async (email, password)=>{
         }
     } catch (err) {
         (0, _alert.showAlert)("error", err.response.data.message);
+    }
+};
+
+},{"axios":"jo6P5","../handleAlertPage/alert":"hgdTX","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3TsAr":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "logout", ()=>logout);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _alert = require("../handleAlertPage/alert");
+const logout = async ()=>{
+    try {
+        const res = await (0, _axiosDefault.default)({
+            method: "GET",
+            url: "/api/v1/users/logout"
+        });
+        res.data.status = "success";
+        location.assign("/");
+    } catch (err) {
+        (0, _alert.showAlert)("error", "Error logging out! Try again");
     }
 };
 
@@ -36964,26 +36984,6 @@ function modalHandle() {
     });
 }
 
-},{"./handleElements":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3TsAr":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "logout", ()=>logout);
-var _axios = require("axios");
-var _axiosDefault = parcelHelpers.interopDefault(_axios);
-var _alert = require("../handleAlertPage/alert");
-const logout = async ()=>{
-    try {
-        const res = await (0, _axiosDefault.default)({
-            method: "GET",
-            url: "/api/v1/users/logout"
-        });
-        res.data.status = "success";
-        location.assign("/");
-    } catch (err) {
-        (0, _alert.showAlert)("error", "Error logging out! Try again");
-    }
-};
-
-},{"axios":"jo6P5","../handleAlertPage/alert":"hgdTX","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
+},{"./handleElements":"aJLPg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["gTVKZ","f2QDv"], "f2QDv", "parcelRequire0ae2")
 
 //# sourceMappingURL=index.js.map
