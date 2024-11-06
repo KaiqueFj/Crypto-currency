@@ -46,16 +46,18 @@ export function handleUserClicks() {
   });
 
   //handle aside navigation
-  navItems.forEach((item) => {
-    item.addEventListener('click', function () {
-      const targetId = this.getAttribute('data-target');
-      const targetElement = document.querySelector(targetId);
+  if (navItems) {
+    navItems.forEach((item) => {
+      item.addEventListener('click', function () {
+        const targetId = this.getAttribute('data-target');
+        const targetElement = document.querySelector(targetId);
 
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-      }
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
     });
-  });
+  }
 
   // Handle save chart as image
   saveAsButtonDropdown.on('click', function (e) {

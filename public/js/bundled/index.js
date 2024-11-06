@@ -5712,7 +5712,7 @@ function handleUserClicks() {
         });
     });
     //handle aside navigation
-    navItems.forEach((item)=>{
+    if (navItems) navItems.forEach((item)=>{
         item.addEventListener("click", function() {
             const targetId = this.getAttribute("data-target");
             const targetElement = document.querySelector(targetId);
