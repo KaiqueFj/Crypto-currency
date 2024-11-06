@@ -56,6 +56,9 @@ export const flagIcon = document.getElementById('flagIcon'); // Icon for selecte
 // Navigation menu elements
 export const buttonMobile = document.querySelector('#menu-button'); // Button to open mobile nav menu
 export const menu = document.querySelector('#nav-menu'); // Main navigation menu container
+export const navItems = document.querySelectorAll(
+  '.asideNavigation [data-target]'
+);
 
 // Main table container for displaying coins
 export const mainTableOfCoins = document.querySelector('.table-container-main'); // Container for the main table of coins
