@@ -78,7 +78,7 @@ The project is deployed on Render and you can try it on the following link:
 - https://crypto-currency-pgqa.onrender.com/overview
 
 ## Video of the project
-https://github.com/user-attachments/assets/3ff76c48-e66a-4845-a14a-4a8996558d1e
+https://github.com/user-attachments/assets/a1ca24cc-5356-4aa4-8fe3-a509f718c20f
 
 ## Contact
 
