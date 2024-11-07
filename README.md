@@ -77,6 +77,9 @@ The project is deployed on Render and you can try it on the following link:
 
 - https://crypto-currency-pgqa.onrender.com/overview
 
+## Video of the project
+https://github.com/user-attachments/assets/3ff76c48-e66a-4845-a14a-4a8996558d1e
+
 ## Contact
 
 In case of questions or some info, reach me out on:
@@ -84,4 +87,7 @@ In case of questions or some info, reach me out on:
 - GitHub: KaiqueFj
 - E-mail: kaiqueferraz.dev@gmail.com
 
-**That´s all folks ;)**
+<h2 align="center">
+  That´s all folks ;) 
+</h2>
+
