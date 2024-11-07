@@ -1,10 +1,14 @@
 # Crypto Market
 
-Welcome to the documentation for the **Crypto Market** project. This repository contains the source code, technologies used, and explanations to help you understand its functionality and architecture.
+Welcome to the documentation for the Crypto Market project. This repository contains the source code, technologies, features, and explanations to help you understand its functionality and architecture.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c302eb42-ebcc-4a6d-855d-5eb344ce61ba" alt="crypto-logo-coin" width="200" height="200"/>
+</p>
 
 ## Introduction
 
-**Crypto Market** aims to be a fast and reliable source for cryptocurrency market analysis and global trends, providing a simple, easy-to-use interface.
+**Crypto Market** Crypto Market is a web application designed to be a fast and reliable source for cryptocurrency market analysis and global trends, providing a simple, easy-to-use interface. It enables users to track individual coins, monitor market sentiment, and stay updated on trending cryptocurrencies.
 
 ## Technologies
 
@@ -38,9 +42,9 @@ Crypto Market includes the following features:
 
 The project is using the architecture **MVC** (Model-View-Controller):
 
-- **Model**: Handles the data and business logic, integrating with Firebase for data management and user authentication.
+- **Model**: Handles the data and business logic, integrating with MongoDB for data management and user authentication.
 
-- **View**: The user interface layer, responsible for presenting data to users and capturing user inputs through Android’s activities and fragments, styled with Material Design.
+- **View**: consists of server-rendered HTML views and client-side interactivity.
 
 - **Controller**: Acts as an intermediary between the Model and the View, processing user inputs and updating the View with data from the Model.
 
@@ -81,5 +85,3 @@ In case of questions or some info, reach me out on:
 - E-mail: kaiqueferraz.dev@gmail.com
 
 **That´s all folks ;)**
-
-<img src="https://github.com/user-attachments/assets/c302eb42-ebcc-4a6d-855d-5eb344ce61ba" alt="crypto-logo-coin" width="200" height="200"/>
