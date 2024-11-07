@@ -82,4 +82,7 @@ In case of questions or some info, reach me out on:
 
 **That´s all folks ;)**
 
-<img src="https://github.com/user-attachments/assets/c302eb42-ebcc-4a6d-855d-5eb344ce61ba" alt="crypto-logo-coin" width="200" height="200"/>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c302eb42-ebcc-4a6d-855d-5eb344ce61ba" alt="crypto-logo-coin" width="200" height="200"/>
+</p>
+
